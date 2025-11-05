@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import styles from "./CategoryForm.module.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addCategory } from "services/admin";
-import ToastNotification from "../modules/ToastNotification"; // مسیر رو درست کن
-
+import ToastNotification from "components/modules/ToastNotification";
 function CategoryForm() {
   const queryClient = useQueryClient();
   const [form, setForm] = useState({ name: "", slug: "", icon: "" });
