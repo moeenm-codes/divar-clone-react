@@ -1,0 +1,185 @@
+/* CategoryList.module.css */
+
+/* کانتینر کلی */
+.container {
+  position: relative; /* برای مودال و Toast */
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  direction: rtl;
+  font-family: "Vazir", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  color: #222;
+}
+
+/* شبکه کارت‌ها */
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  align-items: start;
+  margin-top: 12px;
+}
+
+/* کارت هر دسته */
+.card {
+  background: #ffffff;
+  border: 1px solid #ececec;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 6px 18px rgba(18, 24, 40, 0.03);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between; /* دکمه همیشه در انتها */
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  cursor: default;
+  min-height: 72px;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(18, 24, 40, 0.06);
+}
+
+/* محل آیکون */
+.iconWrap {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #f7f8fa 0%, #ffffff 100%);
+  border-radius: 10px;
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+}
+
+.icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
+}
+
+/* متن‌های داخل کارت */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slug {
+  font-size: 0.82rem;
+  color: #6b7280;
+  margin: 0;
+  direction: rtl;
+  unicode-bidi: embed;
+  word-break: break-all;
+}
+
+/* دکمه حذف */
+.deleteButton {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* وقتی لیست خالیه */
+.empty {
+  text-align: center;
+  padding: 36px 12px;
+  color: #6b7280;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px dashed #ececec;
+}
+
+/* wrapper برای لودینگ */
+.loaderWrapper {
+  display: grid;
+  place-items: center;
+  padding: 40px 0;
+}
+
+/* Toast container - بالای صفحه */
+.toastContainer {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1100;
+  pointer-events: none;
+}
+
+/* ریسپانسیو */
+@media (max-width: 768px) {
+  .container {
+    padding: 14px;
+  }
+
+  .grid {
+    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .iconWrap {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .title {
+    font-size: 0.95rem;
+  }
+
+  .card {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .deleteButton {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .deleteButton button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .deleteButton .svgIcon {
+    width: 10px;
+  }
+}

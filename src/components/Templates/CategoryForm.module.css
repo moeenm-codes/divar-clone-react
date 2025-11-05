@@ -1,0 +1,215 @@
+/* CategoryForm.module.css
+   طراحی مخصوص divar.ir — کارت روشن، آکسان قرمز، انیمیشن‌های ریز
+*/
+
+:root {
+  --accent: #a62626;
+  --accent-dark: #a62626;
+  --bg: #f7f8fa;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --input-border: #e6e9ee;
+  --radius: 10px;
+  --transition: 220ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+/* کارت فرم */
+.form {
+  direction: rtl;
+  font-family: "vazir", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 22px;
+  background: var(--card);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: 0 6px 20px rgba(16, 24, 40, 0.06);
+  border: 1px solid rgba(16, 24, 40, 0.03);
+  color: #111827;
+  position: relative;
+  overflow: hidden;
+}
+
+/* هدر */
+.form h3 {
+  margin: 0 0 14px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+  display: inline-block;
+  padding-bottom: 6px;
+  border-bottom: 3px solid #a6262679;
+}
+
+/* راهنما */
+.hint {
+  font-size: 0.86rem;
+  color: var(--muted);
+  margin-top: 6px;
+  margin-bottom: 14px;
+}
+
+/* فیلد */
+.field {
+  margin-bottom: 18px;
+  position: relative;
+}
+
+/* لیبل */
+.form label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+/* اینپوت */
+.form input {
+  width: 100%;
+  height: 44px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  color: #111827;
+  background: #fff;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  outline: none;
+  transition: box-shadow var(--transition), border-color var(--transition),
+    transform var(--transition);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form input::placeholder {
+  color: #9ca3af;
+}
+
+.form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 6px 20px rgba(166, 38, 38, 0.08);
+  transform: translateY(-2px);
+}
+
+/* دکمه */
+.form button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #a62626, #c93a3a);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(166, 38, 38, 0.3);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  min-height: 44px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.form button:hover::before {
+  left: 100%;
+}
+
+.form button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(166, 38, 38, 0.4);
+}
+
+.form button:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+/* لودر */
+.loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Toast Container — بالای فرم */
+.toastContainer {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 100%;
+  max-width: 420px;
+  pointer-events: none;
+}
+
+.toastContainer > * {
+  pointer-events: auto;
+}
+
+/* خطای ورودی */
+.inputError {
+  border-color: #f97373 !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 115, 0.15) !important;
+}
+
+.helperError {
+  color: #ef4444;
+  font-size: 0.82rem;
+  margin-top: 6px;
+  display: block;
+}
+
+/* پیشنهاد اقدام در خطا */
+.errorSuggestion {
+  font-weight: 600;
+  color: #dc2626;
+  margin-right: 4px;
+}
+
+/* ریسپانسیو */
+@media (max-width: 560px) {
+  .form {
+    padding: 16px;
+    margin: 14px;
+  }
+  .form input {
+    height: 42px;
+  }
+  .form h3 {
+    font-size: 1rem;
+  }
+}

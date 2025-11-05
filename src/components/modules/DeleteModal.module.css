@@ -1,0 +1,136 @@
+/* components/admin/DeleteModal.module.css */
+
+/* پس‌زمینه بلور */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* مودال */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 420px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 1000;
+  animation: modalPop 0.3s ease-out;
+}
+
+/* هدر */
+.header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #ececec;
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* بدنه */
+.body {
+  padding: 16px 24px;
+  text-align: center;
+  color: #4b5563;
+}
+
+.body p {
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+
+.warning {
+  font-size: 0.875rem;
+  color: #dc2626;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+/* فوتر */
+.footer {
+  padding: 12px 24px 20px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.cancelBtn,
+.deleteBtn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.cancelBtn {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.cancelBtn:hover {
+  background: #e5e7eb;
+}
+
+.deleteBtn {
+  background: #a62626;
+  color: white;
+}
+
+.deleteBtn:hover {
+  background: #a62626c9;
+}
+
+/* انیمیشن‌ها */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* ریسپانسیو */
+@media (max-width: 480px) {
+  .modal {
+    width: 95%;
+    margin: 0 8px;
+  }
+  .footer {
+    flex-direction: column;
+  }
+  .cancelBtn,
+  .deleteBtn {
+    width: 100%;
+  }
+}

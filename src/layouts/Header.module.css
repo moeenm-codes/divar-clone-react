@@ -1,0 +1,341 @@
+.header {
+  background: linear-gradient(145deg, #ffffff, #f8f8f8);
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  animation: slideDown 0.6s ease-out;
+  backdrop-filter: blur(10px);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* لوگو */
+.logo {
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+.logo:hover {
+  transform: scale(1.05);
+}
+.logoImg {
+  height: 36px;
+  width: auto;
+  transition: filter 0.3s ease;
+}
+.logo:hover .logoImg {
+  filter: brightness(1.1);
+}
+
+/* چیدمان */
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Wrapper برای dropdown */
+.dropdownWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* دکمه اصلی dropdown */
+.dropdownBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(145deg, #ffffff, #f5f5f5);
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  min-width: 120px;
+  justify-content: space-between;
+  white-space: nowrap;
+  outline: none;
+}
+
+.dropdownBtn:hover {
+  border-color: #a62626;
+  background: linear-gradient(145deg, #fff8f8, #ffeaea);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(166, 38, 38, 0.12);
+}
+
+.dropdownBtn.active {
+  border-color: #a62626;
+  background: linear-gradient(145deg, #fff0f0, #ffe5e5);
+  box-shadow: 0 4px 15px rgba(166, 38, 38, 0.15);
+}
+
+/* آیکون و متن */
+.icon {
+  color: #a62626;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.text {
+  flex: 1;
+  text-align: right;
+  font-weight: 600;
+}
+
+/* فلش — چرخش از وسط */
+.arrow {
+  font-size: 1rem;
+  color: #999;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+  display: inline-block;
+  width: 16px;
+  text-align: center;
+  margin-left: 4px;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+/* منوی dropdown */
+.dropdown {
+  position: absolute;
+  top: calc(100% - 6px); /* overlap کوچک برای جلوگیری از gap بین دکمه و منو */
+  right: 0;
+  min-width: 220px;
+  background: white;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  margin-top: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  animation: dropdownFade 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 1001;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* آیتم‌های منو */
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 18px;
+  color: #444;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: right;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease, padding 0.16s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
+.dropdownItem:hover {
+  background: linear-gradient(90deg, #f8dada, #fff1f1);
+  color: #222;
+}
+
+/* سبک وقتی با کیبورد highlight می‌شود */
+.activeItem {
+  background: linear-gradient(90deg, #f7dede, #ffecec);
+}
+
+/* وقتی آیتم به عنوان انتخاب نهایی انتخاب شده */
+.selectedItem {
+  background: linear-gradient(90deg, #a62626, #c93a3a);
+  color: white;
+  font-weight: 600;
+}
+
+/* city-specific styles */
+.citySearchContainer {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fff;
+}
+
+.citySearchInput {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #e6e6e6;
+  font-size: 0.9rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.citySearchInput:focus {
+  border-color: #d32f2f;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.07);
+}
+
+.cityListContainer {
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+}
+
+/* وقتی موردی پیدا نشد */
+.cityEmptyResult {
+  padding: 12px 18px;
+  color: #888;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+/* متن نام شهر داخل آیتم */
+.cityName {
+  display: inline-block;
+}
+
+/* تیک انتخاب شده */
+.check {
+  margin-left: 8px;
+  color: #d32f2f;
+  font-weight: 700;
+}
+
+/* ثبت آگهی */
+.postAdButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #a62626, #c93a3a);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(166, 38, 38, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.postAdButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.postAdButton:hover::before {
+  left: 100%;
+}
+.postAdButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(166, 38, 38, 0.4);
+}
+
+.postAdIcon {
+  font-size: 1rem;
+}
+
+/* ریسپانسیو */
+@media (max-width: 992px) {
+  .left,
+  .right {
+    gap: 14px;
+  }
+  .dropdownBtn {
+    padding: 9px 14px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 0;
+  }
+  .container {
+    flex-direction: column;
+    gap: 14px;
+  }
+  .left,
+  .right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .logoImg {
+    height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .text {
+    display: none;
+  }
+  .dropdownBtn {
+    padding: 10px;
+    min-width: auto;
+    justify-content: center;
+  }
+  .dropdownBtn .icon {
+    margin: 0 auto;
+  }
+  .postAdButton {
+    padding: 9px 16px;
+    font-size: 0.8rem;
+  }
+  .dropdown {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    margin-top: 8px;
+  }
+}
