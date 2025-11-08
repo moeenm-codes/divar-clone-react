@@ -4,4 +4,6 @@ const getProfile = () => {
   return api.get("user/whoami").then((res) => res || false);
 };
 
-export { getProfile };
+const getPosts = () => api.get("post/my");
+
+export { getProfile, getPosts };
