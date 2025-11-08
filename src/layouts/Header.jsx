@@ -1,16 +1,23 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import { FaUser, FaMapMarkerAlt, FaPlus } from "react-icons/fa";
+import {
+  FaUser,
+  FaMapMarkerAlt,
+  FaPlus,
+  FaSignInAlt,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
+import { useAuth } from "components/hooks/useAuth";
 
 function normalizePersian(str = "") {
   return String(str)
     .trim()
     .replace(/ي/g, "ی")
     .replace(/ك/g, "ک")
-    .replace(/\u200C/g, "") // حذف نیم‌فاصله
-    .replace(/ـ/g, "") // حذف کشیده
+    .replace(/\u200C/g, "")
+    .replace(/ـ/g, "")
     .toLowerCase();
 }
 
@@ -25,10 +32,10 @@ function Header() {
   const [cityQuery, setCityQuery] = useState("");
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
-  const cityTimerRef = useRef(null);
-  const profileTimerRef = useRef(null);
   const searchInputRef = useRef(null);
   const listContainerRef = useRef(null);
+
+  const { user, isLoading: authLoading, logout } = useAuth();
 
   const provinces = useMemo(
     () => [
@@ -73,12 +80,10 @@ function Header() {
     return provinces.filter((p) => normalizePersian(p).includes(q));
   }, [cityQuery, provinces]);
 
-  // store selection
   useEffect(() => {
     localStorage.setItem("selectedCity", selectedCity);
   }, [selectedCity]);
 
-  // when dropdown opens focus input
   useEffect(() => {
     if (cityOpen) {
       setTimeout(() => searchInputRef.current?.focus(), 30);
@@ -88,24 +93,21 @@ function Header() {
     }
   }, [cityOpen]);
 
-  // reset highlighted when filtered changes
   useEffect(() => {
     if (!cityOpen) return;
     if (filteredCities.length > 0) setHighlightedIndex(0);
     else setHighlightedIndex(-1);
   }, [filteredCities, cityOpen]);
 
-  // scroll highlighted into view
   useEffect(() => {
-    if (!listContainerRef.current) return;
+    if (!listContainerRef.current || highlightedIndex < 0) return;
     const container = listContainerRef.current;
-    if (highlightedIndex < 0) return;
     const el = container.querySelector(`[data-index="${highlightedIndex}"]`);
     if (!el) return;
-    const offsetTop = el.offsetTop;
-    const offsetHeight = el.offsetHeight;
-    const scrollTop = container.scrollTop;
-    const clientHeight = container.clientHeight;
+
+    const { offsetTop, offsetHeight } = el;
+    const { scrollTop, clientHeight } = container;
+
     if (offsetTop < scrollTop) {
       container.scrollTop = offsetTop;
     } else if (offsetTop + offsetHeight > scrollTop + clientHeight) {
@@ -113,29 +115,9 @@ function Header() {
     }
   }, [highlightedIndex]);
 
-  // city dropdown enter/leave with small delay to avoid flicker
-  const handleCityEnter = () => {
-    if (cityTimerRef.current) clearTimeout(cityTimerRef.current);
-    setCityOpen(true);
-  };
-  const handleCityLeave = () => {
-    if (cityTimerRef.current) clearTimeout(cityTimerRef.current);
-    cityTimerRef.current = setTimeout(() => setCityOpen(false), 120);
-  };
-
-  // profile dropdown
-  const handleProfileEnter = () => {
-    if (profileTimerRef.current) clearTimeout(profileTimerRef.current);
-    setProfileOpen(true);
-  };
-  const handleProfileLeave = () => {
-    if (profileTimerRef.current) clearTimeout(profileTimerRef.current);
-    profileTimerRef.current = setTimeout(() => setProfileOpen(false), 120);
-  };
-
-  // keyboard handlers (attached to input)
   const handleInputKeyDown = (e) => {
     if (!cityOpen) return;
+
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setHighlightedIndex((prev) =>
@@ -148,44 +130,67 @@ function Header() {
       );
     } else if (e.key === "Enter") {
       e.preventDefault();
-      if (highlightedIndex >= 0) {
-        const city = filteredCities[highlightedIndex];
-        if (city) {
-          setSelectedCity(city);
-          setCityOpen(false);
-        }
+      if (highlightedIndex >= 0 && filteredCities[highlightedIndex]) {
+        setSelectedCity(filteredCities[highlightedIndex]);
+        setCityOpen(false);
       }
     } else if (e.key === "Escape") {
       setCityOpen(false);
     }
   };
 
-  // cleanup timers on unmount
-  useEffect(() => {
-    return () => {
-      if (cityTimerRef.current) clearTimeout(cityTimerRef.current);
-      if (profileTimerRef.current) clearTimeout(profileTimerRef.current);
-    };
-  }, []);
+  const profileMenuItems = useMemo(() => {
+    const items = [];
+
+    if (!user) {
+      items.push({ name: "ورود / ثبت‌نام", to: "/auth" });
+    }
+
+    items.push(
+      { name: "صفحه اصلی", to: "/" },
+      { name: "داشبورد", to: "/dashboard" },
+      { name: "آگهی‌های من", to: "/my-ads" },
+      { name: "علاقه‌مندی‌ها", to: "/favorites" },
+      { name: "پشتیبانی", to: "/support" }
+    );
+
+    if (user?.role === "ADMIN") {
+      items.push({ name: "پنل ادمین", to: "/admin" });
+    }
+
+    if (user) {
+      items.push({
+        name: "خروج از حساب کاربری",
+        to: "#",
+        icon: <FaSignOutAlt />,
+        className: "logoutItem",
+        onClick: (e) => {
+          e.preventDefault();
+          logout();
+          setProfileOpen(false);
+        },
+      });
+    }
+
+    return items;
+  }, [user, logout]);
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
+        {/* سمت چپ: لوگو و شهر */}
         <div className={styles.left}>
           <Link to="/" className={styles.logo}>
             <img src="/divar.svg" alt="دیوار" className={styles.logoImg} />
           </Link>
 
-          {/* استان/شهر انتخاب */}
-          <div
-            className={styles.dropdownWrapper}
-            onMouseEnter={handleCityEnter}
-            onMouseLeave={handleCityLeave}
-          >
+          {/* انتخاب شهر */}
+          <div className={styles.dropdownWrapper}>
             <button
               className={`${styles.dropdownBtn} ${
                 cityOpen ? styles.active : ""
               }`}
+              onClick={() => setCityOpen((prev) => !prev)}
               aria-haspopup="menu"
               aria-expanded={cityOpen}
               type="button"
@@ -258,22 +263,28 @@ function Header() {
           </div>
         </div>
 
+        {/* سمت راست: منوی کاربری و ثبت آگهی */}
         <div className={styles.right}>
-          <div
-            className={styles.dropdownWrapper}
-            onMouseEnter={handleProfileEnter}
-            onMouseLeave={handleProfileLeave}
-          >
+          {/* منوی کاربری */}
+          <div className={styles.dropdownWrapper}>
             <button
               className={`${styles.dropdownBtn} ${
                 profileOpen ? styles.active : ""
               }`}
+              onClick={() => setProfileOpen((prev) => !prev)}
               aria-haspopup="menu"
               aria-expanded={profileOpen}
               type="button"
+              disabled={authLoading}
             >
-              <FaUser className={styles.icon} />
-              <span className={styles.text}>دیوار من</span>
+              {authLoading ? (
+                <div className={styles.skeletonIcon} />
+              ) : user ? (
+                <FaUser className={styles.icon} />
+              ) : (
+                <FaSignInAlt className={styles.icon} />
+              )}
+              <span className={styles.text}>{user ? "دیوار من" : "ورود"}</span>
               <IoIosArrowDown
                 className={`${styles.arrow} ${profileOpen ? styles.open : ""}`}
               />
@@ -285,19 +296,21 @@ function Header() {
                 role="menu"
                 aria-label="منوی کاربری"
               >
-                {[
-                  { name: "ورود / ثبت‌نام", to: "/auth" },
-                  { name: "آگهی‌های من", to: "/my-ads" },
-                  { name: "علاقه‌مندی‌ها", to: "/favorites" },
-                  { name: "داشبورد", to: "/dashboard" },
-                  { name: "پشتیبانی", to: "/support" },
-                ].map((item) => (
+                {profileMenuItems.map((item) => (
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={styles.dropdownItem}
-                    onClick={() => setProfileOpen(false)}
+                    className={`${styles.dropdownItem} ${
+                      item.className ? styles[item.className] : ""
+                    }`}
+                    onClick={(e) => {
+                      item.onClick?.(e);
+                      setProfileOpen(false);
+                    }}
                   >
+                    {item.icon && (
+                      <span className={styles.itemIcon}>{item.icon}</span>
+                    )}
                     {item.name}
                   </Link>
                 ))}
@@ -305,6 +318,7 @@ function Header() {
             )}
           </div>
 
+          {/* دکمه ثبت آگهی */}
           <Link to="/dashboard" className={styles.postAdButton}>
             <FaPlus className={styles.postAdIcon} />
             ثبت آگهی

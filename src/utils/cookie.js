@@ -14,4 +14,12 @@ const getCookie = (cookieName) => {
     ?.split("=")[1];
 };
 
-export { setCookie, getCookie };
+const removeCookie = (name) => {
+  document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+};
+
+const removeTokens = () => {
+  removeCookie("accessToken");
+  removeCookie("refreshToken");
+};
+export { setCookie, getCookie, removeTokens };

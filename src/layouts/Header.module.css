@@ -30,7 +30,6 @@
   align-items: center;
 }
 
-/* لوگو */
 .logo {
   text-decoration: none;
   transition: transform 0.3s ease;
@@ -47,7 +46,6 @@
   filter: brightness(1.1);
 }
 
-/* چیدمان */
 .left,
 .right {
   display: flex;
@@ -55,13 +53,13 @@
   gap: 20px;
 }
 
-/* Wrapper برای dropdown */
+/* Wrapper برای موقعیت‌دهی منو */
 .dropdownWrapper {
   position: relative;
   display: inline-block;
 }
 
-/* دکمه اصلی dropdown */
+/* دکمه dropdown */
 .dropdownBtn {
   display: flex;
   align-items: center;
@@ -95,7 +93,6 @@
   box-shadow: 0 4px 15px rgba(166, 38, 38, 0.15);
 }
 
-/* آیکون و متن */
 .icon {
   color: #a62626;
   font-size: 1rem;
@@ -107,7 +104,6 @@
   font-weight: 600;
 }
 
-/* فلش — چرخش از وسط */
 .arrow {
   font-size: 1rem;
   color: #999;
@@ -118,21 +114,20 @@
   text-align: center;
   margin-left: 4px;
 }
-
 .arrow.open {
   transform: rotate(180deg);
 }
 
-/* منوی dropdown */
+/* منوی dropdown — دقیقاً زیر دکمه */
 .dropdown {
   position: absolute;
-  top: calc(100% - 6px); /* overlap کوچک برای جلوگیری از gap بین دکمه و منو */
+  top: calc(100% + 4px);
   right: 0;
+  left: auto;
   min-width: 220px;
   background: white;
   border: 1.5px solid #e0e0e0;
   border-radius: 12px;
-  margin-top: 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   animation: dropdownFade 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -165,38 +160,32 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: background 0.16s ease, color 0.16s ease, padding 0.16s ease;
+  transition: background 0.16s ease, color 0.16s ease;
   border-bottom: 1px solid #f0f0f0;
 }
-
 .dropdownItem:last-child {
   border-bottom: none;
 }
-
 .dropdownItem:hover {
   background: linear-gradient(90deg, #f8dada, #fff1f1);
   color: #222;
 }
 
-/* سبک وقتی با کیبورد highlight می‌شود */
 .activeItem {
   background: linear-gradient(90deg, #f7dede, #ffecec);
 }
-
-/* وقتی آیتم به عنوان انتخاب نهایی انتخاب شده */
 .selectedItem {
   background: linear-gradient(90deg, #a62626, #c93a3a);
   color: white;
   font-weight: 600;
 }
 
-/* city-specific styles */
+/* جستجوی شهر */
 .citySearchContainer {
   padding: 10px 12px;
   border-bottom: 1px solid #f0f0f0;
   background: #fff;
 }
-
 .citySearchInput {
   width: 100%;
   padding: 8px 10px;
@@ -207,32 +196,24 @@
   box-sizing: border-box;
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
-
 .citySearchInput:focus {
   border-color: #d32f2f;
   box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.07);
 }
-
 .cityListContainer {
   max-height: 300px;
   overflow-y: auto;
   background: white;
 }
-
-/* وقتی موردی پیدا نشد */
 .cityEmptyResult {
   padding: 12px 18px;
   color: #888;
   font-size: 0.9rem;
   text-align: right;
 }
-
-/* متن نام شهر داخل آیتم */
 .cityName {
   display: inline-block;
 }
-
-/* تیک انتخاب شده */
 .check {
   margin-left: 8px;
   color: #d32f2f;
@@ -256,7 +237,6 @@
   position: relative;
   overflow: hidden;
 }
-
 .postAdButton::before {
   content: "";
   position: absolute;
@@ -272,7 +252,6 @@
   );
   transition: left 0.6s ease;
 }
-
 .postAdButton:hover::before {
   left: 100%;
 }
@@ -280,9 +259,51 @@
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(166, 38, 38, 0.4);
 }
-
 .postAdIcon {
   font-size: 1rem;
+}
+
+.skeletonIcon {
+  width: 20px;
+  height: 20px;
+  background: #e0e0e0;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+.itemIcon {
+  margin-right: 8px;
+  font-size: 1.1em;
+  opacity: 0.8;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.logoutItem {
+  color: #444;
+  font-weight: 600;
+  border-top: 1px solid #f0f0f0;
+  margin-top: 4px;
+  padding-top: 12px;
+  display: flex;
+  align-items: center;
+}
+.logoutItem:hover {
+  background: linear-gradient(90deg, #ffebee, #ffcdd2) !important;
+  color: #a62626 !important;
+}
+.logoutItem .itemIcon {
+  color: #a62626;
+  opacity: 1;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
 }
 
 /* ریسپانسیو */
@@ -296,7 +317,6 @@
     font-size: 0.85rem;
   }
 }
-
 @media (max-width: 768px) {
   .header {
     padding: 10px 0;
@@ -314,7 +334,6 @@
     height: 32px;
   }
 }
-
 @media (max-width: 480px) {
   .text {
     display: none;
