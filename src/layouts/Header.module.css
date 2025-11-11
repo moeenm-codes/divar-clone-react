@@ -33,6 +33,7 @@
 .logo {
   text-decoration: none;
   transition: transform 0.3s ease;
+  outline: none;
 }
 .logo:hover {
   transform: scale(1.05);

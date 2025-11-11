@@ -20,6 +20,8 @@ function HomePage() {
     queryFn: getCategory,
   });
 
+  console.log(posts);
+
   return (
     <>
       {postLoading || categoryLoading ? (
