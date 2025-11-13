@@ -2,45 +2,13 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getCategory, createPost } from "services/admin";
+import { PROVINCES } from "../../constants/provinces";
 import { getCookie } from "utils/cookie";
 import { useToast } from "components/hooks/useToast";
+import { normalizePersian } from "utils/normalize";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import styles from "./AddPost.module.css";
-
-const PROVINCES = [
-  "آذربایجان شرقی",
-  "آذربایجان غربی",
-  "اردبیل",
-  "اصفهان",
-  "البرز",
-  "ایلام",
-  "بوشهر",
-  "تهران",
-  "چهارمحال و بختیاری",
-  "خراسان جنوبی",
-  "خراسان رضوی",
-  "خراسان شمالی",
-  "خوزستان",
-  "زنجان",
-  "سمنان",
-  "سیستان و بلوچستان",
-  "فارس",
-  "قزوین",
-  "قم",
-  "کردستان",
-  "کرمان",
-  "کرمانشاه",
-  "کهگیلویه و بویراحمد",
-  "گلستان",
-  "گیلان",
-  "لرستان",
-  "مازندران",
-  "مرکزی",
-  "هرمزگان",
-  "همدان",
-  "یزد",
-];
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -119,8 +87,9 @@ function AddPost() {
 
   // فیلتر شهرها
   const filteredCities = useMemo(() => {
-    if (!cityQuery.trim()) return PROVINCES;
-    return PROVINCES.filter((p) => p.includes(cityQuery.trim()));
+    const q = normalizePersian(cityQuery);
+    if (!q) return PROVINCES;
+    return PROVINCES.filter((p) => normalizePersian(p).includes(q));
   }, [cityQuery]);
 
   // فیلتر دسته‌بندی‌ها (بدون جستجو)

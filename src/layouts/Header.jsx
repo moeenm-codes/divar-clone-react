@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import { PROVINCES } from ".././constants/provinces";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import {
@@ -10,23 +11,10 @@ import {
 } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { useAuth } from "components/hooks/useAuth";
-
-function normalizePersian(str = "") {
-  return String(str)
-    .trim()
-    .replace(/ي/g, "ی")
-    .replace(/ك/g, "ک")
-    .replace(/\u200C/g, "")
-    .replace(/ـ/g, "")
-    .toLowerCase();
-}
+import { useCity } from "components/context/CityContext";
+import { normalizePersian } from "utils/normalize";
 
 function Header() {
-  const [selectedCity, setSelectedCity] = useState(() => {
-    const saved = localStorage.getItem("selectedCity");
-    return saved || "تهران";
-  });
-
   const [cityOpen, setCityOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [cityQuery, setCityQuery] = useState("");
@@ -37,53 +25,15 @@ function Header() {
 
   const { user, isLoading: authLoading, logout } = useAuth();
 
-  const provinces = useMemo(
-    () => [
-      "آذربایجان شرقی",
-      "آذربایجان غربی",
-      "اردبیل",
-      "اصفهان",
-      "البرز",
-      "ایلام",
-      "بوشهر",
-      "تهران",
-      "چهارمحال و بختیاری",
-      "خراسان جنوبی",
-      "خراسان رضوی",
-      "خراسان شمالی",
-      "خوزستان",
-      "زنجان",
-      "سمنان",
-      "سیستان و بلوچستان",
-      "فارس",
-      "قزوین",
-      "قم",
-      "کردستان",
-      "کرمان",
-      "کرمانشاه",
-      "کهگیلویه و بویراحمد",
-      "گلستان",
-      "گیلان",
-      "لرستان",
-      "مازندران",
-      "مرکزی",
-      "هرمزگان",
-      "همدان",
-      "یزد",
-      "کرج",
-    ],
-    []
-  );
+  const { selectedCity, setSelectedCity } = useCity();
+
+  const allCities = useMemo(() => ["همه استان‌ها", ...PROVINCES], []);
 
   const filteredCities = useMemo(() => {
     const q = normalizePersian(cityQuery);
-    if (!q) return provinces;
-    return provinces.filter((p) => normalizePersian(p).includes(q));
-  }, [cityQuery, provinces]);
-
-  useEffect(() => {
-    localStorage.setItem("selectedCity", selectedCity);
-  }, [selectedCity]);
+    if (!q) return allCities;
+    return allCities.filter((p) => normalizePersian(p).includes(q));
+  }, [cityQuery, allCities]);
 
   useEffect(() => {
     if (cityOpen) {
@@ -197,7 +147,11 @@ function Header() {
               type="button"
             >
               <FaMapMarkerAlt className={styles.icon} />
-              <span className={styles.text}>{selectedCity}</span>
+              <span className={styles.text}>
+                {selectedCity === "همه استان‌ها"
+                  ? "همه استان‌ها"
+                  : selectedCity}
+              </span>
               <IoIosArrowDown
                 className={`${styles.arrow} ${cityOpen ? styles.open : ""}`}
               />
