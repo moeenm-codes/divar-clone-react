@@ -7,6 +7,8 @@ import { getCategory } from "services/admin";
 import { useCity } from "components/context/CityContext";
 import { normalizePersian } from "utils/normalize";
 import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const style = {
   display: "flex",
@@ -14,6 +16,8 @@ const style = {
 
 function HomePage() {
   const { selectedCity } = useCity();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data: posts, isLoading: postLoading } = useQuery({
     queryKey: ["post-list"],
@@ -25,19 +29,50 @@ function HomePage() {
     queryFn: getCategory,
   });
 
+  const selectedCategoryId = searchParams.get("category") || null;
+
   const filteredPosts = useMemo(() => {
     if (!posts?.data?.posts) return { data: { posts: [] } };
 
-    if (selectedCity === "همه استان‌ها") {
-      return posts;
+    let filtered = posts.data.posts;
+
+    // فیلتر شهر
+    if (selectedCity !== "همه استان‌ها") {
+      const normalizedCity = normalizePersian(selectedCity);
+      filtered = filtered.filter((post) =>
+        normalizePersian(post.options.city).includes(normalizedCity)
+      );
     }
 
-    const normalizedCity = normalizePersian(selectedCity);
-    const filtered = posts.data.posts.filter((post) =>
-      normalizePersian(post.options.city).includes(normalizedCity)
-    );
+    // فیلتر دسته‌بندی
+    if (selectedCategoryId) {
+      filtered = filtered.filter(
+        (post) => post.category === selectedCategoryId
+      );
+    }
+
     return { data: { posts: filtered } };
-  }, [posts, selectedCity]);
+  }, [posts, selectedCity, selectedCategoryId]);
+
+  useEffect(() => {
+    const newParams = new URLSearchParams(searchParams);
+    if (selectedCity === "همه استان‌ها") {
+      newParams.delete("city");
+    } else {
+      newParams.set("city", selectedCity);
+    }
+    setSearchParams(newParams, { replace: true });
+  }, [selectedCity, searchParams, setSearchParams]);
+
+  const handleCategoryClick = (categoryId) => {
+    const newParams = new URLSearchParams(searchParams);
+    if (categoryId === null) {
+      newParams.delete("category");
+    } else {
+      newParams.set("category", categoryId);
+    }
+    setSearchParams(newParams);
+  };
 
   return (
     <>
@@ -45,7 +80,11 @@ function HomePage() {
         <Loader />
       ) : (
         <div style={style}>
-          <Sidebar categories={categories} />
+          <Sidebar
+            categories={categories}
+            selectedCategoryId={selectedCategoryId}
+            onCategoryClick={handleCategoryClick}
+          />
           <Main posts={filteredPosts} />
         </div>
       )}
