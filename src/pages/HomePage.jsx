@@ -1,22 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllPosts } from "services/user";
 import Loader from "components/modules/Loader";
-import Main from "components/Templates/Main";
 import Sidebar from "components/Templates/Sidebar";
+import Main from "components/Templates/Main";
 import { getCategory } from "services/admin";
 import { useCity } from "components/context/CityContext";
 import { normalizePersian } from "utils/normalize";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
-
-const style = {
-  display: "flex",
-};
+import styles from "./HomePage.module.css";
 
 function HomePage() {
   const { selectedCity } = useCity();
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { data: posts, isLoading: postLoading } = useQuery({
@@ -36,7 +31,6 @@ function HomePage() {
 
     let filtered = posts.data.posts;
 
-    // فیلتر شهر
     if (selectedCity !== "همه استان‌ها") {
       const normalizedCity = normalizePersian(selectedCity);
       filtered = filtered.filter((post) =>
@@ -44,7 +38,6 @@ function HomePage() {
       );
     }
 
-    // فیلتر دسته‌بندی
     if (selectedCategoryId) {
       filtered = filtered.filter(
         (post) => post.category === selectedCategoryId
@@ -74,21 +67,19 @@ function HomePage() {
     setSearchParams(newParams);
   };
 
+  if (postLoading || categoryLoading) return <Loader />;
+
   return (
-    <>
-      {postLoading || categoryLoading ? (
-        <Loader />
-      ) : (
-        <div style={style}>
-          <Sidebar
-            categories={categories}
-            selectedCategoryId={selectedCategoryId}
-            onCategoryClick={handleCategoryClick}
-          />
-          <Main posts={filteredPosts} />
-        </div>
-      )}
-    </>
+    <div className={styles.homepage}>
+      <div className={styles.container}>
+        <Sidebar
+          categories={categories}
+          selectedCategoryId={selectedCategoryId}
+          onCategoryClick={handleCategoryClick}
+        />
+        <Main posts={filteredPosts} />
+      </div>
+    </div>
   );
 }
 

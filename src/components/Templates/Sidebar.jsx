@@ -2,30 +2,36 @@ import styles from "./Sidebar.module.css";
 
 function Sidebar({ categories, selectedCategoryId, onCategoryClick }) {
   return (
-    <div className={styles.sidebar}>
-      <h4>دسته بندی ها</h4>
-      <ul>
+    <aside className={styles.sidebar}>
+      <h3 className={styles.title}>دسته‌بندی‌ها</h3>
+      <ul className={styles.list}>
         <li
           onClick={() => onCategoryClick(null)}
-          className={selectedCategoryId === null ? styles.active : ""}
-          style={{ cursor: "pointer" }}
+          className={`${styles.item} ${
+            selectedCategoryId === null ? styles.active : ""
+          }`}
         >
-          <span style={{ marginRight: "8px" }}>همه</span>
-          <p>همه</p>
+          <span>همه آگهی‌ها</span>
         </li>
-        {categories.data.map((category) => (
+        {categories?.data?.map((category, index) => (
           <li
             key={category._id}
             onClick={() => onCategoryClick(category._id)}
-            className={selectedCategoryId === category._id ? styles.active : ""}
-            style={{ cursor: "pointer" }}
+            className={`${styles.item} ${
+              selectedCategoryId === category._id ? styles.active : ""
+            }`}
+            style={{ animationDelay: `${index * 0.05}s` }}
           >
-            <img src={`/${category.icon}.svg`} alt={category.name} />
-            <p>{category.name}</p>
+            <img
+              src={`/${category.icon}.svg`}
+              alt={category.name}
+              className={styles.icon}
+            />
+            <span>{category.name}</span>
           </li>
         ))}
       </ul>
-    </div>
+    </aside>
   );
 }
 
