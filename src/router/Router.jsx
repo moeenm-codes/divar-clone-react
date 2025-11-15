@@ -6,6 +6,7 @@ import HomePage from "pages/HomePage";
 import DashboardPage from "pages/DashboardPage";
 import AdminPage from "pages/AdminPage";
 import AuthPage from "pages/AuthPage";
+import PostPage from "pages/PostPage";
 import NotFoundPage from "pages/NotFoundPage";
 
 import WithLayout from "layouts/WithLayout";
@@ -19,6 +20,7 @@ function Router() {
       {/* === صفحات با هدر و فوتر === */}
       <Route element={<WithLayout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/post/:id" element={<PostPage />} />
 
         <Route
           path="/dashboard"

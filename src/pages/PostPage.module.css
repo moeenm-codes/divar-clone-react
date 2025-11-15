@@ -1,0 +1,658 @@
+/* src/pages/PostPage.module.css */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* هدر */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.breadcrumbLink {
+  color: #a62626;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.breadcrumbSeparator {
+  color: #999;
+}
+
+.breadcrumbCurrent {
+  color: #666;
+  font-weight: 500;
+}
+
+.headerActions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.actionButton,
+.reportButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+.actionButton:hover {
+  border-color: #a62626;
+  color: #a62626;
+}
+
+.actionButton.liked {
+  border-color: #a62626;
+  color: #a62626;
+}
+
+.actionButton.liked .actionIcon {
+  color: #a62626;
+}
+
+.reportButton:hover {
+  border-color: #ff4444;
+  color: #ff4444;
+}
+
+.actionIcon {
+  font-size: 0.9rem;
+}
+
+/* محتوای اصلی */
+.content {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* گالری عکس */
+.gallery {
+  margin-bottom: 2rem;
+}
+
+.mainImageContainer {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background: #f8f9fa;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.mainImageContainer:hover {
+  transform: translateY(-2px);
+}
+
+.mainImage {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+.noImage {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  background: #f8f9fa;
+  border: 2px dashed #e0e0e0;
+  border-radius: 12px;
+}
+
+.noImageIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navButton:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.prevButton {
+  left: 15px;
+}
+
+.nextButton {
+  right: 15px;
+}
+
+.imageCounter {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.thumbnail:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.thumbnailActive {
+  border-color: #a62626;
+  opacity: 1;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* اطلاعات آگهی */
+.postInfo {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.postHeader {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #a62626;
+}
+
+.metaInfo {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.metaIcon {
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.description {
+  margin-bottom: 1.5rem;
+}
+
+.descriptionTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.8rem 0;
+}
+
+.descriptionContent {
+  line-height: 1.7;
+  color: #555;
+  white-space: pre-wrap;
+  background: #f8f9fa;
+  padding: 1.2rem;
+  border-radius: 8px;
+  border-right: 3px solid #a62626;
+}
+
+.categoryInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: #f0f7ff;
+  border-radius: 8px;
+  border: 1px solid #e3f2fd;
+}
+
+.categoryLabel {
+  font-weight: 600;
+  color: #333;
+}
+
+.categoryName {
+  color: #a62626;
+  font-weight: 500;
+}
+
+/* سایدبار */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sellerCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  animation: slideInRight 0.6s ease-out 0.2s both;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.sellerHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sellerAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a62626, #d32f2f);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.sellerInfo {
+  flex: 1;
+}
+
+.sellerName {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.sellerStats {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.sellerRating {
+  color: #ff9800;
+  font-weight: 600;
+}
+
+.sellerMeta {
+  margin-bottom: 1.5rem;
+}
+
+.sellerJoinDate {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+/* بخش تماس */
+.contactSection {
+  margin-bottom: 1rem;
+}
+
+.contactButton {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #a62626, #d32f2f);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(166, 38, 38, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(166, 38, 38, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(166, 38, 38, 0);
+  }
+}
+
+.contactButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(166, 38, 38, 0.3);
+}
+
+.contactIcon {
+  font-size: 1rem;
+}
+
+.phoneRevealed {
+  text-align: center;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 2px solid #e9ecef;
+  animation: phoneReveal 0.5s ease-out;
+}
+
+@keyframes phoneReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.phoneNumber {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #a62626;
+  margin-bottom: 0.5rem;
+  direction: ltr;
+  display: inline-block;
+}
+
+.phoneNote {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.chatButton {
+  width: 100%;
+  padding: 0.8rem;
+  background: #f8f9fa;
+  color: #999;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.comingSoon {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff9800;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+}
+
+/* نکات امنیتی */
+.securityTips {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  border-right: 4px solid #4caf50;
+}
+
+.securityTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.securityList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #666;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.securityList li {
+  margin-bottom: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* صفحه خطا */
+.errorContainer {
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+.errorAnimation {
+  margin-bottom: 2rem;
+}
+
+.errorIcon {
+  font-size: 4rem;
+  color: #ff9800;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.errorTitle {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.errorText {
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 2rem 0;
+}
+
+.errorButton {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: #a62626;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.errorButton:hover {
+  background: #d32f2f;
+  transform: translateY(-2px);
+}
+
+/* ریسپانسیو */
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .sidebar {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .headerActions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .actionButton,
+  .reportButton {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .mainImage {
+    height: 300px;
+  }
+
+  .noImage {
+    height: 300px;
+  }
+
+  .metaInfo {
+    gap: 1rem;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
+  .price {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .thumbnails {
+    justify-content: flex-start;
+  }
+
+  .thumbnail {
+    width: 70px;
+    height: 70px;
+  }
+
+  .sellerHeader {
+    flex-direction: column;
+    text-align: center;
+  }
+}
