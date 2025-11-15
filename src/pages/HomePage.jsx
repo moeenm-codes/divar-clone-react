@@ -25,6 +25,18 @@ function HomePage() {
   });
 
   const selectedCategoryId = searchParams.get("category") || null;
+  const urlMinPrice = searchParams.get("minPrice") || "";
+  const urlMaxPrice = searchParams.get("maxPrice") || "";
+
+  const { minPrice, maxPrice } = useMemo(() => {
+    if (!posts?.data?.posts?.length) return { minPrice: 0, maxPrice: 0 };
+
+    const prices = posts.data.posts.map((p) => p.amount);
+    return {
+      minPrice: Math.min(...prices),
+      maxPrice: Math.max(...prices),
+    };
+  }, [posts]);
 
   const filteredPosts = useMemo(() => {
     if (!posts?.data?.posts) return { data: { posts: [] } };
@@ -43,9 +55,17 @@ function HomePage() {
         (post) => post.category === selectedCategoryId
       );
     }
+    // === فیلتر قیمت ===
+    if (urlMinPrice || urlMaxPrice) {
+      const min = urlMinPrice ? parseInt(urlMinPrice, 10) : 0;
+      const max = urlMaxPrice ? parseInt(urlMaxPrice, 10) : Infinity;
+      filtered = filtered.filter(
+        (post) => post.amount >= min && post.amount <= max
+      );
+    }
 
     return { data: { posts: filtered } };
-  }, [posts, selectedCity, selectedCategoryId]);
+  }, [posts, selectedCity, selectedCategoryId, urlMinPrice, urlMaxPrice]);
 
   useEffect(() => {
     const newParams = new URLSearchParams(searchParams);
@@ -76,6 +96,24 @@ function HomePage() {
           categories={categories}
           selectedCategoryId={selectedCategoryId}
           onCategoryClick={handleCategoryClick}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          urlMinPrice={urlMinPrice}
+          urlMaxPrice={urlMaxPrice}
+          onPriceChange={(min, max) => {
+            const newParams = new URLSearchParams(searchParams);
+            if (min === "" || min === null) {
+              newParams.delete("minPrice");
+            } else {
+              newParams.set("minPrice", min);
+            }
+            if (max === "" || max === null) {
+              newParams.delete("maxPrice");
+            } else {
+              newParams.set("maxPrice", max);
+            }
+            setSearchParams(newParams);
+          }}
         />
         <Main posts={filteredPosts} />
       </div>

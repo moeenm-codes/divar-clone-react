@@ -7,23 +7,101 @@
   animation: slideInLeft 0.5s ease-out;
   /* position در دسکتاپ با media query اعمال میشه */
 }
+/* === فیلتر قیمت === */
+.priceFilter {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
 
-/* فقط در دسکتاپ: sticky */
-@media (min-width: 769px) {
+.priceTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+}
+
+.priceInputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.priceInput {
+  flex: 1;
+  padding: 10px 8px;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-width: 0;
+  background: #fff;
+}
+
+.priceInput:focus {
+  outline: none;
+  border-color: #a62626;
+  box-shadow: 0 0 0 3px rgba(166, 38, 38, 0.1);
+}
+
+.priceInput::placeholder {
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+.separator {
+  color: #999;
+  font-weight: 500;
+}
+
+.priceHint {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #777;
+  text-align: center;
+}
+
+/* ریسپانسیو: موبایل */
+@media (max-width: 768px) {
+  .priceFilter {
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+
+  .priceInputs {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .priceInput {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .separator {
+    display: none;
+  }
+}
+/* === موبایل: sticky خاموش === */
+@media (max-width: 768px) {
   .sidebar {
-    position: sticky;
-    top: 100px; /* فاصله از بالای صفحه */
-    z-index: 10; /* بالاتر از کارت‌های پست */
+    position: static !important; /* مهم: با !important تضمین می‌کنیم */
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
   }
 }
 
-/* در موبایل: sticky خاموش + استاتیک */
-@media (max-width: 768px) {
+/* === دسکتاپ: sticky فعال === */
+@media (min-width: 769px) {
   .sidebar {
-    position: static;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    position: sticky;
+    top: 100px;
+    z-index: 10;
   }
 }
 
