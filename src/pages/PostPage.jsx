@@ -1,7 +1,7 @@
 // src/pages/PostPage.jsx
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getPost } from "services/user";
-import { getCategory } from "services/admin";
+import { getCategory, deletePost } from "services/admin";
 import Loader from "components/modules/Loader";
 import { sp } from "utils/numbers";
 import { useParams, Link, useSearchParams } from "react-router-dom";
@@ -15,20 +15,25 @@ import {
   FaHeart,
   FaExclamationCircle,
 } from "react-icons/fa";
+import DeleteButton from "../components/modules/DeleteButton";
+import DeleteModal from "../components/modules/DeleteModal";
+import ToastNotification from "../components/modules/ToastNotification";
 import styles from "./PostPage.module.css";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
 function PostPage() {
   const { id } = useParams();
+  const queryClient = useQueryClient();
 
-  // همه Hookها اینجا، قبل از هر شرط
   const [searchParams] = useSearchParams();
   const currentCity = searchParams.get("city");
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showPhone, setShowPhone] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [toast, setToast] = useState(null);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { data: postData, isLoading: postLoading } = useQuery({
     queryKey: ["post", id],
@@ -40,14 +45,43 @@ function PostPage() {
     queryFn: getCategory,
   });
 
-  // شبیه‌سازی بازدید
+  const { data: profileData } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => import("services/user").then((m) => m.getProfile()),
+  });
+
+  const isAdmin = profileData?.data?.role === "ADMIN";
+
+  const deleteMutation = useMutation({
+    mutationFn: deletePost,
+    onSuccess: () => {
+      setToast({ text: "آگهی با موفقیت حذف شد", type: "success" });
+      queryClient.invalidateQueries(["post", id]);
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+    },
+    onError: (error) => {
+      setToast({
+        text: error.response?.data?.message || "خطا در حذف آگهی",
+        type: "error",
+      });
+    },
+  });
+
+  const openDeleteModal = () => setDeleteModal(true);
+  const closeDeleteModal = () => setDeleteModal(false);
+  const confirmDelete = () => {
+    deleteMutation.mutate(id);
+    closeDeleteModal();
+  };
+
   useEffect(() => {
     if (postData) {
       console.log("بازدید از آگهی افزایش یافت");
     }
   }, [postData]);
 
-  // حالا شرط‌ها
   if (postLoading) return <Loader />;
 
   const post = postData?.data?.post;
@@ -71,14 +105,11 @@ function PostPage() {
   const category = categoriesData?.data?.find(
     (cat) => cat._id === post.category
   );
-
-  // استفاده از فیلدهای اصلی بک‌اند
   const title = post.title || "بدون عنوان";
   const content = post.content || "";
   const city = post.city || post.options?.city || "نامشخص";
   const images = post.images || [];
 
-  // شبیه‌سازی اطلاعات فروشنده
   const sellerInfo = {
     name: post.user?.name || "کاربر دیوار",
     joinDate: new Date(post.user?.createdAt || post.createdAt),
@@ -86,13 +117,23 @@ function PostPage() {
     reviews: 23,
   };
 
-  const handleShowPhone = () => {
-    setShowPhone(true);
-  };
+  const handleShowPhone = () => setShowPhone(true);
 
   return (
     <div className={styles.container}>
-      {/* هدر آگهی */}
+      {/* Toast Notification */}
+      {toast && (
+        <div className={styles.toastWrapper}>
+          <ToastNotification
+            message={toast.text}
+            type={toast.type}
+            onClose={() => setToast(null)}
+            duration={3000}
+          />
+        </div>
+      )}
+
+      {/* Header */}
       <div className={styles.header}>
         <div className={styles.breadcrumb}>
           <Link to="/" className={styles.breadcrumbLink}>
@@ -131,12 +172,13 @@ function PostPage() {
         </div>
       </div>
 
-      {/* بقیه JSX بدون تغییر */}
+      {/* Main Content */}
       <div className={styles.content}>
         <div className={styles.mainSection}>
+          {/* Gallery */}
           <div className={styles.gallery}>
             <div className={styles.mainImageContainer}>
-              {images[0] ? (
+              {images.length > 0 ? (
                 <>
                   <img
                     src={`${baseURL}${images[currentImageIndex]}`}
@@ -153,7 +195,17 @@ function PostPage() {
                           )
                         }
                       >
-                        Less than
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                        >
+                          <path
+                            d="M15 18l-6-6 6-6"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                          />
+                        </svg>
                       </button>
                       <button
                         className={`${styles.navButton} ${styles.nextButton}`}
@@ -163,7 +215,17 @@ function PostPage() {
                           )
                         }
                       >
-                        Greater than
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                        >
+                          <path
+                            d="M9 18l6-6-6-6"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                          />
+                        </svg>
                       </button>
                       <div className={styles.imageCounter}>
                         {currentImageIndex + 1} / {images.length}
@@ -199,6 +261,7 @@ function PostPage() {
             )}
           </div>
 
+          {/* Post Info */}
           <div className={styles.postInfo}>
             <div className={styles.postHeader}>
               <h1 className={styles.title}>{title}</h1>
@@ -244,6 +307,7 @@ function PostPage() {
           </div>
         </div>
 
+        {/* Sidebar */}
         <div className={styles.sidebar}>
           <div className={styles.sellerCard}>
             <div className={styles.sellerHeader}>
@@ -296,6 +360,7 @@ function PostPage() {
             </button>
           </div>
 
+          {/* Security Tips */}
           <div className={styles.securityTips}>
             <h4 className={styles.securityTitle}>نکات امنیتی دیوار</h4>
             <ul className={styles.securityList}>
@@ -304,8 +369,31 @@ function PostPage() {
               <li>• کالا را قبل از خرید به دقت بررسی کنید</li>
             </ul>
           </div>
+
+          {/* دکمه حذف آگهی — فقط برای ادمین — خارج از نکات امنیتی */}
+          {isAdmin && (
+            <div className={styles.adminDeleteContainer}>
+              <button
+                className={styles.adminDeleteButton}
+                onClick={openDeleteModal}
+              >
+                <DeleteButton />
+                <span>حذف آگهی</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Delete Modal */}
+      <DeleteModal
+        isOpen={deleteModal}
+        onConfirm={confirmDelete}
+        onCancel={closeDeleteModal}
+        categoryName={title}
+        title="حذف آگهی"
+        message={`آیا از حذف آگهی <strong>«${title}»</strong> مطمئن هستید؟`}
+      />
     </div>
   );
 }
