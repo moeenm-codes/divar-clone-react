@@ -34,7 +34,7 @@ function Main({ posts }) {
               <div className={styles.overlay}></div>
             </div>
             <div className={styles.content}>
-              <h3 className={styles.title}>{post.options.title}</h3>
+              <h3 className={styles.title}>{post.title}</h3>
               <div className={styles.footer}>
                 <p className={styles.price}>{sp(post.amount)} تومان</p>
                 <span className={styles.city}>{post.options.city}</span>

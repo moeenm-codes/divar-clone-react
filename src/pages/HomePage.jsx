@@ -19,6 +19,7 @@ function HomePage() {
     queryFn: getAllPosts,
   });
 
+  console.log(posts);
   const { data: categories, isLoading: categoryLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategory,
