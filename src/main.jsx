@@ -6,11 +6,14 @@ import App from "./App.jsx";
 
 import "styles/fonts.css";
 import "styles/index.css";
+import { FavoritesProvider } from "components/context/FavoritesContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ToastProvider>
-      <App />
+      <FavoritesProvider>
+        <App />
+      </FavoritesProvider>
     </ToastProvider>
   </React.StrictMode>
 );

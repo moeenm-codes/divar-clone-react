@@ -10,6 +10,7 @@
 }
 
 .card {
+  position: relative;
   background: white;
   border-radius: 16px;
   overflow: hidden;
@@ -20,12 +21,20 @@
   display: flex;
   flex-direction: column;
   min-height: 300px;
+  cursor: default;
 }
 
 .card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 20px 40px rgba(166, 38, 38, 0.15);
   border-color: #a62626;
+}
+
+.imageLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 .imageWrapper {
@@ -64,7 +73,20 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 12;
+  gap: 12px;
+}
+
+.contentLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  flex-grow: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.contentLink:hover {
+  text-decoration: none;
 }
 
 .title {
@@ -127,6 +149,137 @@
   color: #666;
 }
 
+/* قلب - فقط روی هاور */
+.con-like {
+  --red: rgb(255, 50, 50);
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 12px;
+  top: 12px;
+  z-index: 10;
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+}
+
+.card:hover .con-like {
+  opacity: 1;
+  background: white;
+}
+
+.con-like:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.con-like:active {
+  transform: scale(0.95);
+}
+
+.con-like .checkmark {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.con-like .outline,
+.con-like .filled {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease;
+  overflow: visible;
+}
+
+.con-like .outline {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 2;
+  opacity: 1;
+}
+
+.con-like .filled {
+  fill: var(--red);
+  stroke: none;
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* حالت لایک شده */
+.con-like.liked .outline {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.con-like.liked .filled {
+  opacity: 1;
+  transform: scale(1);
+  animation: heartBeat 0.5s ease-out;
+}
+
+/* انیمیشن جشن فقط وقتی لایک میشه */
+.con-like .celebrate {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.con-like .poly {
+  stroke: var(--red);
+  fill: var(--red);
+}
+
+/* انیمیشن جشن فقط برای لایک */
+.con-like.liked .celebrate {
+  animation: celebrate 0.6s ease-out;
+}
+
+@keyframes heartBeat {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes celebrate {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+}
+
 /* انیمیشن کارت */
 @keyframes cardPop {
   0% {
@@ -164,94 +317,75 @@
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 16px;
   }
-
   .imageWrapper {
     height: 160px;
   }
 }
 
-/* ریسپانسیو برای تبلت */
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 15px;
     padding: 16px 0;
   }
-
   .imageWrapper {
     height: 150px;
   }
-
   .content {
     padding: 14px;
     gap: 10px;
   }
-
   .title {
     font-size: 0.95rem;
     min-height: 2.8em;
   }
-
   .price {
     font-size: 0.95rem;
   }
-
   .city {
     font-size: 0.8rem;
   }
-
-  /* حالت خالی در تبلت */
   .empty {
     padding: 30px 15px;
     min-height: 40vh;
   }
-
   .emptyImg {
     max-width: 300px;
     margin-bottom: 15px;
   }
-
   .empty p {
     font-size: 1rem;
   }
 }
 
-/* ریسپانسیو برای موبایل */
 @media (max-width: 640px) {
   .grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 12px;
   }
-
   .card {
     min-height: 280px;
     border-radius: 12px;
   }
-
   .imageWrapper {
     height: 140px;
   }
-
   .content {
     padding: 12px;
     gap: 8px;
   }
-
   .title {
     font-size: 0.9rem;
     min-height: 2.6em;
   }
-
   .footer {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
   }
-
   .price {
     font-size: 0.9rem;
   }
-
   .city {
     font-size: 0.75rem;
   }
@@ -264,77 +398,61 @@
     max-width: 400px;
     margin: 0 auto;
   }
-
   .card {
     min-height: auto;
     max-width: 100%;
   }
-
   .imageWrapper {
-    height: 200px; /* ارتفاع بیشتر برای موبایل */
+    height: 200px;
   }
-
   .content {
     padding: 16px;
   }
-
   .title {
     font-size: 1rem;
     min-height: auto;
   }
-
   .footer {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
-
-  /* حالت خالی در موبایل */
   .empty {
     padding: 20px 12px;
     min-height: 30vh;
   }
-
   .emptyImg {
     max-width: 250px;
     margin-bottom: 12px;
   }
-
   .empty p {
     font-size: 0.95rem;
   }
 }
 
-/* برای صفحات بسیار کوچک */
 @media (max-width: 360px) {
   .grid {
     grid-template-columns: 1fr;
     gap: 10px;
   }
-
   .imageWrapper {
     height: 160px;
   }
-
   .content {
     padding: 12px;
   }
-
   .title {
     font-size: 0.9rem;
   }
-
   .emptyImg {
     max-width: 200px;
   }
 }
 
-/* بهبود نمایش در حالت landscape موبایل */
 @media (max-width: 768px) and (orientation: landscape) {
   .grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
-
   .imageWrapper {
     height: 120px;
   }
