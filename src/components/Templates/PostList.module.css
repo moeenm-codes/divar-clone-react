@@ -1,40 +1,124 @@
+/* src/components/Templates/PostList.module.css */
+
+.list {
+  margin-top: 10px;
+}
+
 .list h3 {
-  margin: 10px 0px;
-  border-bottom: 3px solid #a62626;
+  margin: 0 0 24px 0;
+  border-bottom: 4px solid #a62626;
   width: fit-content;
-  padding-bottom: 5px;
+  padding-bottom: 8px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
 .post {
   display: flex;
   align-items: center;
   border: 2px solid #eaeaea;
-  border-radius: 5px;
-  margin: 10px 0;
-  padding: 5px;
+  border-radius: 16px;
+  margin: 16px 0;
+  padding: 16px;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* انیمیشن ورود — یکی یکی! */
+.post:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.post:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.post:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.post:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.post:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.post:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.post:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.post:nth-child(8) {
+  animation-delay: 0.8s;
+}
+.post:nth-child(9) {
+  animation-delay: 0.9s;
+}
+.post:nth-child(10) {
+  animation-delay: 1s;
+}
+/* تا ۱۰ تا کافیه — اگه بیشتر بود خودش ادامه میده */
+
+.post:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(166, 38, 38, 0.15);
+  border-color: #a62626;
 }
 
 .post img {
   width: 100px;
-  height: 70px;
-  border-radius: 3px;
-  margin-left: 30px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-left: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.post div {
-  width: 100%;
+.post > div:first-of-type {
+  flex: 1;
 }
 
 .post p {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  color: #1a1a1a;
 }
 
 .post span {
-  font-size: 0.8rem;
-  color: grey;
+  font-size: 0.9rem;
+  color: #666;
+  display: block;
 }
 
-.post .price {
-  width: 150px;
+.price {
   text-align: center;
+  min-width: 140px;
+}
+
+.price p {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 0 8px 0;
+}
+
+.price span {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #a62626;
+}
+
+/* انیمیشن جادویی */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
