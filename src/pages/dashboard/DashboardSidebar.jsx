@@ -37,7 +37,7 @@ function DashboardSidebar() {
               }
               end
               onClick={() => window.scrollTo(0, 0)}
-              style={{ animationDelay: `${index * 0.07}s` }}
+              style={{ animationDelay: `${index * 0.05}s` }}
             >
               <span className={styles.icon}>{item.icon}</span>
               <span className={styles.label}>{item.label}</span>
