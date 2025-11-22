@@ -4,7 +4,7 @@ import { getPost } from "services/user";
 import { getCategory, deletePost } from "services/admin";
 import Loader from "components/modules/Loader";
 import { sp } from "utils/numbers";
-import { useParams, Link, useSearchParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   FaMapMarkerAlt,
@@ -15,6 +15,7 @@ import {
   FaHeart,
   FaExclamationCircle,
 } from "react-icons/fa";
+import { useFavorites } from "components/context/FavoritesContext";
 import DeleteButton from "../components/modules/DeleteButton";
 import DeleteModal from "../components/modules/DeleteModal";
 import ToastNotification from "../components/modules/ToastNotification";
@@ -26,14 +27,12 @@ function PostPage() {
   const { id } = useParams();
   const queryClient = useQueryClient();
 
-  const [searchParams] = useSearchParams();
-  const currentCity = searchParams.get("city");
-
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showPhone, setShowPhone] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
   const [toast, setToast] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
+
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   const { data: postData, isLoading: postLoading } = useQuery({
     queryKey: ["post", id],
@@ -105,19 +104,19 @@ function PostPage() {
   const category = categoriesData?.data?.find(
     (cat) => cat._id === post.category
   );
-  const title = post.title || "بدون عنوان";
-  const content = post.content || "";
+  const title = post.options?.title || post.title || "بدون عنوان";
+  const content = post.options?.content || post.content || "";
   const city = post.city || post.options?.city || "نامشخص";
   const images = post.images || [];
 
   const sellerInfo = {
     name: post.user?.name || "کاربر دیوار",
     joinDate: new Date(post.user?.createdAt || post.createdAt),
-    rating: 4.7,
-    reviews: 23,
   };
 
   const handleShowPhone = () => setShowPhone(true);
+
+  const favoriteKey = `${post._id}-${isFavorite(post._id)}`; // برای ریست انیمیشن
 
   return (
     <div className={styles.container}>
@@ -141,9 +140,7 @@ function PostPage() {
           </Link>
           <span className={styles.breadcrumbSeparator}>/</span>
           <Link
-            to={`/?category=${post.category}${
-              currentCity ? `&city=${currentCity}` : ""
-            }`}
+            to={`/?category=${post.category}`}
             className={styles.breadcrumbLink}
             onClick={() => window.scrollTo(0, 0)}
           >
@@ -153,35 +150,46 @@ function PostPage() {
           <span className={styles.breadcrumbCurrent}>{title}</span>
         </div>
 
+        {/* دکمه‌های عملیاتی */}
         <div className={styles.headerActions}>
+          {/* دکمه ذخیره با انیمیشن حرفه‌ای */}
           <button
-            className={`${styles.actionButton} ${isLiked ? styles.liked : ""}`}
-            onClick={() => setIsLiked(!isLiked)}
+            key={favoriteKey}
+            className={`${styles.actionButton} ${
+              isFavorite(post._id) ? styles.liked : ""
+            }`}
+            onClick={() => toggleFavorite(post)}
           >
             <FaHeart className={styles.actionIcon} />
-            ذخیره
+            <span className={styles.favoriteText}>
+              {isFavorite(post._id) ? "حذف از ذخیره" : "ذخیره"}
+            </span>
           </button>
-          <button className={styles.actionButton}>
+
+          <button className={styles.actionButton} disabled>
             <FaShare className={styles.actionIcon} />
             اشتراک‌گذاری
           </button>
-          <button className={styles.reportButton}>
+
+          <Link to="/my-divar/support" className={styles.actionButton}>
             <FaExclamationCircle className={styles.actionIcon} />
             گزارش
-          </button>
+          </Link>
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* بقیه محتوا بدون تغییر... */}
       <div className={styles.content}>
         <div className={styles.mainSection}>
-          {/* Gallery */}
           <div className={styles.gallery}>
             <div className={styles.mainImageContainer}>
               {images.length > 0 ? (
                 <>
                   <img
-                    src={`${baseURL}${images[currentImageIndex]}`}
+                    src={`${baseURL}${images[currentImageIndex]?.replace(
+                      /\\/g,
+                      "/"
+                    )}`}
                     alt={title}
                     className={styles.mainImage}
                   />
@@ -235,7 +243,6 @@ function PostPage() {
                 </>
               ) : (
                 <div className={styles.noImage}>
-                  <div className={styles.noImageIcon}>Camera</div>
                   <span>تصویری برای این آگهی ثبت نشده است</span>
                 </div>
               )}
@@ -252,7 +259,7 @@ function PostPage() {
                     onClick={() => setCurrentImageIndex(index)}
                   >
                     <img
-                      src={`${baseURL}${image}`}
+                      src={`${baseURL}${image.replace(/\\/g, "/")}`}
                       alt={`${title} ${index + 1}`}
                     />
                   </div>
@@ -261,7 +268,6 @@ function PostPage() {
             )}
           </div>
 
-          {/* Post Info */}
           <div className={styles.postInfo}>
             <div className={styles.postHeader}>
               <h1 className={styles.title}>{title}</h1>
@@ -285,10 +291,6 @@ function PostPage() {
                   })}
                 </span>
               </div>
-              <div className={styles.metaItem}>
-                <FaEye className={styles.metaIcon} />
-                <span>{(Math.random() * 100 + 50).toFixed(0)} بازدید</span>
-              </div>
             </div>
 
             {content && (
@@ -297,17 +299,9 @@ function PostPage() {
                 <div className={styles.descriptionContent}>{content}</div>
               </div>
             )}
-
-            <div className={styles.categoryInfo}>
-              <span className={styles.categoryLabel}>دسته‌بندی:</span>
-              <span className={styles.categoryName}>
-                {category?.name || "نامشخص"}
-              </span>
-            </div>
           </div>
         </div>
 
-        {/* Sidebar */}
         <div className={styles.sidebar}>
           <div className={styles.sellerCard}>
             <div className={styles.sellerHeader}>
@@ -316,24 +310,6 @@ function PostPage() {
               </div>
               <div className={styles.sellerInfo}>
                 <div className={styles.sellerName}>{sellerInfo.name}</div>
-                <div className={styles.sellerStats}>
-                  <span className={styles.sellerRating}>
-                    Star {sellerInfo.rating}
-                  </span>
-                  <span className={styles.sellerReviews}>
-                    ({sellerInfo.reviews} نظر)
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.sellerMeta}>
-              <div className={styles.sellerJoinDate}>
-                عضویت در{" "}
-                {sellerInfo.joinDate.toLocaleDateString("fa-IR", {
-                  year: "numeric",
-                  month: "long",
-                })}
               </div>
             </div>
 
@@ -360,17 +336,14 @@ function PostPage() {
             </button>
           </div>
 
-          {/* Security Tips */}
           <div className={styles.securityTips}>
             <h4 className={styles.securityTitle}>نکات امنیتی دیوار</h4>
             <ul className={styles.securityList}>
               <li>• بدون پیش‌پرداخت معامله کنید</li>
-              <li>• از جابجایی در مکان‌های عمومی خودداری کنید</li>
-              <li>• کالا را قبل از خرید به دقت بررسی کنید</li>
+              <li>• کالا را قبل از خرید بررسی کنید</li>
             </ul>
           </div>
 
-          {/* دکمه حذف آگهی — فقط برای ادمین — خارج از نکات امنیتی */}
           {isAdmin && (
             <div className={styles.adminDeleteContainer}>
               <button
@@ -385,7 +358,6 @@ function PostPage() {
         </div>
       </div>
 
-      {/* Delete Modal */}
       <DeleteModal
         isOpen={deleteModal}
         onConfirm={confirmDelete}

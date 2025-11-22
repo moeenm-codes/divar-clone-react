@@ -33,6 +33,9 @@ function PostList() {
                 key={post._id}
                 to={`/post/${post._id}`}
                 className={styles.postLink}
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                }}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className={styles.post}>
