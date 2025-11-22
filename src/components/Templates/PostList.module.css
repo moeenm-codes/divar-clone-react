@@ -111,7 +111,21 @@
   color: #a62626;
 }
 
-/* انیمیشن جادویی */
+.postLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.postLink:hover {
+  text-decoration: none;
+}
+
+.postLink .post:hover {
+  border-color: #a62626;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(166, 38, 38, 0.15);
+}
 @keyframes fadeInUp {
   from {
     opacity: 0;
