@@ -17,10 +17,10 @@ function Main({ posts }) {
     );
   }
 
-  const handleLikeClick = (e, postId) => {
+  const handleLikeClick = (e, post) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleFavorite(postId);
+    toggleFavorite(post);
   };
 
   return (
@@ -51,7 +51,7 @@ function Main({ posts }) {
                     className={`${styles["con-like"]} ${
                       liked ? styles.liked : ""
                     }`}
-                    onClick={(e) => handleLikeClick(e, post._id)}
+                    onClick={(e) => handleLikeClick(e, post)}
                     aria-label={
                       liked ? "حذف از علاقه‌مندی‌ها" : "اضافه به علاقه‌مندی‌ها"
                     }

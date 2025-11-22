@@ -99,10 +99,10 @@ function Header() {
 
     items.push(
       { name: "صفحه اصلی", to: "/" },
-      { name: "داشبورد", to: "/dashboard" },
-      { name: "آگهی‌های من", to: "/my-ads" },
-      { name: "علاقه‌مندی‌ها", to: "/favorites" },
-      { name: "پشتیبانی", to: "/support" }
+      { name: "داشبورد", to: "/my-divar" },
+      { name: "آگهی‌های من", to: "/my-divar/my-posts" },
+      { name: "علاقه‌مندی‌ها", to: "/my-divar/favorites" },
+      { name: "پشتیبانی", to: "/my-divar/support" }
     );
 
     if (user?.role === "ADMIN") {
@@ -274,7 +274,13 @@ function Header() {
           </div>
 
           {/* دکمه ثبت آگهی */}
-          <Link to="/dashboard" className={styles.postAdButton}>
+          <Link
+            to="/addpost"
+            className={styles.postAdButton}
+            onClick={() => {
+              window.scrollTo(0, 0); // این خط جادویی!
+            }}
+          >
             <FaPlus className={styles.postAdIcon} />
             ثبت آگهی
           </Link>
