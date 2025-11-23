@@ -4,7 +4,7 @@ import { getPost } from "services/user";
 import { getCategory, deletePost } from "services/admin";
 import Loader from "components/modules/Loader";
 import { sp } from "utils/numbers";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   FaMapMarkerAlt,
@@ -26,6 +26,9 @@ const baseURL = import.meta.env.VITE_BASE_URL;
 function PostPage() {
   const { id } = useParams();
   const queryClient = useQueryClient();
+
+  const [searchParams] = useSearchParams();
+  const currentCity = searchParams.get("city");
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showPhone, setShowPhone] = useState(false);
@@ -112,6 +115,8 @@ function PostPage() {
   const sellerInfo = {
     name: post.user?.name || "کاربر دیوار",
     joinDate: new Date(post.user?.createdAt || post.createdAt),
+    rating: 4.7,
+    reviews: 23,
   };
 
   const handleShowPhone = () => setShowPhone(true);
@@ -291,6 +296,10 @@ function PostPage() {
                   })}
                 </span>
               </div>
+              <div className={styles.metaItem}>
+                <FaEye className={styles.metaIcon} />
+                <span>{(Math.random() * 100 + 50).toFixed(0)} بازدید</span>
+              </div>
             </div>
 
             {content && (
@@ -299,6 +308,12 @@ function PostPage() {
                 <div className={styles.descriptionContent}>{content}</div>
               </div>
             )}
+            <div className={styles.categoryInfo}>
+              <span className={styles.categoryLabel}>دسته‌بندی:</span>
+              <span className={styles.categoryName}>
+                {category?.name || "نامشخص"}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -310,6 +325,24 @@ function PostPage() {
               </div>
               <div className={styles.sellerInfo}>
                 <div className={styles.sellerName}>{sellerInfo.name}</div>
+                <div className={styles.sellerStats}>
+                  <span className={styles.sellerRating}>
+                    Star {sellerInfo.rating}
+                  </span>
+                  <span className={styles.sellerReviews}>
+                    ({sellerInfo.reviews} نظر)
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.sellerMeta}>
+              <div className={styles.sellerJoinDate}>
+                عضویت در{" "}
+                {sellerInfo.joinDate.toLocaleDateString("fa-IR", {
+                  year: "numeric",
+                  month: "long",
+                })}
               </div>
             </div>
 
@@ -340,7 +373,8 @@ function PostPage() {
             <h4 className={styles.securityTitle}>نکات امنیتی دیوار</h4>
             <ul className={styles.securityList}>
               <li>• بدون پیش‌پرداخت معامله کنید</li>
-              <li>• کالا را قبل از خرید بررسی کنید</li>
+              <li>• از جابجایی در مکان‌های عمومی خودداری کنید</li>
+              <li>• کالا را قبل از خرید به دقت بررسی کنید</li>
             </ul>
           </div>
 
