@@ -13,4 +13,5 @@ const createPost = ({ formData, token }) => {
     },
   });
 };
+
 export { addCategory, getCategory, deleteCategory, createPost, deletePost };

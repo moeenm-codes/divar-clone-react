@@ -25,25 +25,30 @@ function Footer() {
     { name: "بلاگ دیوار", link: "#" },
     { name: "نشان ویژه", link: "#" },
     { name: "آگهی فروشگاهی", link: "#" },
-    { name: "پشتیبانی", link: "#" },
+    { name: "پشتیبانی", link: "/my-divar/support" },
   ];
 
   const categories = [
-    { name: "املاک", link: "#" },
-    { name: "وسایل نقلیه", link: "#" },
-    { name: "لوازم الکترونیکی", link: "#" },
-    { name: "لوازم خانگی", link: "#" },
-    { name: "خدمات", link: "#" },
-    { name: "استخدام و کاریابی", link: "#" },
+    { name: "دیجیتال", link: "/?category=68c8a3bd6bd2248d44890ba6" },
+    { name: "وسایل شخصی", link: "/?category=68ca875d024480355f6fcbde" },
+    { name: "سرگرمی", link: "/?category=68d31fad1a087964b126695b" },
+    { name: "خدماتی", link: "/?category=690c49f23c4ff706d401b68a" },
+    { name: "املاک", link: "/?category=69186c38d9159a22f9b80064" },
+    { name: "خودرو", link: "/?category=6922f13933546c4f4f9b9558" },
   ];
 
   const apps = [
-    { name: "App Store", icon: <FaApple />, subtitle: "دانلود از", link: "#" },
+    {
+      name: "App Store",
+      icon: <FaApple />,
+      subtitle: "دانلود از",
+      link: "https://apps.apple.com/us/app/the-wall-see-buy/id1604353794",
+    },
     {
       name: "Google Play",
       icon: <FaGooglePlay />,
       subtitle: "دانلود از",
-      link: "#",
+      link: "https://divar.ir/downloads/android/release/release_251111010/Divar-release-11.14.5-251111010.apk",
     },
     {
       name: "کافه بازار",
@@ -55,15 +60,31 @@ function Footer() {
         />
       ),
       subtitle: "دانلود از",
-      link: "#",
+      link: "https://cafebazaar.ir/app/ir.divar",
     },
   ];
 
   const socialMedia = [
-    { icon: <FaSquareXTwitter />, link: "#", name: "x" },
-    { icon: <FaInstagram />, link: "#", name: "instagram" },
-    { icon: <FaLinkedin />, link: "#", name: "linkedin" },
-    { icon: <FaTelegram />, link: "#", name: "telegram" },
+    {
+      icon: <FaSquareXTwitter />,
+      link: "https://x.com/Divar_Official",
+      name: "x",
+    },
+    {
+      icon: <FaInstagram />,
+      link: "https://www.instagram.com/divar.official/",
+      name: "instagram",
+    },
+    {
+      icon: <FaLinkedin />,
+      link: "https://ir.linkedin.com/company/divarofficial",
+      name: "linkedin",
+    },
+    {
+      icon: <FaTelegram />,
+      link: "https://telegram.me/divar_com",
+      name: "telegram",
+    },
   ];
 
   return (
@@ -77,7 +98,9 @@ function Footer() {
             <ul>
               {services.map((item, index) => (
                 <li key={index}>
-                  <a href={item.link}>{item.name}</a>
+                  <a href={item.link} target="_blank">
+                    {item.name}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -89,7 +112,9 @@ function Footer() {
             <ul>
               {products.map((item, index) => (
                 <li key={index}>
-                  <a href={item.link}>{item.name}</a>
+                  <a href={item.link} target="_blank">
+                    {item.name}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -112,7 +137,12 @@ function Footer() {
             <h3>دانلود اپلیکیشن</h3>
             <div className={styles.apps}>
               {apps.map((app, index) => (
-                <a href={app.link} className={styles.appButton} key={index}>
+                <a
+                  href={app.link}
+                  className={styles.appButton}
+                  key={index}
+                  target="_blank"
+                >
                   <div className={styles.appIcon}>{app.icon}</div>
                   <div className={styles.appText}>
                     <span>{app.subtitle}</span>
@@ -144,6 +174,7 @@ function Footer() {
                   {socialMedia.map((item, index) => (
                     <a
                       href={item.link}
+                      target="_blank"
                       className={styles.socialIcon}
                       key={index}
                       aria-label={item.name}
