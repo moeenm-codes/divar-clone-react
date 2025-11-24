@@ -65,39 +65,39 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 16px; /* هماهنگ با searchBox */
-  background: white; /* هماهنگ با searchBox */
-  border: 2px solid #e0e0e0; /* هماهنگ با searchBox */
-  border-radius: 12px; /* هماهنگ با searchBox */
-  font-size: 0.95rem; /* هماهنگ با searchInput */
+  padding: 9px 16px;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #333;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* هماهنگ با searchBox */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   min-width: 140px;
   justify-content: space-between;
   white-space: nowrap;
   outline: none;
-  height: 44px; /* ارتفاع ثابت برای هماهنگی */
+  height: 44px;
 }
 
 .dropdownBtn:hover {
   border-color: #a62626;
-  background: white; /* ثابت نگه داریم */
+  background: white;
   transform: translateY(-1px);
   box-shadow: 0 4px 15px rgba(166, 38, 38, 0.12);
 }
 
 .dropdownBtn.active {
   border-color: #a62626;
-  background: white; /* ثابت نگه داریم */
+  background: white;
   box-shadow: 0 4px 15px rgba(166, 38, 38, 0.15);
 }
 
 .icon {
   color: #a62626;
-  font-size: 1.1rem; /* کمی بزرگتر برای هماهنگی */
+  font-size: 1.1rem;
   flex-shrink: 0;
 }
 
@@ -105,7 +105,7 @@
   flex: 1;
   text-align: right;
   font-weight: 600;
-  font-size: 0.95rem; /* هماهنگ با searchInput */
+  font-size: 0.95rem;
 }
 
 .arrow {
@@ -125,23 +125,23 @@
 /* منوی dropdown — دقیقاً زیر دکمه */
 .dropdown {
   position: absolute;
-  top: calc(100% + 8px); /* هماهنگ با search dropdown */
+  top: calc(100% + 8px);
   right: 0;
   left: auto;
-  min-width: 240px; /* کمی عریض‌تر */
+  min-width: 240px;
   background: white;
-  border: 1px solid #eee; /* هماهنگ با search dropdown */
-  border-radius: 16px; /* هماهنگ با search dropdown */
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15); /* هماهنگ با search dropdown */
+  border: 1px solid #eee;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
   overflow: hidden;
-  animation: dropdownFade 0.2s ease-out; /* هماهنگ با search */
+  animation: dropdownFade 0.2s ease-out;
   z-index: 1001;
 }
 
 @keyframes dropdownFade {
   from {
     opacity: 0;
-    transform: translateY(-8px); /* هماهنگ با search */
+    transform: translateY(-8px);
   }
   to {
     opacity: 1;
@@ -155,18 +155,18 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 14px 18px; /* هماهنگ با suggestionItem */
+  padding: 14px 18px;
   color: #444;
   text-decoration: none;
-  font-size: 0.95rem; /* هماهنگ با suggestionItem */
+  font-size: 0.95rem;
   font-weight: 500;
   text-align: right;
   background: none;
   border: none;
   cursor: pointer;
-  transition: background 0.2s; /* هماهنگ با suggestionItem */
+  transition: background 0.2s;
   border-bottom: 1px solid #f0f0f0;
-  height: 48px; /* ارتفاع ثابت مشابه suggestionItem */
+  height: 48px;
   box-sizing: border-box;
 }
 
@@ -189,25 +189,25 @@
 
 /* جستجوی شهر */
 .citySearchContainer {
-  padding: 12px 14px; /* مشابه searchBox */
+  padding: 12px 14px;
   border-bottom: 1px solid #f0f0f0;
   background: #fff;
 }
 .citySearchInput {
   width: 100%;
-  padding: 8px 12px; /* مشابه searchInput */
+  padding: 8px 12px;
   border-radius: 8px;
-  border: 2px solid #e0e0e0; /* هماهنگ با searchBox */
-  font-size: 0.95rem; /* هماهنگ با searchInput */
+  border: 2px solid #e0e0e0;
+  font-size: 0.95rem;
   outline: none;
   box-sizing: border-box;
-  transition: all 0.3s ease; /* هماهنگ با searchBox */
-  height: 40px; /* ارتفاع ثابت */
+  transition: all 0.3s ease;
+  height: 40px;
 }
 
 .citySearchInput:focus {
-  border-color: #a62626; /* هماهنگ با searchBox.active */
-  box-shadow: 0 4px 20px rgba(166, 38, 38, 0.15); /* هماهنگ با searchBox */
+  border-color: #a62626;
+  box-shadow: 0 4px 20px rgba(166, 38, 38, 0.15);
 }
 .cityListContainer {
   max-height: 300px;
@@ -232,18 +232,20 @@
 /* ثبت آگهی */
 .postAdButton {
   display: flex;
+  position: relative;
+  overflow: hidden;
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
   background: linear-gradient(135deg, #a62626, #c93a3a);
   color: white;
   font-weight: 600;
-  font-size: 0.95rem; /* هماهنگ با بقیه */
-  border-radius: 12px; /* هماهنگ با بقیه */
+  font-size: 0.95rem;
+  border-radius: 12px;
   text-decoration: none;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(166, 38, 38, 0.3);
-  height: 44px; /* ارتفاع ثابت */
+  height: 44px;
   box-sizing: border-box;
 }
 .postAdButton::before {

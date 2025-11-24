@@ -107,6 +107,7 @@ function HomePage() {
       newParams.set("category", categoryId);
     }
     setSearchParams(newParams);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   if (postLoading || categoryLoading) return <Loader />;

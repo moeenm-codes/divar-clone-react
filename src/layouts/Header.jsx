@@ -15,6 +15,9 @@ import { useCity } from "components/context/CityContext";
 import { normalizePersian } from "utils/normalize";
 import PostSearch from "components/modules/PostSearch";
 
+// ←←← این خط جدید اضافه شده
+import { useClickAway } from "@uidotdev/usehooks";
+
 function Header() {
   const [cityOpen, setCityOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -25,7 +28,6 @@ function Header() {
   const listContainerRef = useRef(null);
 
   const { user, isLoading: authLoading, logout } = useAuth();
-
   const { selectedCity, setSelectedCity } = useCity();
 
   const allCities = useMemo(() => ["همه استان‌ها", ...PROVINCES], []);
@@ -35,6 +37,10 @@ function Header() {
     if (!q) return allCities;
     return allCities.filter((p) => normalizePersian(p).includes(q));
   }, [cityQuery, allCities]);
+
+  // ←←← دو خط جدید: تشخیص کلیک خارج از منوها
+  const cityRef = useClickAway(() => setCityOpen(false));
+  const profileRef = useClickAway(() => setProfileOpen(false));
 
   useEffect(() => {
     if (cityOpen) {
@@ -130,19 +136,21 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        {/* سمت چپ: لوگو و شهر */}
         <div className={styles.left}>
           <Link to="/" className={styles.logo}>
             <img src="/divar.svg" alt="دیوار" className={styles.logoImg} />
           </Link>
 
-          {/* انتخاب شهر */}
-          <div className={styles.dropdownWrapper}>
+          {/* ←←← منوی شهر – ref اضافه شد */}
+          <div className={styles.dropdownWrapper} ref={cityRef}>
             <button
               className={`${styles.dropdownBtn} ${
                 cityOpen ? styles.active : ""
               }`}
-              onClick={() => setCityOpen((prev) => !prev)}
+              onClick={() => {
+                setCityOpen((prev) => !prev);
+                if (profileOpen) setProfileOpen(false); // یکی باز بشه، اون یکی بسته بشه
+              }}
               aria-haspopup="menu"
               aria-expanded={cityOpen}
               type="button"
@@ -217,18 +225,21 @@ function Header() {
               </div>
             )}
           </div>
+
           <PostSearch />
         </div>
 
-        {/* سمت راست: منوی کاربری و ثبت آگهی */}
         <div className={styles.right}>
-          {/* منوی کاربری */}
-          <div className={styles.dropdownWrapper}>
+          {/* ←←← منوی پروفایل – ref اضافه شد */}
+          <div className={styles.dropdownWrapper} ref={profileRef}>
             <button
               className={`${styles.dropdownBtn} ${
                 profileOpen ? styles.active : ""
               }`}
-              onClick={() => setProfileOpen((prev) => !prev)}
+              onClick={() => {
+                setProfileOpen((prev) => !prev);
+                if (cityOpen) setCityOpen(false); // یکی باز بشه، اون یکی بسته بشه
+              }}
               aria-haspopup="menu"
               aria-expanded={profileOpen}
               type="button"
@@ -275,13 +286,10 @@ function Header() {
             )}
           </div>
 
-          {/* دکمه ثبت آگهی */}
           <Link
             to="/addpost"
             className={styles.postAdButton}
-            onClick={() => {
-              window.scrollTo(0, 0); // این خط جادویی!
-            }}
+            onClick={() => window.scrollTo(0, 0)}
           >
             <FaPlus className={styles.postAdIcon} />
             ثبت آگهی
