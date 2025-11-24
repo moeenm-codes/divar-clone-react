@@ -138,7 +138,12 @@ function HomePage() {
             setSearchParams(newParams);
           }}
         />
-        <Main posts={filteredPosts} />
+        <Main
+          posts={filteredPosts}
+          key={`${selectedCategoryId || "all"}-${selectedCity}-${
+            urlMinPrice || 0
+          }-${urlMaxPrice || "inf"}-${searchQuery}`}
+        />
       </div>
     </div>
   );
