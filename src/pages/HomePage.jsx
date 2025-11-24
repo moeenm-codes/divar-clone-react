@@ -27,6 +27,7 @@ function HomePage() {
   const selectedCategoryId = searchParams.get("category") || null;
   const urlMinPrice = searchParams.get("minPrice") || "";
   const urlMaxPrice = searchParams.get("maxPrice") || "";
+  const searchQuery = searchParams.get("search") || "";
 
   const { minPrice, maxPrice } = useMemo(() => {
     if (!posts?.data?.posts?.length) return { minPrice: 0, maxPrice: 0 };
@@ -64,8 +65,29 @@ function HomePage() {
       );
     }
 
+    if (searchQuery) {
+      const normalizedQuery = normalizePersian(searchQuery);
+      filtered = filtered.filter((post) => {
+        const title = normalizePersian(post.title || "");
+        const description = normalizePersian(post.description || "");
+        const content = normalizePersian(post.content || "");
+        return (
+          title.includes(normalizedQuery) ||
+          description.includes(normalizedQuery) ||
+          content.includes(normalizedQuery)
+        );
+      });
+    }
+
     return { data: { posts: filtered } };
-  }, [posts, selectedCity, selectedCategoryId, urlMinPrice, urlMaxPrice]);
+  }, [
+    posts,
+    selectedCity,
+    selectedCategoryId,
+    urlMinPrice,
+    urlMaxPrice,
+    searchParams,
+  ]);
 
   useEffect(() => {
     const newParams = new URLSearchParams(searchParams);

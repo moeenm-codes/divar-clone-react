@@ -13,6 +13,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { useAuth } from "components/hooks/useAuth";
 import { useCity } from "components/context/CityContext";
 import { normalizePersian } from "utils/normalize";
+import PostSearch from "components/modules/PostSearch";
 
 function Header() {
   const [cityOpen, setCityOpen] = useState(false);
@@ -216,6 +217,7 @@ function Header() {
               </div>
             )}
           </div>
+          <PostSearch />
         </div>
 
         {/* سمت راست: منوی کاربری و ثبت آگهی */}

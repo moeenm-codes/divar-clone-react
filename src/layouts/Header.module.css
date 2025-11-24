@@ -65,44 +65,47 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
-  background: linear-gradient(145deg, #ffffff, #f5f5f5);
-  border: 1.5px solid #e0e0e0;
-  border-radius: 12px;
-  font-size: 0.9rem;
+  padding: 9px 16px; /* هماهنگ با searchBox */
+  background: white; /* هماهنگ با searchBox */
+  border: 2px solid #e0e0e0; /* هماهنگ با searchBox */
+  border-radius: 12px; /* هماهنگ با searchBox */
+  font-size: 0.95rem; /* هماهنگ با searchInput */
   font-weight: 600;
   color: #333;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  min-width: 120px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* هماهنگ با searchBox */
+  min-width: 140px;
   justify-content: space-between;
   white-space: nowrap;
   outline: none;
+  height: 44px; /* ارتفاع ثابت برای هماهنگی */
 }
 
 .dropdownBtn:hover {
   border-color: #a62626;
-  background: linear-gradient(145deg, #fff8f8, #ffeaea);
+  background: white; /* ثابت نگه داریم */
   transform: translateY(-1px);
   box-shadow: 0 4px 15px rgba(166, 38, 38, 0.12);
 }
 
 .dropdownBtn.active {
   border-color: #a62626;
-  background: linear-gradient(145deg, #fff0f0, #ffe5e5);
+  background: white; /* ثابت نگه داریم */
   box-shadow: 0 4px 15px rgba(166, 38, 38, 0.15);
 }
 
 .icon {
   color: #a62626;
-  font-size: 1rem;
+  font-size: 1.1rem; /* کمی بزرگتر برای هماهنگی */
   flex-shrink: 0;
 }
+
 .text {
   flex: 1;
   text-align: right;
   font-weight: 600;
+  font-size: 0.95rem; /* هماهنگ با searchInput */
 }
 
 .arrow {
@@ -122,27 +125,27 @@
 /* منوی dropdown — دقیقاً زیر دکمه */
 .dropdown {
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + 8px); /* هماهنگ با search dropdown */
   right: 0;
   left: auto;
-  min-width: 220px;
+  min-width: 240px; /* کمی عریض‌تر */
   background: white;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid #eee; /* هماهنگ با search dropdown */
+  border-radius: 16px; /* هماهنگ با search dropdown */
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15); /* هماهنگ با search dropdown */
   overflow: hidden;
-  animation: dropdownFade 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: dropdownFade 0.2s ease-out; /* هماهنگ با search */
   z-index: 1001;
 }
 
 @keyframes dropdownFade {
   from {
     opacity: 0;
-    transform: translateY(-6px) scale(0.99);
+    transform: translateY(-8px); /* هماهنگ با search */
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: none;
   }
 }
 
@@ -152,18 +155,21 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 12px 18px;
+  padding: 14px 18px; /* هماهنگ با suggestionItem */
   color: #444;
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 0.95rem; /* هماهنگ با suggestionItem */
   font-weight: 500;
   text-align: right;
   background: none;
   border: none;
   cursor: pointer;
-  transition: background 0.16s ease, color 0.16s ease;
+  transition: background 0.2s; /* هماهنگ با suggestionItem */
   border-bottom: 1px solid #f0f0f0;
+  height: 48px; /* ارتفاع ثابت مشابه suggestionItem */
+  box-sizing: border-box;
 }
+
 .dropdownItem:last-child {
   border-bottom: none;
 }
@@ -183,23 +189,25 @@
 
 /* جستجوی شهر */
 .citySearchContainer {
-  padding: 10px 12px;
+  padding: 12px 14px; /* مشابه searchBox */
   border-bottom: 1px solid #f0f0f0;
   background: #fff;
 }
 .citySearchInput {
   width: 100%;
-  padding: 8px 10px;
+  padding: 8px 12px; /* مشابه searchInput */
   border-radius: 8px;
-  border: 1px solid #e6e6e6;
-  font-size: 0.9rem;
+  border: 2px solid #e0e0e0; /* هماهنگ با searchBox */
+  font-size: 0.95rem; /* هماهنگ با searchInput */
   outline: none;
   box-sizing: border-box;
-  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  transition: all 0.3s ease; /* هماهنگ با searchBox */
+  height: 40px; /* ارتفاع ثابت */
 }
+
 .citySearchInput:focus {
-  border-color: #d32f2f;
-  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.07);
+  border-color: #a62626; /* هماهنگ با searchBox.active */
+  box-shadow: 0 4px 20px rgba(166, 38, 38, 0.15); /* هماهنگ با searchBox */
 }
 .cityListContainer {
   max-height: 300px;
@@ -230,13 +238,13 @@
   background: linear-gradient(135deg, #a62626, #c93a3a);
   color: white;
   font-weight: 600;
-  font-size: 0.9rem;
-  border-radius: 12px;
+  font-size: 0.95rem; /* هماهنگ با بقیه */
+  border-radius: 12px; /* هماهنگ با بقیه */
   text-decoration: none;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(166, 38, 38, 0.3);
-  position: relative;
-  overflow: hidden;
+  height: 44px; /* ارتفاع ثابت */
+  box-sizing: border-box;
 }
 .postAdButton::before {
   content: "";
@@ -333,6 +341,28 @@
   }
   .logoImg {
     height: 32px;
+  }
+
+  .dropdownWrapper:nth-child(3) {
+    order: -1;
+    width: 100%;
+    margin: 12px 0;
+  }
+  .dropdownWrapper:nth-child(3) .dropdownBtn {
+    min-width: auto;
+    width: 100%;
+  }
+  .left > :nth-child(3) {
+    order: -1;
+    width: 100%;
+    margin: 12px 0 8px;
+  }
+
+  .left > :nth-child(3) .dropdownBtn {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 14px 18px;
+    border-radius: 16px;
   }
 }
 @media (max-width: 480px) {
