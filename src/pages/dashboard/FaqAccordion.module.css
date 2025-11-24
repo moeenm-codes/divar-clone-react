@@ -1,0 +1,64 @@
+/* components/modules/FaqAccordion.module.css */
+.accordion {
+  border: 1.5px solid #eee;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.accordion:hover {
+  border-color: #a62626;
+  box-shadow: 0 8px 25px rgba(166, 38, 38, 0.12);
+  transform: translateY(-2px);
+}
+
+.accordion.open {
+  border-color: #a62626;
+  box-shadow: 0 10px 30px rgba(166, 38, 38, 0.15);
+}
+
+.question {
+  width: 100%;
+  padding: 20px 24px;
+  background: transparent;
+  border: none;
+  text-align: right;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.question:hover {
+  color: #a62626;
+}
+
+.icon {
+  font-size: 1.5rem;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #a62626;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+.answerWrapper {
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #fff9f9;
+}
+
+.answer {
+  color: #444;
+  line-height: 1.8;
+  font-size: 0.98rem;
+  padding: 0 4px;
+}

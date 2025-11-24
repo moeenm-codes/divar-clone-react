@@ -13,7 +13,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { useAuth } from "components/hooks/useAuth";
 import { useCity } from "components/context/CityContext";
 import { normalizePersian } from "utils/normalize";
-import PostSearch from "components/modules/PostSearch";
+import PostSearch from "components/Templates/PostSearch";
 
 // ←←← این خط جدید اضافه شده
 import { useClickAway } from "@uidotdev/usehooks";
