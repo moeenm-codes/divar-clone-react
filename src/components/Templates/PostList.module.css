@@ -60,12 +60,19 @@
 .post:nth-child(10) {
   animation-delay: 1s;
 }
-/* تا ۱۰ تا کافیه — اگه بیشتر بود خودش ادامه میده */
 
 .post:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(166, 38, 38, 0.15);
   border-color: #a62626;
+}
+
+.postLink {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
 }
 
 .post img {
@@ -77,55 +84,47 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.post > div:first-of-type {
+.content {
   flex: 1;
 }
 
-.post p {
+.content p {
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0 0 6px 0;
   color: #1a1a1a;
 }
 
-.post span {
+.content span {
   font-size: 0.9rem;
   color: #666;
   display: block;
 }
 
-.price {
-  text-align: center;
-  min-width: 140px;
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.price p {
-  font-size: 0.85rem;
-  color: #888;
-  margin: 0 0 8px 0;
+.editBtn {
+  padding: 10px 20px;
+  background: #868686fd;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
-.price span {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #a62626;
+.editBtn:hover {
+  background: #d32f2f;
+  transform: translateY(-2px);
 }
 
-.postLink {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.postLink:hover {
-  text-decoration: none;
-}
-
-.postLink .post:hover {
-  border-color: #a62626;
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(166, 38, 38, 0.15);
-}
 @keyframes fadeInUp {
   from {
     opacity: 0;

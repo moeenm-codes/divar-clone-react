@@ -1,6 +1,8 @@
-// AddPost.jsx
+// src/components/Templates/AddPost.jsx
+
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom"; // اضافه شد
 import { getCategory, createPost } from "services/admin";
 import { PROVINCES } from "../../constants/provinces";
 import { getCookie } from "utils/cookie";
@@ -14,6 +16,10 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 function AddPost() {
+  const navigate = useNavigate(); // اضافه شد
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
   const [form, setForm] = useState({
     title_post: "",
     description: "",
@@ -25,20 +31,16 @@ function AddPost() {
     lng: 51.389,
     images: [],
   });
+
   const [errors, setErrors] = useState({});
   const [fileNames, setFileNames] = useState([]);
 
-  // State برای dropdown شهر
+  // State برای dropdown
   const [cityOpen, setCityOpen] = useState(false);
   const [cityQuery, setCityQuery] = useState("");
   const [highlightedCityIndex, setHighlightedCityIndex] = useState(0);
-
-  // State برای dropdown دسته‌بندی
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [highlightedCategoryIndex, setHighlightedCategoryIndex] = useState(0);
-
-  const toast = useToast();
-  const queryClient = useQueryClient();
 
   // Refs
   const citySearchRef = useRef(null);
@@ -54,11 +56,21 @@ function AddPost() {
     staleTime: 5 * 60 * 1000,
   });
 
+  // بخش ثبت آگهی — نسخه نهایی و حرفه‌ای
   const { mutate, isPending } = useMutation({
     mutationFn: createPost,
     onSuccess: (res) => {
       toast.success(res?.data?.message || "آگهی با موفقیت ایجاد شد!");
+
+      // کش‌ها رو پاک می‌کنیم تا جدیدترین داده‌ها لود بشن
+      queryClient.removeQueries({ queryKey: ["my-post-list"] });
+      queryClient.removeQueries({ queryKey: ["post-list"] });
+
+      // فرم رو کامل ریست می‌کنیم
       resetForm();
+
+      // مستقیم می‌ریم به آگهی‌های من — مثل دیوار واقعی!
+      navigate("/my-divar/my-posts", { replace: true });
     },
     onError: (error) => {
       const msg = error.response?.data?.message || "خطا در ایجاد آگهی";
@@ -83,6 +95,8 @@ function AddPost() {
     setCityQuery("");
     setCityOpen(false);
     setCategoryOpen(false);
+    setHighlightedCityIndex(0);
+    setHighlightedCategoryIndex(0);
   };
 
   // فیلتر شهرها
@@ -92,7 +106,6 @@ function AddPost() {
     return PROVINCES.filter((p) => normalizePersian(p).includes(q));
   }, [cityQuery]);
 
-  // فیلتر دسته‌بندی‌ها (بدون جستجو)
   const categories = categoryData?.data || [];
 
   // کیبورد برای شهر
@@ -154,7 +167,7 @@ function AddPost() {
     if (cityOpen && citySearchRef.current) citySearchRef.current.focus();
   }, [cityOpen]);
 
-  // کلیک خارج
+  // کلیک خارج از دراپ‌داون
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -338,7 +351,7 @@ function AddPost() {
           {errors.city && <p className={styles.helperError}>{errors.city}</p>}
         </div>
 
-        {/* دسته‌بندی (بدون جستجو) */}
+        {/* دسته‌بندی */}
         <div className={styles.field}>
           <label>دسته‌بندی</label>
           <div className={styles.dropdownWrapper} ref={categoryDropdownRef}>
@@ -399,7 +412,7 @@ function AddPost() {
           )}
         </div>
 
-        {/* محدوده قیمت */}
+        {/* مبلغ */}
         <div className={styles.field}>
           <label>مبلغ (تومان)</label>
           <div className={styles.priceRange}>
@@ -413,10 +426,9 @@ function AddPost() {
           </div>
         </div>
 
-        {/* آپلود عکس — ساده، تمیز، حرفه‌ای */}
+        {/* آپلود عکس */}
         <div className={styles.field}>
           <label className={styles.uploadLabel}>عکس آگهی (حداکثر ۱۰ عکس)</label>
-
           <div className={styles.uploadBox}>
             <input
               type="file"
@@ -453,7 +465,6 @@ function AddPost() {
               </span>
             </label>
           </div>
-
           {errors.images && (
             <p className={styles.helperError}>{errors.images}</p>
           )}

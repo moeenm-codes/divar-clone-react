@@ -33,7 +33,7 @@ function Footer() {
     { name: "وسایل شخصی", link: "/?category=68ca875d024480355f6fcbde" },
     { name: "سرگرمی", link: "/?category=68d31fad1a087964b126695b" },
     { name: "خدماتی", link: "/?category=690c49f23c4ff706d401b68a" },
-    { name: "املاک", link: "/?category=69186c38d9159a22f9b80064" },
+    { name: "املاک", link: "/?category=6927f1c8ee294dac92014494" },
     { name: "خودرو", link: "/?category=6922f13933546c4f4f9b9558" },
   ];
 

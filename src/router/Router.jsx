@@ -18,6 +18,7 @@ import WithoutLayout from "layouts/WithoutLayout";
 import ProtectedRoute from "router/ProtectedRoute/ProtectedRoute";
 import AuthRedirect from "./ProtectedRoute/AuthRedirect";
 import AddPost from "components/Templates/AddPost";
+import EditPost from "components/Templates/EditPost";
 
 function Router() {
   return (
@@ -32,6 +33,14 @@ function Router() {
           element={
             <ProtectedRoute>
               <AddPost />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/editpost/:postId"
+          element={
+            <ProtectedRoute>
+              <EditPost />
             </ProtectedRoute>
           }
         />
