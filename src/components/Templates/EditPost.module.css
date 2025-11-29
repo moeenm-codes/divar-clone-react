@@ -1,4 +1,4 @@
-/* src/components/Templates/AddPost.module.css */
+/* src/components/Templates/EditPost.module.css */
 
 :root {
   --accent: #a62626;
@@ -172,11 +172,6 @@
 .dropdownBtn.active {
   border-color: var(--accent);
   background: rgba(166, 38, 38, 0.03);
-}
-
-.dropdownBtn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 
 .icon {
@@ -389,12 +384,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   color: #6b7280;
   font-size: 0.85rem;
   pointer-events: none;
   text-align: center;
-  padding: 16px;
+  padding: 30px;
   transition: color 0.2s ease;
 }
 
@@ -404,11 +399,6 @@
 
 .uploadSlot:hover .uploadContent svg {
   stroke: #a62626;
-}
-
-.uploadHint {
-  font-size: 0.75rem;
-  color: #9ca3af;
 }
 
 .maxImagesHint {
@@ -540,6 +530,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 16px;
+}
+
+.loadingContainer .loader {
+  width: 32px;
+  height: 32px;
+  border-top-color: var(--accent);
 }
 
 /* Responsive */

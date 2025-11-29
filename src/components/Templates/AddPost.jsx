@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom"; // اضافه شد
+import { useNavigate } from "react-router-dom";
 import { getCategory, createPost } from "services/admin";
 import { PROVINCES } from "../../constants/provinces";
 import { getCookie } from "utils/cookie";
@@ -12,11 +12,12 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import styles from "./AddPost.module.css";
 
+const MAX_IMAGES = 5;
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 function AddPost() {
-  const navigate = useNavigate(); // اضافه شد
+  const navigate = useNavigate();
   const toast = useToast();
   const queryClient = useQueryClient();
 
@@ -26,26 +27,19 @@ function AddPost() {
     city: "",
     category: "",
     priceFrom: "",
-    priceTo: "",
     lat: 35.6892,
     lng: 51.389,
     images: [],
   });
 
   const [errors, setErrors] = useState({});
-  const [fileNames, setFileNames] = useState([]);
 
   // State برای dropdown
   const [cityOpen, setCityOpen] = useState(false);
   const [cityQuery, setCityQuery] = useState("");
-  const [highlightedCityIndex, setHighlightedCityIndex] = useState(0);
   const [categoryOpen, setCategoryOpen] = useState(false);
-  const [highlightedCategoryIndex, setHighlightedCategoryIndex] = useState(0);
 
   // Refs
-  const citySearchRef = useRef(null);
-  const cityListRef = useRef(null);
-  const categoryListRef = useRef(null);
   const cityDropdownRef = useRef(null);
   const categoryDropdownRef = useRef(null);
 
@@ -56,7 +50,7 @@ function AddPost() {
     staleTime: 5 * 60 * 1000,
   });
 
-  // بخش ثبت آگهی — نسخه نهایی و حرفه‌ای
+  // بخش ثبت آگهی
   const { mutate, isPending } = useMutation({
     mutationFn: createPost,
     onSuccess: (res) => {
@@ -66,10 +60,7 @@ function AddPost() {
       queryClient.removeQueries({ queryKey: ["my-post-list"] });
       queryClient.removeQueries({ queryKey: ["post-list"] });
 
-      // فرم رو کامل ریست می‌کنیم
-      resetForm();
-
-      // مستقیم می‌ریم به آگهی‌های من — مثل دیوار واقعی!
+      // مستقیم می‌ریم به آگهی‌های من
       navigate("/my-divar/my-posts", { replace: true });
     },
     onError: (error) => {
@@ -77,27 +68,6 @@ function AddPost() {
       toast.error(msg);
     },
   });
-
-  const resetForm = () => {
-    setForm({
-      title_post: "",
-      description: "",
-      city: "",
-      category: "",
-      priceFrom: "",
-      priceTo: "",
-      lat: 35.6892,
-      lng: 51.389,
-      images: [],
-    });
-    setFileNames([]);
-    setErrors({});
-    setCityQuery("");
-    setCityOpen(false);
-    setCategoryOpen(false);
-    setHighlightedCityIndex(0);
-    setHighlightedCategoryIndex(0);
-  };
 
   // فیلتر شهرها
   const filteredCities = useMemo(() => {
@@ -107,48 +77,6 @@ function AddPost() {
   }, [cityQuery]);
 
   const categories = categoryData?.data || [];
-
-  // کیبورد برای شهر
-  const handleCityKeyDown = (e) => {
-    if (!cityOpen) return;
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setHighlightedCityIndex((prev) =>
-        prev < filteredCities.length - 1 ? prev + 1 : prev
-      );
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setHighlightedCityIndex((prev) => (prev > 0 ? prev - 1 : prev));
-    } else if (e.key === "Enter") {
-      e.preventDefault();
-      if (filteredCities[highlightedCityIndex]) {
-        handleCitySelect(filteredCities[highlightedCityIndex]);
-      }
-    } else if (e.key === "Escape") {
-      setCityOpen(false);
-    }
-  };
-
-  // کیبورد برای دسته‌بندی
-  const handleCategoryKeyDown = (e) => {
-    if (!categoryOpen) return;
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setHighlightedCategoryIndex((prev) =>
-        prev < categories.length - 1 ? prev + 1 : prev
-      );
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setHighlightedCategoryIndex((prev) => (prev > 0 ? prev - 1 : prev));
-    } else if (e.key === "Enter") {
-      e.preventDefault();
-      if (categories[highlightedCategoryIndex]) {
-        handleCategorySelect(categories[highlightedCategoryIndex]);
-      }
-    } else if (e.key === "Escape") {
-      setCategoryOpen(false);
-    }
-  };
 
   const handleCitySelect = (city) => {
     setForm((prev) => ({ ...prev, city }));
@@ -161,11 +89,6 @@ function AddPost() {
     setCategoryOpen(false);
     if (errors.category) setErrors((prev) => ({ ...prev, category: false }));
   };
-
-  // فوکوس روی جستجو
-  useEffect(() => {
-    if (cityOpen && citySearchRef.current) citySearchRef.current.focus();
-  }, [cityOpen]);
 
   // کلیک خارج از دراپ‌داون
   useEffect(() => {
@@ -186,34 +109,45 @@ function AddPost() {
   }, []);
 
   const changeHandler = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "images") {
-      handleFilesChange(files);
-    } else {
-      setForm((prev) => ({ ...prev, [name]: value }));
-      if (errors[name]) setErrors((prev) => ({ ...prev, [name]: false }));
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: false }));
+  };
+
+  // اضافه کردن عکس جدید
+  const handleNewImage = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length > 0) {
+      const validFiles = [];
+
+      for (let file of files) {
+        if (validFiles.length >= MAX_IMAGES - form.images.length) break;
+        if (!ALLOWED_TYPES.includes(file.type)) {
+          toast.error(`فقط JPG, PNG, WebP مجاز است.`);
+          continue;
+        }
+        if (file.size > MAX_FILE_SIZE) {
+          toast.error(`حجم فایل بیش از ۵ مگابایت است.`);
+          continue;
+        }
+        validFiles.push(file);
+      }
+
+      setForm((prev) => ({
+        ...prev,
+        images: [...prev.images, ...validFiles],
+      }));
+
+      if (errors.images) setErrors((prev) => ({ ...prev, images: false }));
     }
   };
 
-  const handleFilesChange = (files) => {
-    const validFiles = [];
-    const names = [];
-    for (let file of files) {
-      if (validFiles.length >= 10) break;
-      if (!ALLOWED_TYPES.includes(file.type)) {
-        toast.error(`فقط JPG, PNG, WebP مجاز است.`);
-        continue;
-      }
-      if (file.size > MAX_FILE_SIZE) {
-        toast.error(`حجم فایل بیش از ۵ مگابایت است.`);
-        continue;
-      }
-      validFiles.push(file);
-      names.push(file.name);
-    }
-    setForm((prev) => ({ ...prev, images: validFiles }));
-    setFileNames(names);
-    if (errors.images) setErrors((prev) => ({ ...prev, images: false }));
+  // حذف عکس
+  const removeImage = (index) => {
+    setForm((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index),
+    }));
   };
 
   const submitHandler = (e) => {
@@ -244,15 +178,82 @@ function AddPost() {
     mutate({ formData, token });
   };
 
+  // محاسبه تعداد اسلات‌های خالی
+  const totalImages = form.images.length;
+  const emptySlots = MAX_IMAGES - totalImages;
+
   return (
     <div className={styles.page}>
-      <div className={styles.toastContainer}></div>
-
       <form onSubmit={submitHandler} className={styles.form}>
-        <h3>افزودن آگهی جدید</h3>
-        <p className={styles.hint}>
-          همه فیلدها الزامی هستند مگر اینکه مشخص شده باشد.
-        </p>
+        <div className={styles.header}>
+          <h3>افزودن آگهی جدید</h3>
+          <p className={styles.hint}>
+            همه فیلدها الزامی هستند مگر اینکه مشخص شده باشد.
+          </p>
+        </div>
+
+        {/* عکس‌ها */}
+        <div className={styles.field}>
+          <label className={styles.uploadLabel}>
+            عکس‌های آگهی (حداکثر {MAX_IMAGES} عکس)
+            <span className={styles.imageCount}>
+              {totalImages}/{MAX_IMAGES}
+            </span>
+          </label>
+
+          <div className={styles.imageGrid}>
+            {/* عکس‌های آپلود شده */}
+            {form.images.map((file, i) => (
+              <div key={`image-${i}`} className={styles.imageContainer}>
+                <div className={styles.imageWrapper}>
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={`عکس ${i + 1}`}
+                    className={styles.image}
+                  />
+                </div>
+                <button
+                  type="button"
+                  className={styles.removeBtn}
+                  onClick={() => removeImage(i)}
+                  aria-label="حذف عکس"
+                >
+                  <CloseIcon />
+                </button>
+              </div>
+            ))}
+
+            {/* اسلات آپلود */}
+            {emptySlots > 0 && (
+              <label className={styles.uploadSlot}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleNewImage}
+                  className={styles.hiddenInput}
+                />
+                <div className={styles.uploadContent}>
+                  <UploadIcon />
+                  <span>افزودن عکس</span>
+                  <span className={styles.uploadHint}>
+                    تا {emptySlots} عکس دیگر
+                  </span>
+                </div>
+              </label>
+            )}
+          </div>
+
+          {errors.images && (
+            <p className={styles.helperError}>{errors.images}</p>
+          )}
+
+          {emptySlots === 0 && (
+            <p className={styles.maxImagesHint}>
+              شما حداکثر تعداد عکس‌ها را انتخاب کرده‌اید
+            </p>
+          )}
+        </div>
 
         {/* عنوان */}
         <div className={styles.field}>
@@ -264,7 +265,7 @@ function AddPost() {
             value={form.title_post}
             onChange={changeHandler}
             className={errors.title_post ? styles.inputError : ""}
-            placeholder="مثال: آیفون ۱۳ پرو مکس"
+            placeholder="مثال: آیفون ۱۳ پرو مکس سالم"
           />
           {errors.title_post && (
             <p className={styles.helperError}>{errors.title_post}</p>
@@ -280,8 +281,8 @@ function AddPost() {
             value={form.description}
             onChange={changeHandler}
             className={errors.description ? styles.inputError : ""}
-            rows="4"
-            placeholder="جزئیات کامل آگهی..."
+            rows="6"
+            placeholder="شرح کامل آگهی خود را اینجا بنویسید..."
           />
           {errors.description && (
             <p className={styles.helperError}>{errors.description}</p>
@@ -300,55 +301,47 @@ function AddPost() {
               onClick={() => setCityOpen(!cityOpen)}
             >
               <FaMapMarkerAlt className={styles.icon} />
-              <span className={styles.text}>{form.city || "انتخاب استان"}</span>
+              <span className={styles.text}>{form.city || "انتخاب شهر"}</span>
               <IoIosArrowDown
                 className={`${styles.arrow} ${cityOpen ? styles.open : ""}`}
               />
             </button>
-
+            {errors.city && <p className={styles.helperError}>{errors.city}</p>}
             {cityOpen && (
               <div className={styles.dropdown}>
                 <div className={styles.citySearchContainer}>
                   <input
-                    ref={citySearchRef}
                     value={cityQuery}
-                    onChange={(e) => {
-                      setCityQuery(e.target.value);
-                      setHighlightedCityIndex(0);
-                    }}
-                    onKeyDown={handleCityKeyDown}
-                    placeholder="جستجوی استان..."
+                    onChange={(e) => setCityQuery(e.target.value)}
+                    placeholder="جستجوی شهر..."
                     className={styles.citySearchInput}
+                    autoFocus
                   />
                 </div>
-                <div className={styles.cityListContainer} ref={cityListRef}>
-                  {filteredCities.length === 0 ? (
-                    <div className={styles.cityEmptyResult}>موردی پیدا نشد</div>
-                  ) : (
-                    filteredCities.map((city, i) => (
+                <div className={styles.cityListContainer}>
+                  {filteredCities.length > 0 ? (
+                    filteredCities.map((city) => (
                       <button
                         key={city}
                         type="button"
-                        className={[
-                          styles.dropdownItem,
-                          i === highlightedCityIndex ? styles.activeItem : "",
-                          city === form.city ? styles.selectedItem : "",
-                        ].join(" ")}
-                        onMouseEnter={() => setHighlightedCityIndex(i)}
+                        className={`${styles.dropdownItem} ${
+                          form.city === city ? styles.selectedItem : ""
+                        }`}
                         onClick={() => handleCitySelect(city)}
                       >
                         <span className={styles.cityName}>{city}</span>
-                        {city === form.city && (
+                        {form.city === city && (
                           <span className={styles.check}>✓</span>
                         )}
                       </button>
                     ))
+                  ) : (
+                    <div className={styles.cityEmptyResult}>شهری یافت نشد</div>
                   )}
                 </div>
               </div>
             )}
           </div>
-          {errors.city && <p className={styles.helperError}>{errors.city}</p>}
         </div>
 
         {/* دسته‌بندی */}
@@ -373,115 +366,108 @@ function AddPost() {
                 className={`${styles.arrow} ${categoryOpen ? styles.open : ""}`}
               />
             </button>
-
+            {errors.category && (
+              <p className={styles.helperError}>{errors.category}</p>
+            )}
             {categoryOpen && (
               <div className={styles.dropdown}>
-                <div className={styles.cityListContainer} ref={categoryListRef}>
-                  {categories.length === 0 ? (
-                    <div className={styles.cityEmptyResult}>
-                      دسته‌بندی موجود نیست
-                    </div>
-                  ) : (
-                    categories.map((cat, i) => (
+                <div className={styles.cityListContainer}>
+                  {categories.length > 0 ? (
+                    categories.map((cat) => (
                       <button
                         key={cat._id}
                         type="button"
-                        className={[
-                          styles.dropdownItem,
-                          i === highlightedCategoryIndex
-                            ? styles.activeItem
-                            : "",
-                          cat._id === form.category ? styles.selectedItem : "",
-                        ].join(" ")}
-                        onMouseEnter={() => setHighlightedCategoryIndex(i)}
+                        className={`${styles.dropdownItem} ${
+                          form.category === cat._id ? styles.selectedItem : ""
+                        }`}
                         onClick={() => handleCategorySelect(cat)}
                       >
                         <span className={styles.cityName}>{cat.name}</span>
-                        {cat._id === form.category && (
+                        {form.category === cat._id && (
                           <span className={styles.check}>✓</span>
                         )}
                       </button>
                     ))
+                  ) : (
+                    <div className={styles.cityEmptyResult}>
+                      دسته‌بندی موجود نیست
+                    </div>
                   )}
                 </div>
               </div>
             )}
           </div>
-          {errors.category && (
-            <p className={styles.helperError}>{errors.category}</p>
-          )}
         </div>
 
-        {/* مبلغ */}
+        {/* قیمت */}
         <div className={styles.field}>
-          <label>مبلغ (تومان)</label>
-          <div className={styles.priceRange}>
+          <label>قیمت (تومان)</label>
+          <div className={styles.priceInputContainer}>
             <input
               type="number"
               name="priceFrom"
               value={form.priceFrom}
               onChange={changeHandler}
-              placeholder="مبلغ مورد نظر خود را وارد کنید"
+              placeholder="مثال: 25000000"
+              className={styles.priceInput}
             />
+            <span className={styles.currency}>تومان</span>
           </div>
+          <p className={styles.priceHint}>
+            در صورت تمایل می‌توانید قیمت را خالی بگذارید
+          </p>
         </div>
 
-        {/* آپلود عکس */}
-        <div className={styles.field}>
-          <label className={styles.uploadLabel}>عکس آگهی (حداکثر ۱۰ عکس)</label>
-          <div className={styles.uploadBox}>
-            <input
-              type="file"
-              name="images"
-              id="images"
-              multiple
-              accept="image/jpeg,image/png,image/webp"
-              onChange={changeHandler}
-              className={styles.fileInput}
-            />
-            <label htmlFor="images" className={styles.uploadArea}>
-              <div className={styles.uploadIcon}>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M3 16.5V18.75C3 19.3467 3.23705 19.9185 3.65901 20.341C4.08097 20.763 4.65268 21 5.328 21H18.672C19.3473 21 19.919 20.763 20.341 20.341C20.7629 19.9185 21 19.3467 21 18.75V16.5M16.5 12L12 7.5M12 7.5L7.5 12M12 7.5V16.5"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <p className={styles.uploadText}>
-                {fileNames.length > 0
-                  ? `${fileNames.length} عکس انتخاب شد`
-                  : "کلیک کنید یا فایل را اینجا رها کنید"}
-              </p>
-              <span className={styles.uploadHint}>
-                حداکثر ۱۰ عکس، هر کدام تا ۵ مگابایت
-              </span>
-            </label>
-          </div>
-          {errors.images && (
-            <p className={styles.helperError}>{errors.images}</p>
-          )}
+        {/* دکمه‌های اقدام */}
+        <div className={styles.actionButtons}>
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className={styles.cancelBtn}
+          >
+            انصراف
+          </button>
+          <button
+            type="submit"
+            disabled={isPending}
+            className={styles.submitBtn}
+          >
+            {isPending ? (
+              <>
+                <span className={styles.loader}></span>
+                در حال ارسال...
+              </>
+            ) : (
+              "ثبت آگهی"
+            )}
+          </button>
         </div>
-
-        <button type="submit" disabled={isPending} className={styles.submitBtn}>
-          {isPending ? (
-            <>
-              <span className={styles.loader}></span> در حال ارسال...
-            </>
-          ) : (
-            "ثبت آگهی"
-          )}
-        </button>
       </form>
     </div>
   );
 }
+
+// آیکون مینیمال برای بستن
+const CloseIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+    <path d="M12.853 3.147a.5.5 0 0 1 0 .708L8.707 8l4.146 4.146a.5.5 0 0 1-.708.708L8 8.707l-4.146 4.147a.5.5 0 0 1-.708-.708L7.293 8 3.146 3.854a.5.5 0 1 1 .708-.708L8 7.293l4.146-4.146a.5.5 0 0 1 .707 0z" />
+  </svg>
+);
+
+// آیکون مینیمال برای آپلود
+const UploadIcon = () => (
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="17 8 12 3 7 8" />
+    <line x1="12" y1="3" x2="12" y2="15" />
+  </svg>
+);
 
 export default AddPost;
