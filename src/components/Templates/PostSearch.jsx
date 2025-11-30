@@ -1,6 +1,6 @@
 // components/modules/PostSearch.jsx
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { POPULAR_SEARCHES } from "../../constants/popularSearches";
 import { normalizePersian } from "utils/normalize";
 import styles from "./PostSearch.module.css";
@@ -9,6 +9,9 @@ import { useClickAway } from "@uidotdev/usehooks";
 
 export default function PostSearch() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -40,11 +43,15 @@ export default function PostSearch() {
     localStorage.setItem("divar-recent-searches", JSON.stringify(updated));
   };
 
-  // همگام‌سازی با URL
+  // همگام‌سازی با URL - فقط در صفحه اصلی
   useEffect(() => {
-    const urlSearch = searchParams.get("search");
-    setQuery(urlSearch || "");
-  }, [searchParams]);
+    if (location.pathname === "/") {
+      const urlSearch = searchParams.get("search");
+      setQuery(urlSearch || "");
+    } else {
+      setQuery(""); // در صفحات دیگر، input خالی باشد
+    }
+  }, [searchParams, location.pathname]);
 
   const filteredSuggestions = useMemo(() => {
     if (!query.trim()) return [];
@@ -63,10 +70,16 @@ export default function PostSearch() {
       saveToRecentSearches(trimmed);
     }
 
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set("search", trimmed);
-    newParams.delete("page");
-    setSearchParams(newParams);
+    // اگر در صفحه اصلی نیستیم، به صفحه اصلی هدایت شو
+    if (location.pathname !== "/") {
+      navigate(`/?search=${encodeURIComponent(trimmed)}`);
+    } else {
+      // اگر در صفحه اصلی هستیم، فقط پارامترها رو آپدیت کنیم
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set("search", trimmed);
+      newParams.delete("page");
+      setSearchParams(newParams);
+    }
 
     setIsOpen(false);
     setHighlightedIndex(-1);
@@ -121,9 +134,14 @@ export default function PostSearch() {
 
   const handleClear = () => {
     setQuery("");
-    const newParams = new URLSearchParams(searchParams);
-    newParams.delete("search");
-    setSearchParams(newParams);
+
+    // اگر در صفحه اصلی هستیم، پارامتر سرچ رو حذف کنیم
+    if (location.pathname === "/") {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete("search");
+      setSearchParams(newParams);
+    }
+
     setTimeout(() => {
       inputRef.current?.focus();
     }, 0);
