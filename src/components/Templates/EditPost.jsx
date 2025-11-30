@@ -38,14 +38,12 @@ function EditPost() {
   const cityDropdownRef = useRef(null);
   const categoryDropdownRef = useRef(null);
 
-  // دریافت اطلاعات آگهی
   const { data: postData, isLoading: loadingPost } = useQuery({
     queryKey: ["edit-post", postId],
     queryFn: () => getPost(postId),
     enabled: !!postId,
   });
 
-  // دریافت دسته‌بندی‌ها
   const { data: catData } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategory,
@@ -53,7 +51,6 @@ function EditPost() {
 
   const categories = catData?.data || [];
 
-  // پر کردن فرم
   useEffect(() => {
     if (postData?.data?.post) {
       const p = postData.data.post;
@@ -64,20 +61,18 @@ function EditPost() {
         category: p.category?._id || p.category || "",
         priceFrom: p.amount?.toString() || "",
         images: [],
-        existingImages: p.images || [],
+        existingImages: Array.isArray(p.images) ? p.images : [],
       });
       setCityQuery(p.city || "");
     }
   }, [postData]);
 
-  // فیلتر شهرها
   const filteredCities = useMemo(() => {
     const q = normalizePersian(cityQuery);
     if (!q) return PROVINCES;
     return PROVINCES.filter((c) => normalizePersian(c).includes(q));
   }, [cityQuery]);
 
-  // کلیک خارج از دراپ‌داون
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -95,15 +90,32 @@ function EditPost() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // ⭐ Mutation با invalidate درست
   const { mutate, isPending } = useMutation({
     mutationFn: (formData) => updateMyPost(postId, formData),
-    onSuccess: () => {
+    onSuccess: (response) => {
+      console.log("✅ ویرایش موفق:", response.data);
       toast.success("آگهی با موفقیت ویرایش شد!");
-      queryClient.removeQueries({ queryKey: ["post-list"] });
-      queryClient.removeQueries({ queryKey: ["my-post-list"] });
-      navigate("/my-divar/my-posts", { replace: true });
+
+      // ⭐ Invalidate به جای Remove
+      queryClient.invalidateQueries({ queryKey: ["post-list"], exact: true });
+      queryClient.invalidateQueries({
+        queryKey: ["my-post-list"],
+        exact: true,
+      });
+      queryClient.invalidateQueries({ queryKey: ["edit-post", postId] });
+      queryClient.invalidateQueries({ queryKey: ["post", postId] });
+
+      // کمی تاخیر بذار تا invalidate انجام بشه
+      setTimeout(() => {
+        navigate("/my-divar/my-posts", { replace: true });
+      }, 100);
     },
-    onError: () => toast.error("خطا در ویرایش آگهی"),
+    onError: (error) => {
+      console.error("❌ خطا در ویرایش:", error);
+      console.error("Response:", error.response?.data);
+      toast.error(error.response?.data?.message || "خطا در ویرایش آگهی");
+    },
   });
 
   const changeHandler = (e) => {
@@ -111,7 +123,6 @@ function EditPost() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // حذف عکس فعلی
   const removeExistingImage = (index) => {
     setForm((prev) => ({
       ...prev,
@@ -119,7 +130,6 @@ function EditPost() {
     }));
   };
 
-  // حذف عکس جدید
   const removeNewImage = (index) => {
     setForm((prev) => ({
       ...prev,
@@ -127,7 +137,6 @@ function EditPost() {
     }));
   };
 
-  // اضافه کردن عکس جدید
   const handleNewImage = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
@@ -146,7 +155,6 @@ function EditPost() {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // اعتبارسنجی
     if (!form.title_post.trim()) {
       toast.error("لطفا عنوان آگهی را وارد کنید");
       return;
@@ -167,6 +175,7 @@ function EditPost() {
       return;
     }
 
+    // ⭐ ساخت FormData
     const formData = new FormData();
     formData.append("title_post", form.title_post);
     formData.append("description", form.description);
@@ -174,8 +183,19 @@ function EditPost() {
     formData.append("category", form.category);
     if (form.priceFrom) formData.append("amount", form.priceFrom);
 
-    // فقط عکس‌های جدید رو می‌فرستیم
-    form.images.forEach((img) => img && formData.append("images", img));
+    // ⭐ عکس‌های فعلی
+    formData.append("existingImages", JSON.stringify(form.existingImages));
+
+    // ⭐ عکس‌های جدید
+    form.images.forEach((img) => {
+      if (img) formData.append("images", img);
+    });
+
+    console.log("📤 ارسال داده‌ها:");
+    console.log("- existingImages:", form.existingImages);
+    console.log("- newImages count:", form.images.length);
+    console.log("- title:", form.title_post);
+    console.log("- city:", form.city);
 
     mutate(formData);
   };
@@ -193,7 +213,6 @@ function EditPost() {
     );
   }
 
-  // محاسبه تعداد اسلات‌های خالی
   const totalImages = form.existingImages.length + form.images.length;
   const emptySlots = MAX_IMAGES - totalImages;
 
@@ -205,7 +224,6 @@ function EditPost() {
           <p className={styles.hint}>هر قسمتی که بخوای رو تغییر بده</p>
         </div>
 
-        {/* عکس‌ها */}
         <div className={styles.field}>
           <label className={styles.uploadLabel}>
             عکس‌های آگهی (حداکثر {MAX_IMAGES} عکس)
@@ -215,7 +233,6 @@ function EditPost() {
           </label>
 
           <div className={styles.imageGrid}>
-            {/* عکس‌های فعلی */}
             {form.existingImages.map((img, i) => (
               <div key={`existing-${i}`} className={styles.imageContainer}>
                 <div className={styles.imageWrapper}>
@@ -236,7 +253,6 @@ function EditPost() {
               </div>
             ))}
 
-            {/* عکس‌های جدید آپلود شده */}
             {form.images.map((file, i) => (
               <div key={`new-${i}`} className={styles.imageContainer}>
                 <div className={styles.imageWrapper}>
@@ -254,10 +270,10 @@ function EditPost() {
                 >
                   <CloseIcon />
                 </button>
+                <span className={styles.newBadge}>جدید</span>
               </div>
             ))}
 
-            {/* اسلات آپلود */}
             {emptySlots > 0 && (
               <label className={styles.uploadSlot}>
                 <input
@@ -282,7 +298,6 @@ function EditPost() {
           )}
         </div>
 
-        {/* بقیه فیلدها */}
         <div className={styles.field}>
           <label>عنوان آگهی</label>
           <input
@@ -446,6 +461,7 @@ function EditPost() {
             type="button"
             onClick={() => navigate(-1)}
             className={styles.cancelBtn}
+            disabled={isPending}
           >
             انصراف
           </button>
@@ -469,14 +485,12 @@ function EditPost() {
   );
 }
 
-// آیکون مینیمال برای بستن
 const CloseIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
     <path d="M12.853 3.147a.5.5 0 0 1 0 .708L8.707 8l4.146 4.146a.5.5 0 0 1-.708.708L8 8.707l-4.146 4.147a.5.5 0 0 1-.708-.708L7.293 8 3.146 3.854a.5.5 0 1 1 .708-.708L8 7.293l4.146-4.146a.5.5 0 0 1 .707 0z" />
   </svg>
 );
 
-// آیکون مینیمال برای آپلود
 const UploadIcon = () => (
   <svg
     width="32"

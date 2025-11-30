@@ -14,14 +14,19 @@ function HomePage() {
   const { selectedCity } = useCity();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // ⭐ اضافه کردن refetchOnMount و refetchOnWindowFocus
   const { data: posts, isLoading: postLoading } = useQuery({
     queryKey: ["post-list"],
     queryFn: getAllPosts,
+    refetchOnMount: "always", // همیشه وقتی کامپوننت mount میشه رفرش کن
+    refetchOnWindowFocus: true, // وقتی به تب برمی‌گردی رفرش کن
+    staleTime: 0, // داده همیشه stale محسوب بشه
   });
 
   const { data: categories, isLoading: categoryLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategory,
+    staleTime: 5 * 60 * 1000, // دسته‌بندی‌ها 5 دقیقه fresh باشن
   });
 
   const selectedCategoryId = searchParams.get("category") || null;
@@ -56,7 +61,7 @@ function HomePage() {
         (post) => post.category === selectedCategoryId
       );
     }
-    // === فیلتر قیمت ===
+
     if (urlMinPrice || urlMaxPrice) {
       const min = urlMinPrice ? parseInt(urlMinPrice, 10) : 0;
       const max = urlMaxPrice ? parseInt(urlMaxPrice, 10) : Infinity;
@@ -86,7 +91,7 @@ function HomePage() {
     selectedCategoryId,
     urlMinPrice,
     urlMaxPrice,
-    searchParams,
+    searchQuery,
   ]);
 
   useEffect(() => {

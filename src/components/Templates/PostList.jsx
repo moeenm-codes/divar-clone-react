@@ -19,9 +19,13 @@ function PostList() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
 
+  // ⭐ اضافه کردن refetchOnMount و refetchOnWindowFocus
   const { data, isLoading } = useQuery({
     queryKey: ["my-post-list"],
     queryFn: getPosts,
+    refetchOnMount: "always", // همیشه وقتی کامپوننت mount میشه رفرش کن
+    refetchOnWindowFocus: true, // وقتی به تب برمی‌گردی رفرش کن
+    staleTime: 0, // داده همیشه stale محسوب بشه
   });
 
   const deleteMutation = useMutation({
@@ -29,9 +33,9 @@ function PostList() {
     onSuccess: () => {
       toast.success("آگهی با موفقیت حذف شد");
 
-      queryClient.removeQueries({ queryKey: ["my-post-list"] });
-      queryClient.removeQueries({ queryKey: ["post-list"] });
-      queryClient.removeQueries({ queryKey: ["post"] });
+      // Invalidate کردن کش‌ها
+      queryClient.invalidateQueries({ queryKey: ["my-post-list"] });
+      queryClient.invalidateQueries({ queryKey: ["post-list"] });
 
       setDeleteModalOpen(false);
     },

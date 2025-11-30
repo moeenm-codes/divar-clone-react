@@ -1,5 +1,3 @@
-// src/components/Templates/AddPost.jsx
-
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -57,8 +55,8 @@ function AddPost() {
       toast.success(res?.data?.message || "آگهی با موفقیت ایجاد شد!");
 
       // کش‌ها رو پاک می‌کنیم تا جدیدترین داده‌ها لود بشن
-      queryClient.removeQueries({ queryKey: ["my-post-list"] });
-      queryClient.removeQueries({ queryKey: ["post-list"] });
+      queryClient.invalidateQueries({ queryKey: ["my-post-list"] });
+      queryClient.invalidateQueries({ queryKey: ["post-list"] });
 
       // مستقیم می‌ریم به آگهی‌های من
       navigate("/my-divar/my-posts", { replace: true });
