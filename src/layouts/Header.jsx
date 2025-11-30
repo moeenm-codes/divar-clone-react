@@ -15,7 +15,6 @@ import { useCity } from "components/context/CityContext";
 import { normalizePersian } from "utils/normalize";
 import PostSearch from "components/Templates/PostSearch";
 
-// ←←← این خط جدید اضافه شده
 import { useClickAway } from "@uidotdev/usehooks";
 
 function Header() {
@@ -38,7 +37,6 @@ function Header() {
     return allCities.filter((p) => normalizePersian(p).includes(q));
   }, [cityQuery, allCities]);
 
-  // ←←← دو خط جدید: تشخیص کلیک خارج از منوها
   const cityRef = useClickAway(() => setCityOpen(false));
   const profileRef = useClickAway(() => setProfileOpen(false));
 
@@ -141,7 +139,6 @@ function Header() {
             <img src="/divar.svg" alt="دیوار" className={styles.logoImg} />
           </Link>
 
-          {/* ←←← منوی شهر – ref اضافه شد */}
           <div className={styles.dropdownWrapper} ref={cityRef}>
             <button
               className={`${styles.dropdownBtn} ${
@@ -149,7 +146,7 @@ function Header() {
               }`}
               onClick={() => {
                 setCityOpen((prev) => !prev);
-                if (profileOpen) setProfileOpen(false); // یکی باز بشه، اون یکی بسته بشه
+                if (profileOpen) setProfileOpen(false);
               }}
               aria-haspopup="menu"
               aria-expanded={cityOpen}

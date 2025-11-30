@@ -11,6 +11,7 @@ import { normalizePersian } from "utils/normalize";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import styles from "./EditPost.module.css";
+import Loader from "components/modules/Loader";
 
 const MAX_IMAGES = 5;
 
@@ -199,19 +200,6 @@ function EditPost() {
 
     mutate(formData);
   };
-
-  if (loadingPost) {
-    return (
-      <div className={styles.page}>
-        <div className={styles.form}>
-          <div className={styles.loadingContainer}>
-            <div className={styles.loader}></div>
-            <h3>در حال بارگذاری آگهی...</h3>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   const totalImages = form.existingImages.length + form.images.length;
   const emptySlots = MAX_IMAGES - totalImages;

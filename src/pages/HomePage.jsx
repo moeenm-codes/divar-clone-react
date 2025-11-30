@@ -14,15 +14,14 @@ function HomePage() {
   const { selectedCity } = useCity();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // ⭐ اضافه کردن refetchOnMount و refetchOnWindowFocus
   const { data: posts, isLoading: postLoading } = useQuery({
     queryKey: ["post-list"],
     queryFn: getAllPosts,
-    refetchOnMount: "always", // همیشه وقتی کامپوننت mount میشه رفرش کن
-    refetchOnWindowFocus: true, // وقتی به تب برمی‌گردی رفرش کن
-    staleTime: 0, // داده همیشه stale محسوب بشه
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true,
+    staleTime: 0,
   });
-
+  console.log(posts);
   const { data: categories, isLoading: categoryLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategory,

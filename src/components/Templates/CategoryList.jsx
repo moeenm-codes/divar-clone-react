@@ -12,7 +12,6 @@ function CategoryList() {
   const queryClient = useQueryClient();
   const [toast, setToast] = useState(null);
 
-  // حالت مودال حذف
   const [deleteModal, setDeleteModal] = useState({
     isOpen: false,
     id: null,

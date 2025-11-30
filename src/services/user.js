@@ -18,7 +18,6 @@ const updateMyPost = (id, formData) => {
     {
       headers: {
         Authorization: `Bearer ${token}`,
-        // Content-Type رو نمی‌ذاریم تا axios خودش multipart/form-data تنظیم کنه
       },
     }
   );
