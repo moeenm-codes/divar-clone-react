@@ -1,66 +1,82 @@
+/* PostSearch.module.css */
 .searchWrapper {
   position: relative;
   flex: 1;
-  max-width: 520px;
-  margin: 0 20px;
+  max-width: 580px;
+  margin: 0 24px;
 }
 
 .searchBox {
   display: flex;
   align-items: center;
-  background: white;
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 10px 12px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  height: 44px;
+  background: #f8f9fa;
+  border: 2px solid transparent;
+  border-radius: 24px;
+  padding: 12px 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  height: 52px;
+  backdrop-filter: blur(8px);
 }
 
-.searchBox.active,
 .searchBox:hover {
+  background: white;
+  box-shadow: 0 4px 20px rgba(166, 38, 38, 0.12);
+  border-color: #e0e0e0;
+}
+
+.searchBox.active {
+  background: white;
   border-color: #a62626;
-  box-shadow: 0 4px 20px rgba(166, 38, 38, 0.15);
+  box-shadow: 0 6px 24px rgba(166, 38, 38, 0.18);
+  transform: translateY(-1px);
 }
 
 .searchIcon {
   color: #a62626;
-  font-size: 1.3rem;
-  margin-left: 10px;
+  font-size: 1.4rem;
+  margin-left: 12px;
   flex-shrink: 0;
+  opacity: 0.8;
 }
 
 .searchInput {
   border: none;
   outline: none;
   flex: 1;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-family: inherit;
   background: transparent;
+  font-weight: 400;
+  direction: rtl;
 }
 
 .searchInput::placeholder {
-  color: #999;
+  color: #9e9e9e;
+  font-weight: 300;
 }
 
 .clearBtn {
-  background: none;
+  background: #f5f5f5;
   border: none;
-  font-size: 1.5rem;
-  color: #aaa;
+  font-size: 1.2rem;
+  color: #757575;
   cursor: pointer;
-  padding: 0;
-  width: 24px;
-  height: 24px;
+  padding: 4px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  transition: all 0.2s ease;
+  margin-right: 4px;
 }
 
 .clearBtn:hover {
-  background: #fee;
+  background: #ffebee;
   color: #a62626;
+  transform: scale(1.1);
 }
 
 .dropdown {
@@ -70,17 +86,19 @@
   right: 0;
   background: white;
   border-radius: 16px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-  border: 1px solid #eee;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  border: 1px solid #f0f0f0;
   overflow: hidden;
   z-index: 1001;
-  animation: fadeIn 0.2s ease-out;
+  animation: slideDown 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  max-height: none; /* حذف محدودیت ارتفاع */
 }
 
-@keyframes fadeIn {
+@keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-8px) scale(0.98);
   }
   to {
     opacity: 1;
@@ -88,53 +106,184 @@
   }
 }
 
+.section {
+  padding: 0;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px 12px;
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-bottom: 1px solid #f5f5f5;
+  background: #fafafa;
+}
+
+.sectionIcon {
+  margin-left: 8px;
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+.clearAllBtn {
+  background: none;
+  border: none;
+  color: #a62626;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-right: auto;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.clearAllBtn:hover {
+  background: #fff5f5;
+}
+
 .suggestionsList {
-  max-height: 420px;
-  overflow-y: auto;
+  max-height: none; /* حذف اسکرول */
+  overflow-y: visible;
+  padding: 0;
 }
 
 .suggestionItem {
   display: flex;
   align-items: center;
-  padding: 14px 18px;
+  padding: 14px 20px;
   background: none;
   border: none;
   width: 100%;
   text-align: right;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
   font-size: 0.95rem;
+  color: #424242;
+  position: relative;
+  border-bottom: 1px solid #f8f8f8;
 }
 
-.suggestionItem:hover,
-.highlighted {
-  background: #fff5f5;
+.suggestionItem:last-child {
+  border-bottom: none;
+}
+
+.suggestionItem:hover {
+  background: #fafafa;
 }
 
 .highlighted {
-  background: #ffe5e5 !important;
+  background: #fff5f5 !important;
+  color: #a62626;
   font-weight: 600;
 }
 
 .itemIcon {
-  color: #ccc;
-  font-size: 1rem;
+  color: #9e9e9e;
+  font-size: 1.1rem;
   margin-left: 12px;
-  opacity: 0.7;
+  opacity: 0.8;
+  flex-shrink: 0;
 }
 
-.empty {
-  padding: 20px;
+.highlighted .itemIcon {
+  color: #a62626;
+  opacity: 1;
+}
+
+.itemText {
+  flex: 1;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  color: #bdbdbd;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: all 0.2s;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.suggestionItem:hover .removeBtn {
+  opacity: 1;
+}
+
+.removeBtn:hover {
+  color: #a62626;
+  background: #ffebee;
+}
+
+.emptyState {
+  padding: 32px 20px;
   text-align: center;
-  color: #999;
+  color: #757575;
+}
+
+.emptyIcon {
+  font-size: 2.5rem;
+  color: #e0e0e0;
+  margin-bottom: 16px;
+}
+
+.emptyText {
   font-size: 0.95rem;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  color: #666;
+}
+
+.emptyHint {
+  font-size: 0.9rem;
+  color: #9e9e9e;
+}
+
+.searchAnywayBtn {
+  background: #a62626;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+  font-family: inherit;
+}
+
+.searchAnywayBtn:hover {
+  background: #8c1f1f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(166, 38, 38, 0.3);
 }
 
 /* ریسپانسیو */
+@media (max-width: 1200px) {
+  .searchWrapper {
+    max-width: 500px;
+    margin: 0 16px;
+  }
+}
+
 @media (max-width: 992px) {
   .searchWrapper {
-    margin: 0 12px;
     max-width: 400px;
+  }
+
+  .searchBox {
+    height: 48px;
+    padding: 10px 16px;
+    border-radius: 20px;
   }
 }
 
@@ -143,9 +292,43 @@
     order: -1;
     width: 100%;
     max-width: none;
-    margin: 16px 0 8px;
+    margin: 12px 0 8px;
   }
+
   .searchBox {
-    border-radius: 50px;
+    border-radius: 16px;
+    height: 44px;
+  }
+
+  .dropdown {
+    border-radius: 12px;
+    margin: 6px 0;
+  }
+
+  .suggestionItem {
+    padding: 12px 16px;
+  }
+
+  .sectionHeader {
+    padding: 14px 16px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchBox {
+    padding: 8px 14px;
+  }
+
+  .searchInput {
+    font-size: 0.9rem;
+  }
+
+  .emptyState {
+    padding: 24px 16px;
+  }
+
+  .searchAnywayBtn {
+    padding: 10px 16px;
+    font-size: 0.85rem;
   }
 }
