@@ -8,7 +8,6 @@ const getPost = (id) => api.get(`post/${id}`);
 const getAllPosts = () => api.get("");
 const deleteMyPost = (id) => api.delete(`post/delete/${id}`);
 
-// ⭐ فیکس شده: مثل createPost باید مستقیم با axios کار کنیم
 const updateMyPost = (id, formData) => {
   const token = getCookie("accessToken");
 

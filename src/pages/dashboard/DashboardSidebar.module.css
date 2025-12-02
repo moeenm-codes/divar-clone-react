@@ -2,21 +2,23 @@
 
 .sidebar {
   background: white;
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   height: fit-content;
-  animation: slideInLeft 0.5s ease-out;
+  animation: slideInLeft 0.4s ease-out;
   margin-bottom: 32px;
+  border: 1px solid #f0f0f0;
 }
 
 /* === موبایل: sticky خاموش === */
 @media (max-width: 768px) {
   .sidebar {
     position: static !important;
-    border-radius: 12px;
+    border-radius: 16px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    padding: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   }
 }
 
@@ -30,14 +32,195 @@
   }
 }
 
+/* === بخش dropdown کاربری === */
+.userDropdown {
+  background: white;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.userDropdown:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.dropdownHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 16px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dropdownHeader:hover {
+  background: #fafafa;
+}
+
+.userInfoCompact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.userAvatarCompact {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #a62626, #d32f2f);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.userIconCompact {
+  font-size: 18px;
+  color: white;
+}
+
+.userTextCompact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  flex: 1;
+}
+
+.userTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2d3748;
+  line-height: 1.2;
+}
+
+.verifiedCompact {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffebee;
+  color: #a62626;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.verifiedIconCompact {
+  font-size: 12px;
+}
+
+.dropdownIcon {
+  color: #a62626;
+  font-size: 18px;
+  transition: transform 0.3s ease;
+  opacity: 0.8;
+}
+
+.dropdownHeader:hover .dropdownIcon {
+  opacity: 1;
+}
+
+/* محتوای dropdown */
+.dropdownContent {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease,
+    padding 0.3s ease;
+  opacity: 0;
+  padding: 0 16px;
+  background: #fafafa;
+  border-top: 1px solid #f0f0f0;
+}
+
+.dropdownContent.open {
+  max-height: 250px;
+  opacity: 1;
+  padding: 16px;
+}
+
+.dropdownItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
+.itemLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.itemIcon {
+  font-size: 14px;
+  color: #a62626;
+  opacity: 0.8;
+}
+
+.phoneNumberCompact {
+  font-family: "Vazirmatn", "Segoe UI", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: 0.5px;
+  direction: ltr;
+  text-align: left;
+  padding: 2px 0;
+}
+
+.verificationStatusCompact {
+  background: #ffebee;
+  color: #a62626;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.dropdownHint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #fff5f5;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  color: #a62626;
+  line-height: 1.4;
+  border: 1px solid #ffebee;
+}
+
+.hintIcon {
+  font-size: 14px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
 /* عنوان */
 .title {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #1a1a1a;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   position: relative;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
 }
 
 .title::after {
@@ -45,7 +228,7 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 40px;
+  width: 36px;
   height: 3px;
   background: linear-gradient(90deg, #a62626, #c93a3a);
   border-radius: 2px;
@@ -62,12 +245,12 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 16px;
-  margin-bottom: 8px;
+  padding: 12px 14px;
+  margin-bottom: 6px;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: linear-gradient(145deg, #ffffff, #f8f8f8);
+  background: #f8f8f8;
   border: 1.5px solid transparent;
   animation: fadeInUp 0.4s ease-out both;
   text-decoration: none;
@@ -77,8 +260,8 @@
 .item:hover {
   background: linear-gradient(145deg, #fff0f0, #ffe5e5);
   border-color: #a62626;
-  transform: translateX(-4px);
-  box-shadow: 0 6px 20px rgba(166, 38, 38, 0.12);
+  transform: translateX(-3px);
+  box-shadow: 0 4px 12px rgba(166, 38, 38, 0.12);
 }
 
 .item.active {
@@ -86,7 +269,7 @@
   color: white;
   font-weight: 600;
   border-color: #a62626;
-  box-shadow: 0 8px 25px rgba(166, 38, 38, 0.3);
+  box-shadow: 0 6px 20px rgba(166, 38, 38, 0.2);
 }
 
 .item.active .icon,
@@ -95,19 +278,19 @@
 }
 
 .icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   transition: transform 0.3s ease;
   color: #666;
 }
 
 .item:hover .icon {
-  transform: scale(1.15) rotate(5deg);
+  transform: scale(1.15);
   color: #a62626;
 }
 
 .label {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #333;
   font-weight: 500;
 }
@@ -116,36 +299,36 @@
 .logout {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
+  gap: 10px;
+  padding: 12px 14px;
   width: 100%;
-  background: linear-gradient(145deg, #ffebee, #ffcdd2);
+  background: #ffebee;
   border: 1.5px solid transparent;
   border-radius: 12px;
-  color: #d32f2f;
+  color: #a62626;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .logout:hover {
-  background: linear-gradient(145deg, #a62626, #e53935);
+  background: linear-gradient(145deg, #a62626, #c93a3a);
   color: white;
   border-color: #a62626;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(166, 38, 38, 0.2);
+  box-shadow: 0 4px 12px rgba(166, 38, 38, 0.15);
 }
 
 .logoutIcon {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 /* انیمیشن‌ها */
 @keyframes slideInLeft {
   from {
     opacity: 0;
-    transform: translateX(-30px);
+    transform: translateX(-20px);
   }
   to {
     opacity: 1;
@@ -156,10 +339,69 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ریسپانسیو موبایل */
+@media (max-width: 768px) {
+  .sidebar {
+    padding: 14px;
+  }
+
+  .userAvatarCompact {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .userIconCompact {
+    font-size: 16px;
+  }
+
+  .userTitle {
+    font-size: 0.9rem;
+  }
+
+  .dropdownHeader {
+    padding: 12px 14px;
+  }
+
+  .phoneNumberCompact {
+    font-size: 0.9rem;
+  }
+
+  .item {
+    padding: 10px 12px;
+    margin-bottom: 4px;
+  }
+
+  .logout {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .title {
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+
+  .dropdownContent.open {
+    padding: 12px 14px;
   }
 }

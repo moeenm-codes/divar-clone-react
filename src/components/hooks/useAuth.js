@@ -17,8 +17,8 @@ const useAuth = () => {
 
   const logout = () => {
     removeTokens();
-    queryClient.removeQueries(["profile"]); // پاک کردن کش
-    window.location.href = "/"; // یا navigate("/")
+    queryClient.removeQueries(["profile"]);
+    window.location.href = "/";
   };
 
   return { user, isLoading, logout };

@@ -12,7 +12,6 @@ const AuthRedirect = ({ children }) => {
 
   if (isLoading) return <Loader />;
 
-  // اگر لاگین کرده، نذار بره به /auth
   if (data) {
     return <Navigate to="/dashboard" replace />;
   }

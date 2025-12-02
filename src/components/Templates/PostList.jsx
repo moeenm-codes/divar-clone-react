@@ -247,7 +247,7 @@ function PostList() {
                 if (selectedCategory !== "all") {
                   setSelectedCategory("all");
                 } else {
-                  navigate("/newpost");
+                  navigate("/addpost");
                 }
               }}
             >
