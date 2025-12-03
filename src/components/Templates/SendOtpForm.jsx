@@ -1,3 +1,5 @@
+// components/Templates/SendOtpForm.jsx
+
 import { useState, useRef } from "react";
 import { sendOtp } from "services/auth";
 import styles from "./SendOtpForm.module.css";
@@ -9,35 +11,63 @@ function SendOtpForm({ mobile, setMobile, setStep }) {
   const [error, setError] = useState("");
   const inputRef = useRef(null);
 
+  // تبدیل +98 یا بدون 0 به فرمت 0xxxxxxxxxx
+  const normalizeMobile = (value) => {
+    let cleaned = value.replace(/[^\d۰-۹]/g, ""); // فقط اعداد رو نگه دار
+
+    // اگر با 98 شروع شد (مثل +98 یا 0098)
+    if (cleaned.startsWith("98")) {
+      cleaned = cleaned.slice(2); // حذف 98
+    }
+
+    // اگر با 9 شروع شد و 10 رقم بود → 0 اضافه کن
+    if (cleaned.startsWith("9") && cleaned.length === 10) {
+      cleaned = "0" + cleaned;
+    }
+
+    // اگر با 0098 یا چیزای عجیب بود، باز هم درستش کن
+    if (cleaned.length > 11) {
+      cleaned = cleaned.slice(-11); // فقط 11 رقم آخر
+      if (cleaned.startsWith("9") && cleaned.length === 10) {
+        cleaned = "0" + cleaned;
+      }
+    }
+
+    return cleaned.slice(0, 11);
+  };
+
+  const handleMobileChange = (value) => {
+    setError("");
+    const normalized = normalizeMobile(value);
+    setMobile(normalized);
+  };
+
   const submitHandler = async (event) => {
     event.preventDefault();
     setError("");
 
-    if (mobile.length !== 11) {
-      setError("شماره موبایل باید ۱۱ رقم باشد");
+    const finalMobile = normalizeMobile(mobile);
+
+    if (finalMobile.length !== 11 || !finalMobile.startsWith("0")) {
+      setError("شماره موبایل باید ۱۱ رقم و با ۰ شروع شود");
       inputRef.current?.focus();
       return;
     }
 
     setIsLoading(true);
-    const { response, error: apiError } = await sendOtp(p2e(mobile));
+
+    const { response, error: apiError } = await sendOtp(p2e(finalMobile));
 
     if (response) {
       setStep(2);
     }
 
-    if (error) {
-      setError(error.response?.data?.message || "خطا در ارسال کد");
+    if (apiError) {
+      setError(apiError.response?.data?.message || "خطا در ارسال کد");
       inputRef.current?.focus();
     }
 
     setIsLoading(false);
-  };
-
-  const handleMobileChange = (value) => {
-    setError("");
-    const cleanedValue = value.replace(/[^\d۰-۹]/g, "");
-    setMobile(cleanedValue.slice(0, 11));
   };
 
   return (
