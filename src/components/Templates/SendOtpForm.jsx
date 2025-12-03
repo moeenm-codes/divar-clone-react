@@ -20,7 +20,7 @@ function SendOtpForm({ mobile, setMobile, setStep }) {
     }
 
     setIsLoading(true);
-    const { response, error } = await sendOtp(p2e(mobile));
+    const { response, error: apiError } = await sendOtp(p2e(mobile));
 
     if (response) {
       setStep(2);
@@ -66,6 +66,7 @@ function SendOtpForm({ mobile, setMobile, setStep }) {
                 className={`${styles.input} ${error ? styles.error : ""}`}
                 dir="ltr"
                 autoFocus
+                disabled={isLoading}
               />
               <label className={styles.inputLabel}>شماره موبایل</label>
               <div className={styles.inputLine}></div>

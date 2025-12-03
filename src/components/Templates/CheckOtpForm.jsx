@@ -1,27 +1,32 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { checkOpt } from "services/auth";
+import { checkOtp, sendOtp } from "services/auth";
 import { getProfile } from "services/user";
 import { setCookie } from "utils/cookie";
+import { p2e } from "utils/numbers";
+import { useToast } from "components/hooks/useToast";
 import { GoArrowLeft } from "react-icons/go";
 import { IoMdTimer } from "react-icons/io";
 
 import styles from "./CheckOtpForm.module.css";
 
+const RESEND_TIME_SECONDS = 120;
+
 function CheckOtpForm({ code, setCode, setStep, mobile }) {
   const navigate = useNavigate();
+  const toast = useToast();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [timer, setTimer] = useState(112); // 1:52 دقیقه
+  const [timer, setTimer] = useState(RESEND_TIME_SECONDS);
   const inputRefs = useRef([]);
 
   const { refetch } = useQuery({
     queryKey: ["profile"],
     queryFn: getProfile,
+    enabled: false,
   });
 
-  // تایمر معکوس
   useEffect(() => {
     if (timer > 0) {
       const interval = setInterval(() => {
@@ -31,10 +36,20 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
     }
   }, [timer]);
 
-  // فوکوس روی اینپوت اول (اولین باکس سمت چپ)
-  useEffect(() => {
+  const focusFirstInput = () => {
     inputRefs.current[0]?.focus();
+  };
+
+  useEffect(() => {
+    focusFirstInput();
   }, []);
+
+  // خودکار سابمیت کردن فرم هنگام تکمیل کد
+  useEffect(() => {
+    if (code.length === 5 && !isLoading) {
+      submitHandler();
+    }
+  }, [code]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -45,29 +60,26 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
   const handleChange = (index, value) => {
     setError("");
 
-    // فقط اعداد مجاز
-    const numValue = value.replace(/[^\d]/g, "");
+    // فقط اعداد مجاز (فارسی و انگلیسی)
+    const numValue = value.replace(/[^\d۰-۹]/g, "");
 
     if (numValue) {
-      const newCode = code.split("");
-      newCode[index] = numValue;
-      setCode(newCode.join(""));
+      const newCodeArray = code.split("");
+      newCodeArray[index] = p2e(numValue);
+      setCode(newCodeArray.join(""));
 
-      // رفتن به اینپوت بعدی (سمت راست)
       if (index < 4 && inputRefs.current[index + 1]) {
         inputRefs.current[index + 1].focus();
       }
     } else if (value === "" && index > 0) {
-      // اگر حذف کرد و اینپوت خالی شد، به قبلی برو (سمت چپ)
-      const newCode = code.split("");
-      newCode[index] = "";
-      setCode(newCode.join(""));
+      const newCodeArray = code.split("");
+      newCodeArray[index] = "";
+      setCode(newCodeArray.join(""));
       inputRefs.current[index - 1].focus();
     } else if (value === "" && index === 0) {
-      // اگر در اولین باکس حذف کرد
-      const newCode = code.split("");
-      newCode[0] = "";
-      setCode(newCode.join(""));
+      const newCodeArray = code.split("");
+      newCodeArray[0] = "";
+      setCode(newCodeArray.join(""));
     }
   };
 
@@ -99,23 +111,23 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
 
   const handlePaste = (e) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").replace(/[^\d]/g, "");
+    const pastedData = p2e(
+      e.clipboardData.getData("text").replace(/[^\d]/g, "")
+    );
 
-    if (pastedData.length === 5) {
-      setCode(pastedData);
-      inputRefs.current[4].focus(); // فوکوس روی آخرین باکس
+    if (pastedData.length >= 5) {
+      setCode(pastedData.substring(0, 5));
+      inputRefs.current[4].focus();
     } else if (pastedData.length > 0) {
-      // اگر کمتر از ۵ رقم بود، پر کن تا ۵ رقم
       const paddedData = pastedData.padEnd(5, "").substring(0, 5);
       setCode(paddedData);
-      const lastFilledIndex = Math.min(pastedData.length, 4);
-      inputRefs.current[lastFilledIndex].focus();
+      const lastFilledIndex = pastedData.length - 1;
+      inputRefs.current[lastFilledIndex]?.focus();
     }
   };
 
   const submitHandler = async (event) => {
-    event.preventDefault();
-    setError("");
+    event?.preventDefault();
 
     if (code.length !== 5) {
       setError("کد تایید باید ۵ رقم باشد");
@@ -123,30 +135,45 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
     }
 
     setIsLoading(true);
-    const { response, error: apiError } = await checkOpt(mobile, code);
+    const englishCode = p2e(code);
+    const { response, error: apiError } = await checkOtp(mobile, englishCode);
 
     if (response) {
       setCookie(response.data);
-      refetch();
+      await refetch(); // <--- مطمئن شوید که پروفایل قبل از ریدایرکت فچ می‌شود
       navigate("/");
     }
 
     if (apiError) {
       setError(apiError.response?.data?.message || "کد وارد شده نامعتبر است");
+      triggerShake();
+      toast.error("کد وارد شده اشتباه است"); // <--- نمایش Toast
       // ریست کد و فوکوس
       setCode("");
-      inputRefs.current[0]?.focus();
+      focusFirstInput();
     }
 
     setIsLoading(false);
   };
 
   const handleResendCode = async () => {
-    // در اینجا باید تابع ارسال مجدد کد فراخوانی شود
-    setTimer(112);
-    setError("");
-    setCode("");
-    inputRefs.current[0]?.focus();
+    setIsLoading(true);
+    // فراخوانی تابع ارسال مجدد کد
+    const { response, error: apiError } = await sendOtp(mobile);
+
+    if (response) {
+      setTimer(RESEND_TIME_SECONDS); // <--- ریست تایمر فقط در صورت موفقیت
+      setError("");
+      setCode("");
+      focusFirstInput();
+      toast.success("کد تایید مجددا ارسال شد.");
+    }
+
+    if (apiError) {
+      toast.error(apiError.response?.data?.message || "خطا در ارسال مجدد کد.");
+    }
+
+    setIsLoading(false);
   };
 
   const handleEditMobile = () => {
@@ -188,6 +215,7 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
                       dir="ltr"
                       autoComplete="off"
                       data-index={index}
+                      disabled={isLoading}
                     />
                   </div>
                 ))}
@@ -234,6 +262,7 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
                 type="button"
                 onClick={handleResendCode}
                 className={styles.resendBtn}
+                disabled={isLoading}
               >
                 ارسال مجدد کد
               </button>
@@ -243,6 +272,7 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
               type="button"
               onClick={handleEditMobile}
               className={styles.editMobileBtn}
+              disabled={isLoading}
             >
               ویرایش شماره موبایل
             </button>
@@ -254,7 +284,7 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
             disabled={isLoading || code.length !== 5}
           >
             <span className={styles.btnText}>
-              {isLoading ? "در حال  بررسی" : "تایید و ادامه"}
+              {isLoading ? "در حال بررسی" : "تایید و ادامه"}
             </span>
             <GoArrowLeft className={styles.btnIcon} />
           </button>

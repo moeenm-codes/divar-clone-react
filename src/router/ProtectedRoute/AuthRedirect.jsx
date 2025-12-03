@@ -13,7 +13,7 @@ const AuthRedirect = ({ children }) => {
   if (isLoading) return <Loader />;
 
   if (data) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;
