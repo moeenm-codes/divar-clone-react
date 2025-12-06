@@ -20,6 +20,7 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
   const [isLoading, setIsLoading] = useState(false);
   const [timer, setTimer] = useState(RESEND_TIME_SECONDS);
   const inputRefs = useRef([]);
+  const containerRef = useRef(null); // برای shake animation
 
   const { refetch } = useQuery({
     queryKey: ["profile"],
@@ -43,6 +44,16 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
   useEffect(() => {
     focusFirstInput();
   }, []);
+
+  // تابع shake animation
+  const triggerShake = () => {
+    if (containerRef.current) {
+      containerRef.current.classList.add(styles.shake);
+      setTimeout(() => {
+        containerRef.current?.classList.remove(styles.shake);
+      }, 500);
+    }
+  };
 
   // خودکار سابمیت کردن فرم هنگام تکمیل کد
   useEffect(() => {
@@ -136,44 +147,59 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
 
     setIsLoading(true);
     const englishCode = p2e(code);
-    const { response, error: apiError } = await checkOtp(mobile, englishCode);
 
-    if (response) {
-      setCookie(response.data);
-      await refetch(); // <--- مطمئن شوید که پروفایل قبل از ریدایرکت فچ می‌شود
-      navigate("/");
+    try {
+      const { response, error: apiError } = await checkOtp(mobile, englishCode);
+
+      if (response) {
+        setCookie(response.data);
+        await refetch();
+        navigate("/");
+        return;
+      }
+
+      if (apiError) {
+        const errorMsg =
+          apiError.response?.data?.message || "کد وارد شده نامعتبر است";
+        setError(errorMsg);
+        triggerShake();
+        toast.error("کد وارد شده اشتباه است");
+
+        setCode("");
+        focusFirstInput();
+      }
+    } catch (err) {
+      toast.error("خطایی رخ داده است");
+    } finally {
+      setIsLoading(false);
     }
-
-    if (apiError) {
-      setError(apiError.response?.data?.message || "کد وارد شده نامعتبر است");
-      triggerShake();
-      toast.error("کد وارد شده اشتباه است"); // <--- نمایش Toast
-      // ریست کد و فوکوس
-      setCode("");
-      focusFirstInput();
-    }
-
-    setIsLoading(false);
   };
 
   const handleResendCode = async () => {
     setIsLoading(true);
-    // فراخوانی تابع ارسال مجدد کد
-    const { response, error: apiError } = await sendOtp(mobile);
 
-    if (response) {
-      setTimer(RESEND_TIME_SECONDS); // <--- ریست تایمر فقط در صورت موفقیت
-      setError("");
-      setCode("");
-      focusFirstInput();
-      toast.success("کد تایید مجددا ارسال شد.");
+    try {
+      const { response, error: apiError } = await sendOtp(mobile);
+
+      if (response) {
+        setTimer(RESEND_TIME_SECONDS);
+        setError("");
+        setCode("");
+        focusFirstInput();
+        toast.success("کد تایید مجددا ارسال شد.");
+      }
+
+      if (apiError) {
+        toast.error(
+          apiError.response?.data?.message || "خطا در ارسال مجدد کد."
+        );
+      }
+    } catch (err) {
+      console.error("Error in resend:", err);
+      toast.error("خطا در ارسال مجدد کد.");
+    } finally {
+      setIsLoading(false);
     }
-
-    if (apiError) {
-      toast.error(apiError.response?.data?.message || "خطا در ارسال مجدد کد.");
-    }
-
-    setIsLoading(false);
   };
 
   const handleEditMobile = () => {
@@ -197,7 +223,7 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
         {/* فرم */}
         <form onSubmit={submitHandler} className={styles.form}>
           <div className={styles.inputGroup}>
-            <div className={styles.codeInputsWrapper}>
+            <div className={styles.codeInputsWrapper} ref={containerRef}>
               <div className={styles.codeInputsContainer} onPaste={handlePaste}>
                 {[0, 1, 2, 3, 4].map((index) => (
                   <div key={index} className={styles.codeInputWrapper}>
@@ -222,20 +248,6 @@ function CheckOtpForm({ code, setCode, setStep, mobile }) {
               </div>
               <label className={styles.codeLabel}>کد تایید</label>
             </div>
-
-            {error && (
-              <div className={styles.errorContainer}>
-                <svg className={styles.errorIcon} viewBox="0 0 24 24">
-                  <path
-                    d="M12 8V12M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <span className={styles.errorText}>{error}</span>
-              </div>
-            )}
           </div>
 
           {/* تایمر و دکمه ویرایش */}

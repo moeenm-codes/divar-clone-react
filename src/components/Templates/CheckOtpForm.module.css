@@ -128,33 +128,8 @@
 }
 
 .codeInput.error {
-  border-color: #dc2626;
-  background-color: #fef2f2;
-}
-
-/* Error */
-.errorContainer {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px;
-  background: #fef2f2;
-  border-radius: 8px;
-  animation: fadeIn 0.3s ease;
-  margin-top: 16px;
-}
-
-.errorIcon {
-  width: 16px;
-  height: 16px;
-  color: #dc2626;
-  flex-shrink: 0;
-}
-
-.errorText {
-  font-size: 13px;
-  color: #dc2626;
-  line-height: 1.4;
+  border-color: #ff000073;
+  background-color: rgb(240, 208, 208);
 }
 
 /* Actions */
@@ -194,6 +169,10 @@
   color: #111;
 }
 
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
 .resendBtn {
   background: none;
   border: none;
@@ -207,7 +186,7 @@
 }
 
 .resendBtn:hover {
-  color: #111;
+  color: #fff;
 }
 
 .editMobileBtn {
@@ -223,7 +202,7 @@
 }
 
 .editMobileBtn:hover {
-  color: #111;
+  color: #fff;
 }
 
 /* Button */
@@ -328,6 +307,26 @@
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-8px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(8px);
   }
 }
 

@@ -28,15 +28,28 @@ api.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const res = await getNewTokens();
-      if (!res?.response) return;
-      setCookie(res.response.data);
+      try {
+        const res = await getNewTokens();
 
-      return api(originalRequest);
+        if (res?.response) {
+          setCookie(res.response.data);
+          // token جدید رو به header اضافه کن
+          originalRequest.headers[
+            "Authorization"
+          ] = `Bearer ${res.response.data.accessToken}`;
+          return api(originalRequest);
+        }
+      } catch (refreshError) {
+        console.error("Failed to refresh token:", refreshError);
+        return Promise.reject(refreshError);
+      }
     }
+
+    return Promise.reject(error);
   }
 );
 
