@@ -8,6 +8,7 @@ import {
   FaPlus,
   FaSignInAlt,
   FaSignOutAlt,
+  FaSearch,
 } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { useAuth } from "components/hooks/useAuth";
@@ -134,11 +135,18 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
+        {/* سمت چپ - لوگو و جستجو */}
         <div className={styles.left}>
           <Link to="/" className={styles.logo}>
             <img src="/divar.svg" alt="دیوار" className={styles.logoImg} />
           </Link>
 
+          <PostSearch />
+        </div>
+
+        {/* سمت راست - همه استان‌ها، دیوار من و ثبت آگهی */}
+        <div className={styles.right}>
+          {/* بخش "همه استان‌ها" */}
           <div className={styles.dropdownWrapper} ref={cityRef}>
             <button
               className={`${styles.dropdownBtn} ${
@@ -223,11 +231,7 @@ function Header() {
             )}
           </div>
 
-          <PostSearch />
-        </div>
-
-        <div className={styles.right}>
-          {/* ←←← منوی پروفایل – ref اضافه شد */}
+          {/* بخش "دیوار من" */}
           <div className={styles.dropdownWrapper} ref={profileRef}>
             <button
               className={`${styles.dropdownBtn} ${
@@ -235,7 +239,7 @@ function Header() {
               }`}
               onClick={() => {
                 setProfileOpen((prev) => !prev);
-                if (cityOpen) setCityOpen(false); // یکی باز بشه، اون یکی بسته بشه
+                if (cityOpen) setCityOpen(false);
               }}
               aria-haspopup="menu"
               aria-expanded={profileOpen}
@@ -283,6 +287,7 @@ function Header() {
             )}
           </div>
 
+          {/* دکمه "ثبت آگهی" */}
           <Link
             to="/addpost"
             className={styles.postAdButton}

@@ -1,3 +1,5 @@
+/* Header.module.css */
+
 .header {
   background: linear-gradient(145deg, #ffffff, #f8f8f8);
   border-bottom: 1px solid #e0e0e0;
@@ -28,12 +30,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
+}
+
+/* سمت چپ - لوگو و جستجو */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+  min-width: 0; /* برای overflow کنترل شود */
+}
+
+/* سمت راست - همه استان‌ها، دیوار من و ثبت آگهی */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .logo {
   text-decoration: none;
   transition: transform 0.3s ease;
   outline: none;
+  flex-shrink: 0;
 }
 .logo:hover {
   transform: scale(1.05);
@@ -47,13 +68,6 @@
   filter: brightness(1.1);
 }
 
-.left,
-.right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
 /* Wrapper برای موقعیت‌دهی منو */
 .dropdownWrapper {
   position: relative;
@@ -65,7 +79,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 16px;
+  padding: 10px 16px;
   background: white;
   border: 2px solid #e0e0e0;
   border-radius: 12px;
@@ -106,6 +120,8 @@
   text-align: right;
   font-weight: 600;
   font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .arrow {
@@ -117,6 +133,7 @@
   width: 16px;
   text-align: center;
   margin-left: 4px;
+  flex-shrink: 0;
 }
 .arrow.open {
   transform: rotate(180deg);
@@ -247,6 +264,7 @@
   box-shadow: 0 4px 15px rgba(166, 38, 38, 0.3);
   height: 44px;
   box-sizing: border-box;
+  white-space: nowrap;
 }
 .postAdButton::before {
   content: "";
@@ -317,77 +335,148 @@
   align-items: center;
 }
 
-/* ریسپانسیو */
+/* ریسپانسیو - تبلت */
 @media (max-width: 992px) {
-  .left,
-  .right {
-    gap: 14px;
+  .container {
+    gap: 16px;
   }
+
+  .left {
+    gap: 16px;
+  }
+
+  .right {
+    gap: 10px;
+  }
+
   .dropdownBtn {
     padding: 9px 14px;
     font-size: 0.85rem;
+    min-width: 120px;
+  }
+
+  .postAdButton {
+    padding: 10px 16px;
+    font-size: 0.9rem;
   }
 }
+
+/* ریسپانسیو - موبایل */
 @media (max-width: 768px) {
   .header {
     padding: 10px 0;
   }
+
   .container {
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
+    padding: 0 16px;
   }
-  .left,
-  .right {
+
+  .left {
     width: 100%;
     justify-content: space-between;
   }
+
   .logoImg {
     height: 32px;
   }
 
-  .dropdownWrapper:nth-child(3) {
-    order: -1;
+  .right {
     width: 100%;
-    margin: 12px 0;
-  }
-  .dropdownWrapper:nth-child(3) .dropdownBtn {
-    min-width: auto;
-    width: 100%;
-  }
-  .left > :nth-child(3) {
-    order: -1;
-    width: 100%;
-    margin: 12px 0 8px;
+    justify-content: space-between;
+    order: 2; /* بعد از left بیاد */
   }
 
-  .left > :nth-child(3) .dropdownBtn {
+  .dropdownWrapper {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .dropdownWrapper:nth-child(1) {
+    margin-right: 8px;
+  }
+
+  .dropdownWrapper:nth-child(2) {
+    margin-left: 8px;
+  }
+
+  .postAdButton {
+    flex-shrink: 0;
+    margin: 0;
+  }
+
+  .dropdownBtn {
     width: 100%;
-    justify-content: flex-start;
-    padding: 14px 18px;
-    border-radius: 16px;
+    justify-content: space-between;
+    min-width: auto;
+  }
+
+  .dropdown {
+    right: 0;
+    left: 0;
+    width: 100%;
+    margin-top: 8px;
   }
 }
+
+/* ریسپانسیو - موبایل کوچک */
 @media (max-width: 480px) {
-  .text {
-    display: none;
+  .container {
+    gap: 10px;
   }
-  .dropdownBtn {
-    padding: 10px;
-    min-width: auto;
-    justify-content: center;
+
+  .right {
+    flex-wrap: wrap;
+    gap: 8px;
   }
-  .dropdownBtn .icon {
-    margin: 0 auto;
+
+  .dropdownWrapper {
+    width: 48%;
+    margin: 0 !important;
   }
+
+  .dropdownWrapper:nth-child(1),
+  .dropdownWrapper:nth-child(2) {
+    width: 48%;
+  }
+
   .postAdButton {
-    padding: 9px 16px;
+    width: 100%;
+    order: 3;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .text {
+    display: inline; /* در موبایل کوچک هم نمایش داده شود */
     font-size: 0.8rem;
   }
+
+  .dropdownBtn {
+    padding: 8px 12px;
+    height: 40px;
+  }
+
   .dropdown {
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 220px;
-    margin-top: 8px;
+    min-width: 200px;
+    right: 50%;
+    transform: translateX(50%);
+    width: auto;
+  }
+}
+
+/* ریسپانسیو - بسیار کوچک */
+@media (max-width: 360px) {
+  .text {
+    font-size: 0.75rem;
+  }
+
+  .dropdownBtn {
+    padding: 8px 10px;
+  }
+
+  .postAdButton span {
+    font-size: 0.8rem;
   }
 }
