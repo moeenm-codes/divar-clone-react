@@ -1,0 +1,96 @@
+/* styles/responsive/hamburger.css */
+
+/* دکمه همبرگر - فقط در موبایل و تبلت */
+.hamburgerButton {
+  display: none;
+  background: white;
+  border: 2px solid #e0e0e0;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 10001;
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* نمایش در موبایل و تبلت */
+@media (max-width: 768px) {
+  .hamburgerButton {
+    display: flex;
+  }
+
+  .hamburgerButton:hover {
+    border-color: #a62626;
+    box-shadow: 0 4px 12px rgba(166, 38, 38, 0.12);
+  }
+
+  .hamburgerButton:active {
+    transform: scale(0.95);
+  }
+}
+
+/* خطوط همبرگر */
+.hamburgerLine {
+  width: 20px;
+  height: 3px;
+  background: #a62626;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* حالت باز (تبدیل به X) */
+.hamburgerButton.open .hamburgerLine:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.hamburgerButton.open .hamburgerLine:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.hamburgerButton.open .hamburgerLine:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* حالت باز - تغییر رنگ */
+.hamburgerButton.open {
+  background: white;
+  border-color: #a62626;
+  box-shadow: 0 4px 16px rgba(166, 38, 38, 0.2);
+}
+
+/* مخفی در دسکتاپ */
+@media (min-width: 769px) {
+  .hamburgerButton {
+    display: none !important;
+  }
+}
+
+/* Tablet */
+@media (min-width: 601px) and (max-width: 768px) {
+  .hamburgerButton {
+    width: 48px;
+    height: 48px;
+  }
+
+  .hamburgerLine {
+    width: 24px;
+    height: 3px;
+  }
+
+  .hamburgerButton.open .hamburgerLine:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .hamburgerButton.open .hamburgerLine:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}

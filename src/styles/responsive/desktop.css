@@ -1,0 +1,108 @@
+/* styles/responsive/desktop.css */
+/* Desktop: 1024px+ */
+
+@media (min-width: 1025px) {
+  /* === HEADER === */
+  .header .container {
+    max-width: 1200px !important;
+    padding: 0 20px !important;
+  }
+
+  .header .dropdownBtn {
+    min-width: 140px !important;
+  }
+
+  /* === SEARCH === */
+  .searchWrapper {
+    max-width: 400px !important;
+    margin: 0 24px !important;
+  }
+
+  /* === HOMEPAGE === */
+  .homepage .container {
+    max-width: 1300px !important;
+    grid-template-columns: 240px 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* === SIDEBAR === */
+  .sidebar {
+    position: sticky !important;
+    top: 100px !important;
+    height: fit-content !important;
+  }
+
+  /* === MAIN GRID === */
+  .main .grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 20px !important;
+  }
+
+  /* === DASHBOARD === */
+  .dashboardLayout .container {
+    max-width: 1200px !important;
+    grid-template-columns: 260px 1fr !important;
+    gap: 32px !important;
+  }
+
+  .dashboardSidebar {
+    position: sticky !important;
+    top: 100px !important;
+  }
+
+  /* === POST LIST === */
+  .postList .postsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+    gap: 24px !important;
+  }
+}
+
+/* Large Desktop: 1200px+ */
+@media (min-width: 1200px) {
+  .header .container {
+    max-width: 1300px !important;
+  }
+
+  .homepage .container {
+    max-width: 1400px !important;
+  }
+
+  .searchWrapper {
+    max-width: 500px !important;
+  }
+
+  .main .grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+  }
+}
+
+/* Extra Large Desktop: 1400px+ */
+@media (min-width: 1400px) {
+  .header .container {
+    max-width: 1400px !important;
+  }
+
+  .homepage .container {
+    max-width: 1500px !important;
+    grid-template-columns: 280px 1fr !important;
+  }
+
+  .main .grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+  }
+}
+
+/* Ultra Wide: 1920px+ */
+@media (min-width: 1920px) {
+  .header .container {
+    max-width: 1600px !important;
+  }
+
+  .homepage .container {
+    max-width: 1700px !important;
+  }
+
+  .main .grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)) !important;
+  }
+}

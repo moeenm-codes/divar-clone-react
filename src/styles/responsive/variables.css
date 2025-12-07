@@ -1,0 +1,49 @@
+/* styles/responsive/variables.css */
+
+:root {
+  /* Breakpoints */
+  --breakpoint-mobile: 600px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-laptop: 1024px;
+  --breakpoint-desktop: 1200px;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Font Sizes - Mobile First */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.85rem;
+  --font-size-base: 0.95rem;
+  --font-size-lg: 1.1rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+
+  /* Header Heights */
+  --header-height-mobile: 120px;
+  --header-height-tablet: 80px;
+  --header-height-desktop: 72px;
+
+  /* Container Widths */
+  --container-mobile: 100%;
+  --container-tablet: 720px;
+  --container-laptop: 960px;
+  --container-desktop: 1200px;
+
+  /* Sidebar Widths */
+  --sidebar-width-desktop: 240px;
+  --sidebar-width-tablet: 200px;
+
+  /* Z-Index Scale */
+  --z-dropdown: 1001;
+  --z-sticky: 1000;
+  --z-modal: 9998;
+  --z-drawer: 9999;
+  --z-toast: 10000;
+}
+
+/* Media Query Mixins در CSS Variables */
+/* استفاده در فایل‌های دیگر با @media (max-width: var(--breakpoint-tablet)) */

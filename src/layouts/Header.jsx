@@ -15,6 +15,7 @@ import { useAuth } from "components/hooks/useAuth";
 import { useCity } from "components/context/CityContext";
 import { normalizePersian } from "utils/normalize";
 import PostSearch from "components/Templates/PostSearch";
+import HamburgerMenu from "components/modules/HamburgerMenu";
 
 import { useClickAway } from "@uidotdev/usehooks";
 
@@ -23,6 +24,7 @@ function Header() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [cityQuery, setCityQuery] = useState("");
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const searchInputRef = useRef(null);
   const listContainerRef = useRef(null);
@@ -135,169 +137,196 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        {/* سمت چپ - لوگو و جستجو */}
+        {/* سمت چپ - لوگو */}
         <div className={styles.left}>
           <Link to="/" className={styles.logo}>
             <img src="/divar.svg" alt="دیوار" className={styles.logoImg} />
           </Link>
+        </div>
 
+        {/* وسط - جستجو */}
+        <div className={styles.center}>
           <PostSearch />
         </div>
 
-        {/* سمت راست - همه استان‌ها، دیوار من و ثبت آگهی */}
+        {/* سمت راست - همبرگر در موبایل | منوها در دسکتاپ */}
         <div className={styles.right}>
-          {/* بخش "همه استان‌ها" */}
-          <div className={styles.dropdownWrapper} ref={cityRef}>
-            <button
-              className={`${styles.dropdownBtn} ${
-                cityOpen ? styles.active : ""
-              }`}
-              onClick={() => {
-                setCityOpen((prev) => !prev);
-                if (profileOpen) setProfileOpen(false);
-              }}
-              aria-haspopup="menu"
-              aria-expanded={cityOpen}
-              type="button"
-            >
-              <FaMapMarkerAlt className={styles.icon} />
-              <span className={styles.text}>
-                {selectedCity === "همه استان‌ها"
-                  ? "همه استان‌ها"
-                  : selectedCity}
-              </span>
-              <IoIosArrowDown
-                className={`${styles.arrow} ${cityOpen ? styles.open : ""}`}
-              />
-            </button>
-
-            {cityOpen && (
-              <div
-                className={styles.dropdown}
-                role="menu"
-                aria-label="استان‌ها"
-              >
-                <div className={styles.citySearchContainer}>
-                  <input
-                    ref={searchInputRef}
-                    value={cityQuery}
-                    onChange={(e) => {
-                      setCityQuery(e.target.value);
-                      setHighlightedIndex(0);
-                    }}
-                    onKeyDown={handleInputKeyDown}
-                    placeholder="جستجوی استان..."
-                    aria-label="جستجوی استان"
-                    className={styles.citySearchInput}
-                  />
-                </div>
-
-                <div
-                  className={styles.cityListContainer}
-                  ref={listContainerRef}
-                >
-                  {filteredCities.length === 0 ? (
-                    <div className={styles.cityEmptyResult}>موردی پیدا نشد</div>
-                  ) : (
-                    filteredCities.map((city, index) => {
-                      const isHighlighted = index === highlightedIndex;
-                      const isSelected = city === selectedCity;
-                      return (
-                        <button
-                          key={city}
-                          data-index={index}
-                          type="button"
-                          className={[
-                            styles.dropdownItem,
-                            isHighlighted ? styles.activeItem : "",
-                            isSelected ? styles.selectedItem : "",
-                          ].join(" ")}
-                          onMouseEnter={() => setHighlightedIndex(index)}
-                          onClick={() => {
-                            setSelectedCity(city);
-                            setCityOpen(false);
-                          }}
-                        >
-                          <span className={styles.cityName}>{city}</span>
-                          {isSelected && (
-                            <span className={styles.check}>✓</span>
-                          )}
-                        </button>
-                      );
-                    })
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* بخش "دیوار من" */}
-          <div className={styles.dropdownWrapper} ref={profileRef}>
-            <button
-              className={`${styles.dropdownBtn} ${
-                profileOpen ? styles.active : ""
-              }`}
-              onClick={() => {
-                setProfileOpen((prev) => !prev);
-                if (cityOpen) setCityOpen(false);
-              }}
-              aria-haspopup="menu"
-              aria-expanded={profileOpen}
-              type="button"
-              disabled={authLoading}
-            >
-              {authLoading ? (
-                <div className={styles.skeletonIcon} />
-              ) : user ? (
-                <FaUser className={styles.icon} />
-              ) : (
-                <FaSignInAlt className={styles.icon} />
-              )}
-              <span className={styles.text}>{user ? "دیوار من" : "ورود"}</span>
-              <IoIosArrowDown
-                className={`${styles.arrow} ${profileOpen ? styles.open : ""}`}
-              />
-            </button>
-
-            {profileOpen && (
-              <div
-                className={styles.dropdown}
-                role="menu"
-                aria-label="منوی کاربری"
-              >
-                {profileMenuItems.map((item) => (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    className={`${styles.dropdownItem} ${
-                      item.className ? styles[item.className] : ""
-                    }`}
-                    onClick={(e) => {
-                      item.onClick?.(e);
-                      setProfileOpen(false);
-                    }}
-                  >
-                    {item.icon && (
-                      <span className={styles.itemIcon}>{item.icon}</span>
-                    )}
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* دکمه "ثبت آگهی" */}
-          <Link
-            to="/addpost"
-            className={styles.postAdButton}
-            onClick={() => window.scrollTo(0, 0)}
+          {/* دکمه همبرگر - فقط موبایل و تبلت */}
+          <button
+            className={`hamburgerButton ${menuOpen ? "open" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="منو"
+            aria-expanded={menuOpen}
           >
-            <FaPlus className={styles.postAdIcon} />
-            ثبت آگهی
-          </Link>
+            <span className="hamburgerLine"></span>
+            <span className="hamburgerLine"></span>
+            <span className="hamburgerLine"></span>
+          </button>
+
+          {/* منوهای دسکتاپ - فقط از 769px به بالا */}
+          <div className={`${styles.desktopMenu}`}>
+            {/* بخش "همه استان‌ها" */}
+            <div className={styles.dropdownWrapper} ref={cityRef}>
+              <button
+                className={`${styles.dropdownBtn} ${
+                  cityOpen ? styles.active : ""
+                }`}
+                onClick={() => {
+                  setCityOpen((prev) => !prev);
+                  if (profileOpen) setProfileOpen(false);
+                }}
+                aria-haspopup="menu"
+                aria-expanded={cityOpen}
+                type="button"
+              >
+                <FaMapMarkerAlt className={styles.icon} />
+                <span className={styles.text}>
+                  {selectedCity === "همه استان‌ها"
+                    ? "همه استان‌ها"
+                    : selectedCity}
+                </span>
+                <IoIosArrowDown
+                  className={`${styles.arrow} ${cityOpen ? styles.open : ""}`}
+                />
+              </button>
+
+              {cityOpen && (
+                <div
+                  className={styles.dropdown}
+                  role="menu"
+                  aria-label="استان‌ها"
+                >
+                  <div className={styles.citySearchContainer}>
+                    <input
+                      ref={searchInputRef}
+                      value={cityQuery}
+                      onChange={(e) => {
+                        setCityQuery(e.target.value);
+                        setHighlightedIndex(0);
+                      }}
+                      onKeyDown={handleInputKeyDown}
+                      placeholder="جستجوی استان..."
+                      aria-label="جستجوی استان"
+                      className={styles.citySearchInput}
+                    />
+                  </div>
+
+                  <div
+                    className={styles.cityListContainer}
+                    ref={listContainerRef}
+                  >
+                    {filteredCities.length === 0 ? (
+                      <div className={styles.cityEmptyResult}>
+                        موردی پیدا نشد
+                      </div>
+                    ) : (
+                      filteredCities.map((city, index) => {
+                        const isHighlighted = index === highlightedIndex;
+                        const isSelected = city === selectedCity;
+                        return (
+                          <button
+                            key={city}
+                            data-index={index}
+                            type="button"
+                            className={[
+                              styles.dropdownItem,
+                              isHighlighted ? styles.activeItem : "",
+                              isSelected ? styles.selectedItem : "",
+                            ].join(" ")}
+                            onMouseEnter={() => setHighlightedIndex(index)}
+                            onClick={() => {
+                              setSelectedCity(city);
+                              setCityOpen(false);
+                            }}
+                          >
+                            <span className={styles.cityName}>{city}</span>
+                            {isSelected && (
+                              <span className={styles.check}>✓</span>
+                            )}
+                          </button>
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* بخش "دیوار من" */}
+            <div className={styles.dropdownWrapper} ref={profileRef}>
+              <button
+                className={`${styles.dropdownBtn} ${
+                  profileOpen ? styles.active : ""
+                }`}
+                onClick={() => {
+                  setProfileOpen((prev) => !prev);
+                  if (cityOpen) setCityOpen(false);
+                }}
+                aria-haspopup="menu"
+                aria-expanded={profileOpen}
+                type="button"
+                disabled={authLoading}
+              >
+                {authLoading ? (
+                  <div className={styles.skeletonIcon} />
+                ) : user ? (
+                  <FaUser className={styles.icon} />
+                ) : (
+                  <FaSignInAlt className={styles.icon} />
+                )}
+                <span className={styles.text}>
+                  {user ? "دیوار من" : "ورود"}
+                </span>
+                <IoIosArrowDown
+                  className={`${styles.arrow} ${
+                    profileOpen ? styles.open : ""
+                  }`}
+                />
+              </button>
+
+              {profileOpen && (
+                <div
+                  className={styles.dropdown}
+                  role="menu"
+                  aria-label="منوی کاربری"
+                >
+                  {profileMenuItems.map((item) => (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      className={`${styles.dropdownItem} ${
+                        item.className ? styles[item.className] : ""
+                      }`}
+                      onClick={(e) => {
+                        item.onClick?.(e);
+                        setProfileOpen(false);
+                      }}
+                    >
+                      {item.icon && (
+                        <span className={styles.itemIcon}>{item.icon}</span>
+                      )}
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* دکمه "ثبت آگهی" */}
+            <Link
+              to="/addpost"
+              className={styles.postAdButton}
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              <FaPlus className={styles.postAdIcon} />
+              ثبت آگهی
+            </Link>
+          </div>
         </div>
       </div>
+
+      {/* همبرگر منو - فقط موبایل و تبلت */}
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
     </header>
   );
 }

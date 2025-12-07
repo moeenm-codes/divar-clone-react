@@ -6,6 +6,7 @@ import App from "./App.jsx";
 
 import "styles/fonts.css";
 import "styles/index.css";
+import "./styles/responsive/index.css";
 import { FavoritesProvider } from "components/context/FavoritesContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(

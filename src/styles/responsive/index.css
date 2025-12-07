@@ -1,0 +1,101 @@
+/* styles/responsive/index.css */
+/* فایل اصلی برای import کردن تمام استایل‌های ریسپانسیو */
+
+/* Variables */
+@import "./variables.css";
+
+/* Hamburger Menu (فقط موبایل و تبلت) */
+@import "./hamburger.css";
+
+/* Responsive Styles - Mobile First Approach */
+@import "./mobile.css";
+@import "./tablet.css";
+@import "./desktop.css";
+
+/* Utilities برای ریسپانسیو */
+
+/* مخفی کردن در موبایل */
+.hidden-mobile {
+  display: none !important;
+}
+
+@media (min-width: 769px) {
+  .hidden-mobile {
+    display: block !important;
+  }
+}
+
+/* مخفی کردن در دسکتاپ */
+.hidden-desktop {
+  display: block !important;
+}
+
+@media (min-width: 769px) {
+  .hidden-desktop {
+    display: none !important;
+  }
+}
+
+/* نمایش فقط در موبایل */
+.show-mobile {
+  display: block !important;
+}
+
+@media (min-width: 769px) {
+  .show-mobile {
+    display: none !important;
+  }
+}
+
+/* نمایش فقط در تبلت */
+.show-tablet {
+  display: none !important;
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .show-tablet {
+    display: block !important;
+  }
+}
+
+/* نمایش فقط در دسکتاپ */
+.show-desktop {
+  display: none !important;
+}
+
+@media (min-width: 1025px) {
+  .show-desktop {
+    display: block !important;
+  }
+}
+
+/* Container Responsive */
+.container-responsive {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+@media (min-width: 601px) {
+  .container-responsive {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 769px) {
+  .container-responsive {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .container-responsive {
+    max-width: 1200px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-responsive {
+    max-width: 1400px;
+  }
+}
