@@ -1,5 +1,4 @@
-// components/modules/HamburgerMenu.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "components/hooks/useAuth";
 import { useCity } from "components/context/CityContext";
@@ -14,7 +13,6 @@ import {
   FiShield,
   FiLogOut,
   FiUser,
-  FiX,
   FiChevronDown,
   FiChevronUp,
 } from "react-icons/fi";
@@ -36,6 +34,19 @@ function HamburgerMenu({ isOpen, onClose }) {
 
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
   const [citySearchQuery, setCitySearchQuery] = useState("");
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add(styles.bodyBlur);
+    } else {
+      document.body.classList.remove(styles.bodyBlur);
+    }
+
+    // Cleanup function
+    return () => {
+      document.body.classList.remove(styles.bodyBlur);
+    };
+  }, [isOpen]);
 
   const handleLogout = () => {
     logout();
@@ -63,7 +74,7 @@ function HamburgerMenu({ isOpen, onClose }) {
 
   return (
     <>
-      {/* Overlay با blur */}
+      {/* Overlay */}
       <div
         className={`${styles.overlay} ${isOpen ? styles.overlayOpen : ""}`}
         onClick={onClose}
@@ -71,7 +82,7 @@ function HamburgerMenu({ isOpen, onClose }) {
 
       {/* Menu Drawer */}
       <div className={`${styles.drawer} ${isOpen ? styles.drawerOpen : ""}`}>
-        {/* Header */}
+        {/* Header - بدون دکمه X */}
         <div className={styles.header}>
           <div className={styles.userInfo}>
             <div className={styles.avatar}>
@@ -82,9 +93,6 @@ function HamburgerMenu({ isOpen, onClose }) {
               <p>{user?.mobile || "مهمان"}</p>
             </div>
           </div>
-          <button className={styles.closeBtn} onClick={onClose}>
-            <FiX />
-          </button>
         </div>
 
         {/* Navigation */}

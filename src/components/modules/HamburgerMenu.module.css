@@ -1,16 +1,29 @@
-/* components/modules/HamburgerMenu.module.css */
+.bodyBlur {
+  overflow: hidden; /* جلوگیری از اسکرول صفحه */
+}
 
-/* Overlay با blur */
+.bodyBlur::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  pointer-events: none;
+}
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
   z-index: 9998;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .overlayOpen {
@@ -23,7 +36,7 @@
   position: fixed;
   top: 0;
   right: -100%;
-  width: 85%;
+  width: 80%;
   max-width: 360px;
   height: 100vh;
   background: white;
@@ -39,7 +52,7 @@
   right: 0;
 }
 
-/* Header */
+/* Header - اصلاح شده بدون دکمه X */
 .header {
   display: flex;
   align-items: center;
@@ -55,6 +68,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex: 1;
 }
 
 .avatar {
@@ -81,26 +95,6 @@
   opacity: 0.9;
   direction: ltr;
   text-align: right;
-}
-
-.closeBtn {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: white;
-  font-size: 1.5rem;
-  transition: all 0.2s ease;
-}
-
-.closeBtn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: rotate(90deg);
 }
 
 /* Navigation */
@@ -326,7 +320,7 @@
 /* ریسپانسیو موبایل */
 @media (max-width: 480px) {
   .drawer {
-    width: 90%;
+    width: 80%;
     max-width: 320px;
   }
 

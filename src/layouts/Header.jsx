@@ -153,14 +153,16 @@ function Header() {
         <div className={styles.right}>
           {/* دکمه همبرگر - فقط موبایل و تبلت */}
           <button
-            className={`hamburgerButton ${menuOpen ? "open" : ""}`}
+            className={`${styles.hamburgerButton} ${
+              menuOpen ? styles.hamburgerButtonOpen : ""
+            }`}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="منو"
             aria-expanded={menuOpen}
           >
-            <span className="hamburgerLine"></span>
-            <span className="hamburgerLine"></span>
-            <span className="hamburgerLine"></span>
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
+            <span className={styles.hamburgerLine}></span>
           </button>
 
           {/* منوهای دسکتاپ - فقط از 769px به بالا */}
