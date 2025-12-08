@@ -1,0 +1,235 @@
+/* styles/responsive/tablet.css */
+/* Tablet: 600px - 1024px */
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  /* === GLOBAL === */
+  body {
+    font-size: 15px;
+  }
+
+  /* === HEADER === */
+  header[class*="header"] {
+    padding: 12px 0 !important;
+  }
+
+  div[class*="Header_container"] {
+    padding: 0 20px !important;
+    gap: 16px !important;
+  }
+
+  /* Logo */
+  img[class*="logoImg"] {
+    height: 32px !important;
+  }
+
+  /* === SEARCH === */
+  div[class*="searchWrapper"] {
+    max-width: 400px !important;
+    margin: 0 16px !important;
+  }
+
+  div[class*="searchBox"] {
+    height: 48px !important;
+    padding: 10px 16px !important;
+  }
+
+  input[class*="searchInput"] {
+    font-size: 0.9rem !important;
+  }
+
+  /* === HOMEPAGE === */
+  div[class*="HomePage_container"],
+  div[class*="homepage"] > div {
+    padding: 0 20px !important;
+    gap: 20px !important;
+  }
+
+  /* === SIDEBAR === */
+  aside[class*="sidebar"] {
+    padding: 16px !important;
+    border-radius: 14px !important;
+  }
+
+  li[class*="Sidebar_item"] {
+    padding: 12px 14px !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* === MAIN GRID === */
+  div[class*="Main_grid"] {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+    gap: 16px !important;
+  }
+
+  div[class*="imageWrapper"] {
+    height: 160px !important;
+  }
+
+  div[class*="Main_content"] {
+    padding: 14px !important;
+  }
+
+  /* === FOOTER === */
+  div[class*="Footer_top"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 30px !important;
+  }
+
+  div[class*="logoAndSocial"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  div[class*="social"] {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* === DASHBOARD === */
+  aside[class*="DashboardSidebar_sidebar"] {
+    padding: 16px !important;
+  }
+
+  /* === POST LIST === */
+  div[class*="PostList_postsGrid"] {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 18px !important;
+  }
+
+  div[class*="PostList_controls"] {
+    flex-direction: row !important;
+    gap: 14px !important;
+  }
+
+  div[class*="PostList_dropdownWrapper"] {
+    flex: 1 !important;
+  }
+}
+
+/* Tablet Portrait: 600px - 768px */
+@media (min-width: 601px) and (max-width: 768px) {
+  /* Header Layout */
+  div[class*="Header_container"] {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    gap: 14px !important;
+  }
+
+  div[class*="Header_left"] {
+    order: 1 !important;
+  }
+
+  div[class*="Header_center"] {
+    order: 2 !important;
+  }
+
+  div[class*="Header_right"] {
+    order: 3 !important;
+  }
+
+  /* مخفی کردن منوهای دسکتاپ */
+  div[class*="desktopMenu"] {
+    display: none !important;
+  }
+
+  /* Homepage */
+  div[class*="HomePage_container"] {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  aside[class*="sidebar"] {
+    position: static !important;
+    order: -1 !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* Grid */
+  div[class*="Main_grid"] {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+  }
+}
+
+/* Tablet Landscape: 769px - 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Header - نمایش منوهای دسکتاپ */
+  div[class*="Header_container"] {
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+
+  div[class*="desktopMenu"] {
+    display: flex !important;
+    gap: 10px !important;
+  }
+
+  button[class*="dropdownBtn"] {
+    padding: 9px 14px !important;
+    font-size: 0.85rem !important;
+    min-width: 120px !important;
+  }
+
+  a[class*="postAdButton"] {
+    padding: 10px 16px !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* مخفی کردن همبرگر */
+  button[class*="hamburgerButton"] {
+    display: none !important;
+  }
+
+  /* Homepage - دو ستونه */
+  div[class*="HomePage_container"] {
+    display: grid !important;
+    grid-template-columns: 200px 1fr !important;
+    gap: 20px !important;
+  }
+
+  aside[class*="sidebar"] {
+    position: sticky !important;
+    top: 100px !important;
+    order: initial !important;
+  }
+
+  /* Grid */
+  div[class*="Main_grid"] {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+  }
+
+  /* Dashboard */
+  div[class*="DashboardLayout_container"],
+  div[class*="DashboardLayout_inner"] {
+    display: grid !important;
+    grid-template-columns: 220px 1fr !important;
+    gap: 24px !important;
+  }
+
+  aside[class*="DashboardSidebar_sidebar"] {
+    position: sticky !important;
+    top: 100px !important;
+  }
+}
+
+/* Landscape for Tablet */
+@media (min-width: 601px) and (max-width: 1024px) and (orientation: landscape) {
+  div[class*="Main_grid"] {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  }
+
+  div[class*="imageWrapper"] {
+    height: 140px !important;
+  }
+
+  header[class*="header"] {
+    padding: 10px 0 !important;
+  }
+
+  footer[class*="footer"] {
+    padding: 20px 0 0 !important;
+  }
+
+  div[class*="Footer_top"] {
+    gap: 20px !important;
+  }
+}

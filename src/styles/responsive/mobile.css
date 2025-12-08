@@ -1,0 +1,325 @@
+/* styles/responsive/mobile.css */
+/* Mobile: 320px - 600px */
+
+@media (max-width: 600px) {
+  /* === GLOBAL === */
+  body {
+    font-size: 14px;
+    overflow-x: hidden;
+  }
+
+  /* === HEADER === */
+  header[class*="header"] {
+    padding: 10px 0 !important;
+  }
+
+  header[class*="container"] {
+    padding: 0 12px !important;
+  }
+
+  /* Layout Header */
+  div[class*="Header_container"] {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    gap: 12px !important;
+    align-items: center !important;
+  }
+
+  div[class*="Header_left"] {
+    order: 1 !important;
+  }
+
+  div[class*="Header_center"] {
+    order: 2 !important;
+  }
+
+  div[class*="Header_right"] {
+    order: 3 !important;
+  }
+
+  /* Logo */
+  img[class*="logoImg"],
+  img[class*="Header_logoImg"] {
+    height: 28px !important;
+  }
+
+  /* مخفی کردن منوهای دسکتاپ */
+  div[class*="Header_desktopMenu"],
+  div[class*="desktopMenu"] {
+    display: none !important;
+  }
+
+  /* === SEARCH === */
+  div[class*="searchWrapper"],
+  div[class*="PostSearch_searchWrapper"] {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  div[class*="searchBox"],
+  div[class*="PostSearch_searchBox"] {
+    height: 40px !important;
+    padding: 8px 14px !important;
+    border-radius: 14px !important;
+  }
+
+  input[class*="searchInput"],
+  input[class*="PostSearch_searchInput"] {
+    font-size: 0.85rem !important;
+  }
+
+  svg[class*="searchIcon"],
+  svg[class*="PostSearch_searchIcon"] {
+    font-size: 1.1rem !important;
+  }
+
+  /* === HOMEPAGE === */
+  div[class*="HomePage_homepage"],
+  div[class*="homepage"] {
+    padding: 12px 0 !important;
+  }
+
+  div[class*="HomePage_container"],
+  div[class*="homepage"] > div[class*="container"] {
+    padding: 0 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  /* === SIDEBAR === */
+  aside[class*="Sidebar_sidebar"],
+  aside[class*="sidebar"] {
+    position: static !important;
+    padding: 14px !important;
+    border-radius: 12px !important;
+    margin-bottom: 16px !important;
+    order: -1 !important;
+  }
+
+  h3[class*="Sidebar_title"],
+  h3[class*="sidebar"] h3 {
+    font-size: 0.95rem !important;
+  }
+
+  li[class*="Sidebar_item"],
+  li[class*="sidebar"] li {
+    padding: 12px 14px !important;
+    font-size: 0.85rem !important;
+  }
+
+  img[class*="Sidebar_icon"],
+  li[class*="sidebar"] img {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  /* فیلتر قیمت */
+  div[class*="priceFilter"] {
+    margin-top: 14px !important;
+    padding-top: 14px !important;
+  }
+
+  div[class*="priceInputs"] {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  input[class*="priceInput"] {
+    width: 100% !important;
+  }
+
+  span[class*="separator"] {
+    display: none !important;
+  }
+
+  /* === MAIN GRID === */
+  main[class*="Main_main"],
+  main[class*="main"] {
+    order: 1 !important;
+  }
+
+  div[class*="Main_grid"],
+  div[class*="grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    max-width: 400px !important;
+    margin: 0 auto !important;
+  }
+
+  div[class*="Main_card"],
+  div[class*="card"] {
+    max-width: 100% !important;
+    min-height: auto !important;
+  }
+
+  div[class*="Main_imageWrapper"],
+  div[class*="imageWrapper"] {
+    height: 180px !important;
+  }
+
+  div[class*="Main_content"],
+  div[class*="card"] > div[class*="content"] {
+    padding: 14px !important;
+  }
+
+  h3[class*="Main_title"],
+  h3[class*="card"] h3 {
+    font-size: 0.9rem !important;
+  }
+
+  /* === FOOTER === */
+  footer[class*="Footer_footer"],
+  footer[class*="footer"] {
+    padding: 25px 0 0 !important;
+  }
+
+  footer div[class*="Footer_container"],
+  footer div[class*="container"] {
+    padding: 0 12px !important;
+  }
+
+  div[class*="Footer_top"],
+  div[class*="footer"] div[class*="top"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    padding-bottom: 25px !important;
+  }
+
+  div[class*="Footer_column"] h3,
+  div[class*="column"] h3 {
+    font-size: 0.9rem !important;
+  }
+
+  div[class*="Footer_column"] li a,
+  div[class*="column"] li a {
+    font-size: 0.8rem !important;
+  }
+
+  a[class*="Footer_socialIcon"],
+  a[class*="socialIcon"] {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 1rem !important;
+  }
+
+  div[class*="Footer_logoAndSocial"],
+  div[class*="logoAndSocial"] {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  /* === DASHBOARD === */
+  aside[class*="DashboardSidebar_sidebar"],
+  aside[class*="dashboardSidebar"] {
+    position: static !important;
+    padding: 12px !important;
+    border-radius: 12px !important;
+    margin-bottom: 16px !important;
+  }
+
+  div[class*="DashboardSidebar_userAvatarCompact"],
+  div[class*="userAvatarCompact"] {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  a[class*="DashboardSidebar_item"],
+  li[class*="dashboard"] a {
+    padding: 10px 12px !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* === POST LIST === */
+  div[class*="PostList_postsGrid"],
+  div[class*="postsGrid"] {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  div[class*="PostList_cardImage"],
+  div[class*="cardImage"] {
+    height: 160px !important;
+  }
+
+  div[class*="PostList_controls"],
+  div[class*="controls"] {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  div[class*="PostList_dropdownWrapper"],
+  div[class*="controls"] > div {
+    width: 100% !important;
+  }
+
+  button[class*="PostList_dropdownBtn"],
+  button[class*="dropdownBtn"] {
+    width: 100% !important;
+    min-width: auto !important;
+  }
+
+  /* === LAYOUT === */
+  main[class*="Layout_layoutMain"],
+  main[class*="layoutMain"] {
+    padding: 12px 10px !important;
+  }
+
+  /* === DASHBOARD LAYOUT === */
+  div[class*="DashboardLayout_container"],
+  div[class*="DashboardLayout_inner"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+}
+
+/* Extra Small: 320px - 360px */
+@media (max-width: 360px) {
+  body {
+    font-size: 13px;
+  }
+
+  img[class*="logoImg"] {
+    height: 24px !important;
+  }
+
+  button[class*="hamburgerButton"] {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  span[class*="hamburgerLine"] {
+    width: 18px !important;
+  }
+
+  div[class*="searchBox"] {
+    height: 36px !important;
+    padding: 6px 12px !important;
+  }
+
+  div[class*="imageWrapper"] {
+    height: 150px !important;
+  }
+
+  h3[class*="title"] {
+    font-size: 0.85rem !important;
+  }
+}
+
+/* Landscape Mode for Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  div[class*="grid"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  div[class*="imageWrapper"] {
+    height: 140px !important;
+  }
+
+  footer[class*="footer"] {
+    padding: 20px 0 0 !important;
+  }
+}
