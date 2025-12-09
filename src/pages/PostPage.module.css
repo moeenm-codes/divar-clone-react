@@ -774,3 +774,231 @@
     text-align: center;
   }
 }
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .container {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .breadcrumbLink {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .breadcrumbCurrent {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .actionButton,
+[data-theme="dark"] .reportButton {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .actionButton:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .actionButton.liked {
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+[data-theme="dark"] .reportButton:hover {
+  border-color: var(--error);
+  color: var(--error);
+}
+
+[data-theme="dark"] .mainImageContainer {
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .noImage {
+  background: var(--bg-surface);
+  border: 2px dashed var(--border-color);
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .navButton {
+  background: rgba(45, 45, 45, 0.9);
+  color: var(--text-primary);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .navButton:hover {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .imageCounter {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] .thumbnail {
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .thumbnail:hover {
+  opacity: 1;
+}
+
+[data-theme="dark"] .postInfo {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .postHeader {
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .price {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .metaItem {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .metaIcon {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .descriptionTitle {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .descriptionContent {
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border-right: 3px solid var(--primary);
+}
+
+[data-theme="dark"] .categoryInfo {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .categoryLabel {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .categoryName {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .sellerCard {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .sellerAvatar {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+}
+
+[data-theme="dark"] .sellerName {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .sellerStats {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .sellerJoinDate {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .contactButton {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+  }
+}
+
+[data-theme="dark"] .phoneRevealed {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+}
+
+[data-theme="dark"] .phoneNumber {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .phoneNote {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .chatButton {
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .securityTips {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+  border-right: 4px solid var(--success);
+}
+
+[data-theme="dark"] .securityTitle {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .securityList {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .adminDeleteContainer {
+  background: var(--primary-light);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  box-shadow: 0 2px 10px rgba(255, 107, 107, 0.1);
+}
+
+[data-theme="dark"] .adminDeleteButton {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .adminDeleteButton:hover {
+  background: rgba(255, 107, 107, 0.1);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.15);
+}
+
+[data-theme="dark"] .errorContainer {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .errorTitle {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .errorText {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .errorButton {
+  background: var(--primary);
+}
+
+[data-theme="dark"] .errorButton:hover {
+  background: var(--primary-hover);
+}

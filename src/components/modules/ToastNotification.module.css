@@ -16,8 +16,6 @@
   color: #000;
   max-width: 380px;
   margin: 0 auto 12px;
-
-  /* انیمیشن ورود */
   animation: slideIn 0.35s ease-out forwards;
   transform: translateX(120%);
 }

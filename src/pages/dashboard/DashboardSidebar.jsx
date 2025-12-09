@@ -14,6 +14,7 @@ import {
   FiChevronDown,
   FiChevronUp,
   FiSmartphone,
+  FiSettings,
 } from "react-icons/fi";
 import { MdVerified } from "react-icons/md";
 import { useState } from "react";
@@ -23,6 +24,7 @@ const menuItems = [
   { to: "/my-divar/my-posts", label: "آگهی‌های من", icon: <FiFileText /> },
   { to: "/my-divar/favorites", label: "علاقه‌مندی‌ها", icon: <FiHeart /> },
   { to: "/my-divar/support", label: "پشتیبانی", icon: <FiHelpCircle /> },
+  { to: "/my-divar/settings", label: "تنظیمات", icon: <FiSettings /> },
 ];
 
 function DashboardSidebar() {

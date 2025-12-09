@@ -1,0 +1,41 @@
+/* src/styles/dark-mode/responsive.css */
+
+/* تنظیمات ریسپانسیو برای حالت دارک */
+@media (max-width: 768px) {
+  [data-theme="dark"] {
+    /* کاهش شدت سایه‌ها در موبایل */
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+    /* افزایش کنتراست برای خوانایی بهتر */
+    --text-secondary: #cccccc;
+    --text-muted: #aaaaaa;
+    --border-color: #505050;
+  }
+}
+
+@media (max-width: 480px) {
+  [data-theme="dark"] {
+    /* بهینه‌سازی برای صفحه‌های کوچک */
+    --bg-surface: #222222;
+    --bg-card: #2a2a2a;
+    --bg-input: #2a2a2a;
+  }
+}
+
+/* تنظیمات برای حالت landscape در موبایل */
+@media (max-width: 768px) and (orientation: landscape) {
+  [data-theme="dark"] {
+    --bg-primary: #0f0f0f;
+    --bg-surface: #1a1a1a;
+  }
+}
+
+/* تنظیمات برای تبلت */
+@media (min-width: 769px) and (max-width: 1024px) {
+  [data-theme="dark"] {
+    --bg-card: #2a2a2a;
+    --bg-surface: #222222;
+  }
+}

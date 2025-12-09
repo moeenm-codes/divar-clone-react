@@ -1,5 +1,4 @@
 /* CategoryForm.module.css
-   طراحی مخصوص divar.ir — کارت روشن، آکسان قرمز، انیمیشن‌های ریز
 */
 
 :root {
@@ -212,4 +211,63 @@
   .form h3 {
     font-size: 1rem;
   }
+}
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .form {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .form h3 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .hint {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .form label {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .form input {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .form input::placeholder {
+  color: var(--text-light);
+}
+
+[data-theme="dark"] .form input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.15);
+}
+
+[data-theme="dark"] .form button {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+}
+
+[data-theme="dark"] .inputError {
+  border-color: var(--error) !important;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15) !important;
+}
+
+[data-theme="dark"] .helperError {
+  color: var(--error);
+}
+
+[data-theme="dark"] .errorSuggestion {
+  color: var(--error);
+}
+
+[data-theme="dark"] .toastContainer > * {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
 }

@@ -45,3 +45,37 @@ select {
 .toast-container > * {
   pointer-events: auto;
 }
+
+/* اضافه کردن در انتهای فایل */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --accent: #ff6b6b;
+    --accent-light: #2a1a1a;
+    --bg: #121212;
+    --card: #2d2d2d;
+    --muted: #888888;
+    --border: #404040;
+    --error: #f87171;
+    --error-light: #2a1a1a;
+    --success: #34d399;
+  }
+}
+
+[data-theme="dark"] {
+  --accent: #ff6b6b;
+  --accent-light: #2a1a1a;
+  --bg: #121212;
+  --card: #2d2d2d;
+  --muted: #888888;
+  --border: #404040;
+  --error: #f87171;
+  --error-light: #2a1a1a;
+  --success: #34d399;
+}
+
+/* Body blur در حالت دارک */
+[data-theme="dark"] .bodyBlur::before {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}

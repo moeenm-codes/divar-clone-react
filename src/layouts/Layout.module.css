@@ -18,3 +18,20 @@
     padding: 16px 12px;
   }
 }
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .layout {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .layout-main {
+  background: var(--bg-primary);
+}
+
+/* ریسپانسیو برای حالت دارک */
+@media (max-width: 768px) {
+  [data-theme="dark"] .layout-main {
+    background: var(--bg-primary);
+  }
+}

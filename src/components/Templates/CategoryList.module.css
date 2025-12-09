@@ -183,3 +183,54 @@
     width: 10px;
   }
 }
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .container {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .iconWrap {
+  background: linear-gradient(
+    180deg,
+    var(--bg-surface) 0%,
+    var(--bg-card) 100%
+  );
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .slug {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .empty {
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px dashed var(--border-color);
+}
+
+[data-theme="dark"] .toastContainer > * {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  [data-theme="dark"] .container {
+    background: var(--bg-primary);
+  }
+}

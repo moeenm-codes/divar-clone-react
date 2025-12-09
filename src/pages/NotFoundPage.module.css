@@ -1,3 +1,4 @@
+/* notfoundpage */
 .container {
   margin: 0;
   display: flex;
@@ -237,4 +238,45 @@
   .description {
     font-size: 13px;
   }
+}
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .container {
+  background: linear-gradient(
+    135deg,
+    var(--bg-surface) 0%,
+    var(--bg-primary) 100%
+  );
+}
+
+[data-theme="dark"] .title {
+  color: var(--text-primary);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .description {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .primaryButton {
+  background: linear-gradient(45deg, var(--primary), var(--primary-hover));
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+[data-theme="dark"] .primaryButton:hover {
+  background: linear-gradient(
+    45deg,
+    var(--primary-hover),
+    var(--primary-active)
+  );
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+}
+
+[data-theme="dark"] .imageWrapper::before {
+  background: radial-gradient(
+    circle,
+    rgba(255, 107, 107, 0.15) 0%,
+    transparent 70%
+  );
 }

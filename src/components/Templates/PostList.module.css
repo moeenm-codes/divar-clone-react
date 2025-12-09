@@ -439,3 +439,156 @@
     width: 100%;
   }
 }
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .list {
+  background: transparent;
+}
+
+[data-theme="dark"] .header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .titleSection h1 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .titleSection p {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .dropdownBtn {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .dropdownBtn:hover,
+[data-theme="dark"] .dropdownBtn.active {
+  border-color: var(--primary);
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .icon {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .arrow {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .dropdown {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+}
+
+[data-theme="dark"] .dropdownItem {
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .dropdownItem:hover {
+  background: rgba(255, 107, 107, 0.1);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .selectedItem {
+  background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+  color: white;
+}
+
+[data-theme="dark"] .citySearchInput {
+  background: var(--bg-input);
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .citySearchInput:focus {
+  border-color: var(--primary);
+}
+
+[data-theme="dark"] .cityEmptyResult {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .stats {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .postsCount {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .categoryBadge {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .postCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .postCard:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .cardOverlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] .editBtn {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .editBtn:hover {
+  background: var(--primary);
+  color: white;
+}
+
+[data-theme="dark"] .postTitle {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .postDate {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .postDescription {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .categoryTag {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .emptyState {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .emptyIcon {
+  color: var(--border-color);
+}
+
+[data-theme="dark"] .emptyState h3 {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .emptyState p {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .primaryButton {
+  background: var(--primary);
+}
+
+[data-theme="dark"] .primaryButton:hover {
+  background: var(--primary-hover);
+}

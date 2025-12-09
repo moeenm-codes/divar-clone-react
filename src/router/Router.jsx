@@ -18,6 +18,7 @@ import ProtectedRoute from "router/ProtectedRoute/ProtectedRoute";
 import AuthRedirect from "./ProtectedRoute/AuthRedirect";
 import AddPost from "components/Templates/AddPost";
 import EditPost from "components/Templates/EditPost";
+import SettingsPage from "pages/dashboard/SettingsPage";
 
 function Router() {
   return (
@@ -56,6 +57,7 @@ function Router() {
           <Route path="my-posts" element={<MyPosts />} />
           <Route path="favorites" element={<FavoritesPage />} />
           <Route path="support" element={<SupportPage />} />
+          <Route path="settings" element={<SettingsPage />} />
         </Route>
 
         {/* پنل ادمین */}

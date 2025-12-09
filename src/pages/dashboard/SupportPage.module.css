@@ -125,19 +125,98 @@
   .title {
     font-size: 1.6rem;
   }
-  
+
   .miniCard {
     padding: 16px;
     gap: 12px;
   }
-  
+
   .miniIcon {
     width: 48px;
     height: 48px;
     font-size: 1.5rem;
   }
-  
+
   .contactGrid {
     gap: 16px;
+  }
+}
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .container {
+  background: transparent;
+}
+
+[data-theme="dark"] .header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .icon {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .subtitle {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .sectionTitle {
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--primary);
+}
+
+[data-theme="dark"] .contactSection {
+  background: transparent;
+}
+
+[data-theme="dark"] .miniCard {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .miniCard:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+[data-theme="dark"] .miniIcon {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.3);
+}
+
+[data-theme="dark"] .miniCard h3 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .miniCard p {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .simpleAlert {
+  background: var(--primary-light);
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.1);
+}
+
+/* ریسپانسیو برای حالت دارک */
+@media (max-width: 576px) {
+  [data-theme="dark"] .title {
+    color: var(--text-primary);
+  }
+
+  [data-theme="dark"] .miniCard {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-color);
+  }
+
+  [data-theme="dark"] .miniCard:hover {
+    border-color: var(--primary);
   }
 }

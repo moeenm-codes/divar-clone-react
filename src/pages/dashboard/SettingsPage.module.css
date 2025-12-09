@@ -1,0 +1,202 @@
+/* src/pages/dashboard/SettingsPage.module.css */
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* Header */
+.header {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* Main content */
+.main {
+  background: var(--bg-elevated);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Section */
+.sectionHeader {
+  margin-bottom: 32px;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.sectionDesc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Theme grid */
+.themeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+/* Theme card */
+.themeCard {
+  width: 100%;
+  background: var(--bg-surface);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: right;
+  outline: none;
+}
+
+.themeCard:hover {
+  border-color: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.themeCard:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(166, 38, 38, 0.1);
+}
+
+.themeCard.active {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, rgba(166, 38, 38, 0.03), transparent);
+}
+
+/* Card content */
+.cardContent {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.iconWrapper {
+  flex-shrink: 0;
+}
+
+.iconBackground {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--primary-lightest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+.themeCard.active .iconBackground {
+  background: var(--primary);
+  color: white;
+}
+
+.cardText {
+  flex: 1;
+  text-align: right;
+}
+
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.cardDesc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Selection indicator */
+.selectionIndicator {
+  flex-shrink: 0;
+}
+
+.radio {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.radioActive {
+  border-color: var(--primary);
+  background: var(--primary);
+}
+
+.radioDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px 12px;
+  }
+
+  .main {
+    padding: 24px 20px;
+  }
+
+  .themeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardContent {
+    gap: 12px;
+  }
+
+  .iconBackground {
+    width: 48px;
+    height: 48px;
+    font-size: 1.3rem;
+  }
+
+  .main {
+    padding: 20px 16px;
+  }
+}

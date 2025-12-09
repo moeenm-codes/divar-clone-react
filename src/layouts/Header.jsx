@@ -110,7 +110,8 @@ function Header() {
       { name: "داشبورد", to: "/my-divar" },
       { name: "آگهی‌های من", to: "/my-divar/my-posts" },
       { name: "علاقه‌مندی‌ها", to: "/my-divar/favorites" },
-      { name: "پشتیبانی", to: "/my-divar/support" }
+      { name: "پشتیبانی", to: "/my-divar/support" },
+      { name: "تنظیمات", to: "/my-divar/settings" }
     );
 
     if (user?.role === "ADMIN") {

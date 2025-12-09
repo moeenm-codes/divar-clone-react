@@ -134,3 +134,73 @@
     width: 100%;
   }
 }
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .backdrop {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] .modal {
+  background: var(--bg-card);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .header h3 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .body {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .body p {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .warning {
+  color: var(--error);
+}
+
+[data-theme="dark"] .cancelBtn {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .cancelBtn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .deleteBtn {
+  background: var(--primary);
+  color: white;
+}
+
+[data-theme="dark"] .deleteBtn:hover {
+  background: var(--primary-hover);
+}
+
+/* ریسپانسیو برای حالت دارک */
+@media (max-width: 480px) {
+  [data-theme="dark"] .modal {
+    background: var(--bg-card);
+  }
+
+  [data-theme="dark"] .cancelBtn,
+  [data-theme="dark"] .deleteBtn {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+  }
+
+  [data-theme="dark"] .deleteBtn {
+    background: var(--primary);
+    color: white;
+  }
+}

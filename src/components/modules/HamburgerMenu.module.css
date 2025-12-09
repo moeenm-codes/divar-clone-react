@@ -342,3 +342,114 @@
     font-size: 0.8rem;
   }
 }
+
+/* اضافه کردن در انتهای فایل */
+
+/* حالت دارک برای Hamburger Menu */
+[data-theme="dark"] .drawer {
+  background: var(--bg-card);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .header {
+  background: linear-gradient(135deg, #2a1a1a, #3a1a1a);
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .avatar {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .section {
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .cityToggle {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .cityToggle:hover {
+  background: var(--bg-surface);
+}
+
+[data-theme="dark"] .cityIcon {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .cityDropdown {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .citySearchInput {
+  background: var(--bg-input);
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .citySearchInput:focus {
+  border-color: var(--primary);
+}
+
+[data-theme="dark"] .cityItem {
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .cityItem:hover {
+  background: var(--bg-elevated);
+}
+
+[data-theme="dark"] .cityItemActive {
+  background: var(--primary-light) !important;
+  color: var(--primary);
+}
+
+[data-theme="dark"] .emptyCity {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .item {
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+[data-theme="dark"] .item:hover {
+  background: var(--bg-surface);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .item.active {
+  background: linear-gradient(90deg, var(--primary-light), transparent);
+  border-right-color: var(--primary);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .item.highlight {
+  background: linear-gradient(90deg, var(--primary-light), transparent);
+}
+
+[data-theme="dark"] .footer {
+  border-top: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .logoutBtn {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .loginBtn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+}
+
+[data-theme="dark"] .overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@media (max-width: 480px) {
+  [data-theme="dark"] .drawer {
+    background: var(--bg-card);
+  }
+}

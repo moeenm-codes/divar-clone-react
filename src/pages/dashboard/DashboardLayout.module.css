@@ -46,3 +46,36 @@
     padding: 0 12px;
   }
 }
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .container {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .inner {
+  background: transparent;
+}
+
+[data-theme="dark"] .main {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+}
+
+/* ریسپانسیو برای حالت دارک */
+@media (max-width: 992px) {
+  [data-theme="dark"] .main {
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+@media (max-width: 576px) {
+  [data-theme="dark"] .container {
+    background: var(--bg-primary);
+  }
+
+  [data-theme="dark"] .main {
+    background: var(--bg-card);
+  }
+}

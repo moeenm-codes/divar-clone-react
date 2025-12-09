@@ -332,3 +332,120 @@
     font-size: 0.85rem;
   }
 }
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .searchBox {
+  background: var(--bg-surface);
+  border: 2px solid transparent;
+}
+
+[data-theme="dark"] .searchBox:hover {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .searchBox.active {
+  background: var(--bg-card);
+  border-color: var(--primary);
+}
+
+[data-theme="dark"] .searchIcon {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .searchInput {
+  color: var(--text-primary);
+  background: transparent;
+}
+
+[data-theme="dark"] .searchInput::placeholder {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .clearBtn {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .clearBtn:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+[data-theme="dark"] .dropdown {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(20px);
+}
+
+[data-theme="dark"] .sectionHeader {
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-surface);
+}
+
+[data-theme="dark"] .clearAllBtn {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .clearAllBtn:hover {
+  background: var(--primary-light);
+}
+
+[data-theme="dark"] .suggestionItem {
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .suggestionItem:hover {
+  background: var(--bg-surface);
+}
+
+[data-theme="dark"] .highlighted {
+  background: var(--primary-light) !important;
+  color: var(--primary) !important;
+}
+
+[data-theme="dark"] .itemIcon {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .highlighted .itemIcon {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .removeBtn {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .removeBtn:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+[data-theme="dark"] .emptyState {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .emptyIcon {
+  color: var(--border-color);
+}
+
+[data-theme="dark"] .emptyText {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .emptyHint {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .searchAnywayBtn {
+  background: var(--primary);
+}
+
+[data-theme="dark"] .searchAnywayBtn:hover {
+  background: var(--primary-hover);
+}

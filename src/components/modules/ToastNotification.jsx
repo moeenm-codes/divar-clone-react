@@ -30,7 +30,7 @@ const ToastNotification = ({
   message,
   type = "success",
   onClose,
-  duration = 3000,
+  duration = 1000000000000,
 }) => {
   const [isClosing, setIsClosing] = useState(false);
 

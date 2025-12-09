@@ -457,3 +457,65 @@
     height: 120px;
   }
 }
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .main {
+  background: transparent;
+}
+
+[data-theme="dark"] .card {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--border-color);
+}
+
+[data-theme="dark"] .card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+[data-theme="dark"] .overlay {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.3));
+}
+
+[data-theme="dark"] .title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .price {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .city {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .empty {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .empty p {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .con-like {
+  background: rgba(45, 45, 45, 0.9);
+}
+
+[data-theme="dark"] .card:hover .con-like {
+  background: var(--bg-card);
+}
+
+[data-theme="dark"] .con-like .outline {
+  stroke: var(--primary);
+}
+
+[data-theme="dark"] .con-like .filled {
+  fill: var(--primary);
+}
+
+[data-theme="dark"] .con-like .poly {
+  stroke: var(--primary);
+  fill: var(--primary);
+}

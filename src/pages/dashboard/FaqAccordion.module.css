@@ -62,3 +62,41 @@
   font-size: 0.98rem;
   padding: 0 4px;
 }
+
+/* اضافه کردن در انتهای فایل */
+
+[data-theme="dark"] .accordion {
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .accordion:hover {
+  border-color: var(--primary);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.15);
+}
+
+[data-theme="dark"] .accordion.open {
+  border-color: var(--primary);
+  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.2);
+}
+
+[data-theme="dark"] .question {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .question:hover {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .icon {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .answerWrapper {
+  background: var(--bg-surface);
+}
+
+[data-theme="dark"] .answer {
+  color: var(--text-secondary);
+}
