@@ -8,6 +8,8 @@ import { useCity } from "components/context/CityContext";
 import { normalizePersian } from "utils/normalize";
 import { useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import SidebarSkeleton from "components/modules/Skeletons/SidebarSkeleton";
+import MainSkeleton from "components/modules/Skeletons/MainSkeleton";
 import styles from "./HomePage.module.css";
 
 function HomePage() {
@@ -114,7 +116,18 @@ function HomePage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (postLoading || categoryLoading) return <Loader />;
+  const isLoading = postLoading || categoryLoading;
+  const hasData = posts && categories;
+  if (isLoading || !hasData) {
+    return (
+      <div className={styles.container}>
+        <SidebarSkeleton />
+        <div className={styles.main}>
+          <MainSkeleton />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.homepage}>

@@ -12,6 +12,7 @@ import { useState, useMemo } from "react";
 import { TbFilter, TbCategory, TbMoodEmpty, TbCalendar } from "react-icons/tb";
 import { BiSortAlt2 } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
+import MyPostsSkeleton from "components/modules/Skeletons/MyPostsSkeleton";
 import styles from "./PostList.module.css";
 
 function PostList() {
@@ -89,7 +90,7 @@ function PostList() {
     }
   };
 
-  if (postsLoading || categoriesLoading) return <Loader />;
+  if (postsLoading || categoriesLoading) return <MyPostsSkeleton />;
 
   const selectedCategoryName =
     selectedCategory === "all"

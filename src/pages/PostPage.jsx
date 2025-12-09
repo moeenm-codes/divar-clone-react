@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getPost } from "services/user";
 import { getCategory, deletePost } from "services/admin";
 import Loader from "components/modules/Loader";
+import PostPageSkeleton from "components/modules/Skeletons/PostPageSkeleton";
 import { sp } from "utils/numbers";
 import { useParams, Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -84,7 +85,7 @@ function PostPage() {
     }
   }, [postData]);
 
-  if (postLoading) return <Loader />;
+  if (postLoading) return <PostPageSkeleton />;
 
   const post = postData?.data?.post;
   if (!post) {

@@ -1,0 +1,166 @@
+/* components/modules/Skeletons/Skeletons.module.css */
+
+.skeletonWrapper {
+  width: 100%;
+}
+
+/* === کارت آگهی (برای MainSkeleton) === */
+.card {
+  margin-top: 15px;
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  border: 1.5px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+}
+
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+  height: 180px;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+.content {
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.titleLine {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-height: 3em;
+  justify-content: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sidebar {
+  margin-top: 25px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  height: fit-content;
+}
+
+.sidebarTitle {
+  /* شبیه‌سازی h3.title */
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.sidebarTitle::after {
+  /* شبیه‌سازی خط زیر عنوان */
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 3px;
+  background: #a62626;
+  border-radius: 2px;
+}
+
+.sidebarItem {
+  /* تطابق با .item در Sidebar.module.css */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: #f8f8f8;
+  border: 1.5px solid #f0f0f0;
+}
+
+.priceFilter {
+  /* تطابق با .priceFilter */
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.priceInputs {
+  /* تطابق با .priceInputs */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.postPageContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 2rem;
+  padding-top: 20px;
+}
+
+.gallery {
+  height: 400px;
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.postInfo {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #eee;
+}
+
+/* === تنظیمات دارک مود === */
+[data-theme="dark"] .card,
+[data-theme="dark"] .sidebar,
+[data-theme="dark"] .postInfo {
+  background: var(--bg-card, #2d2d2d);
+  border-color: var(--border-color, #444);
+}
+
+[data-theme="dark"] .sidebarItem {
+  background: var(
+    --bg-surface,
+    #3a3a3a
+  ); /* شبیه‌سازی آیتم‌های دارک مود سایدبار */
+  border-color: var(--border-color, #444);
+}
+
+[data-theme="dark"] .sidebarTitle::after {
+  background: var(--primary, #a62626);
+}
+
+[data-theme="dark"] .priceFilter {
+  border-top-color: var(--border-color, #444);
+}
+
+/* ریسپانسیو مشابه فایل‌های اصلی */
+@media (max-width: 1024px) {
+  .postPageContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  /* در موبایل، فیلدهای قیمت عمودی می‌شوند */
+  .priceInputs {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
