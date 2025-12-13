@@ -10,7 +10,7 @@ const MainSkeleton = () => {
     <SkeletonWrapper>
       {/* استفاده از کلاس .grid فایل اصلی برای حفظ گرید ریسپانسیو */}
       <div className={mainStyles.grid}>
-        {Array(10) // رندر ۸ کارت پیش‌فرض
+        {Array(12)
           .fill(0)
           .map((_, i) => (
             <div
