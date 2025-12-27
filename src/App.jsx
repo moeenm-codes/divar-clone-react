@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import defaultOptions from "configs/reactQuery";
 import Router from "router/Router";
 import { CityProvider } from "components/context/CityContext";
+import ScrollToTop from "components/modules/ScrollToTop";
 
 function App() {
   const queryClient = new QueryClient({ defaultOptions });
@@ -13,6 +14,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <CityProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <Router />
         </BrowserRouter>
       </CityProvider>
