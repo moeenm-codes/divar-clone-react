@@ -140,7 +140,7 @@ function HomePage() {
           maxPrice={maxPrice}
           urlMinPrice={urlMinPrice}
           urlMaxPrice={urlMaxPrice}
-          onPriceChange={(min, max) => {
+          onApplyPrice={(min, max) => {
             const newParams = new URLSearchParams(searchParams);
             if (min === "" || min === null) {
               newParams.delete("minPrice");
@@ -153,6 +153,7 @@ function HomePage() {
               newParams.set("maxPrice", max);
             }
             setSearchParams(newParams);
+            window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         />
         <Main

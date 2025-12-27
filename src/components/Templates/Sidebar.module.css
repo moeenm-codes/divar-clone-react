@@ -176,6 +176,70 @@
 .item:hover .icon {
   transform: scale(1.15) rotate(5deg);
 }
+.priceActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  justify-content: center;
+
+  /* انیمیشن ورود */
+  animation: slideInFromBottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: top;
+}
+
+.priceActions.hiding {
+  animation: slideOutToBottom 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+.applyBtn,
+.cancelBtn {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.applyBtn {
+  background: linear-gradient(135deg, #a62626, #c93a3a);
+  color: white;
+  box-shadow: 0 4px 15px rgba(166, 38, 38, 0.3);
+}
+
+.applyBtn:hover {
+  background: linear-gradient(135deg, #8a1f1f, #a62626);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(166, 38, 38, 0.4);
+}
+
+.applyBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(166, 38, 38, 0.3);
+}
+
+.cancelBtn {
+  background: #f5f5f5;
+  color: #555;
+  border: 1.5px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cancelBtn:hover {
+  background: #ebebeb;
+  border-color: #d0d0d0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.cancelBtn:active {
+  transform: translateY(0);
+}
 
 /* انیمیشن‌ها */
 @keyframes slideInLeft {
@@ -200,7 +264,71 @@
   }
 }
 
-/* اضافه کردن در انتهای فایل */
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 60px;
+  }
+}
+
+@keyframes slideOutToBottom {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 60px;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+    max-height: 0;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .priceActions {
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .applyBtn,
+  .cancelBtn {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+
+  .priceInputs {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .inputWrapper {
+    width: 100%;
+  }
+
+  .priceInput {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .formattedValue {
+    font-size: 0.9rem;
+  }
+}
 
 [data-theme="dark"] .sidebar {
   background: var(--bg-card);
@@ -271,4 +399,43 @@
 
 [data-theme="dark"] .priceHint {
   color: var(--text-secondary);
+}
+[data-theme="dark"] .cancelBtn {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .cancelBtn:hover {
+  background: var(--bg-input);
+  border-color: var(--border-dark);
+}
+
+[data-theme="dark"] .applyBtn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+[data-theme="dark"] .applyBtn:hover {
+  background: linear-gradient(
+    135deg,
+    var(--primary-hover),
+    var(--primary-active)
+  );
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+[data-theme="dark"] .priceInput {
+  background: var(--bg-input);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .priceInput:focus {
+  border-color: var(--primary);
+}
+
+[data-theme="dark"] .formattedValue {
+  color: var(--text-primary);
+  background: var(--bg-input);
 }
