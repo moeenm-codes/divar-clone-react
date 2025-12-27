@@ -29,12 +29,12 @@ function Footer() {
   ];
 
   const categories = [
-    { name: "دیجیتال", link: "/?category=68c8a3bd6bd2248d44890ba6" },
-    { name: "وسایل شخصی", link: "/?category=68ca875d024480355f6fcbde" },
-    { name: "سرگرمی", link: "/?category=68d31fad1a087964b126695b" },
-    { name: "خدماتی", link: "/?category=690c49f23c4ff706d401b68a" },
-    { name: "املاک", link: "/?category=6927f1c8ee294dac92014494" },
-    { name: "خودرو", link: "/?category=6922f13933546c4f4f9b9558" },
+    { name: "املاک", link: "/?category=6930df31a9fc0a58cb902ea4" },
+    { name: "دیجیتال", link: "/?category=6930df75a9fc0a58cb902ead" },
+    { name: "خدماتی", link: "/?category=6930e020a9fc0a58cb902eb3" },
+    { name: "خودرو", link: "/?category=6931c6bc1d6227f5c5765f9f" },
+    { name: "سرگرمی", link: "/?category=6931c70a1d6227f5c5765faa" },
+    { name: "وسایل شخصی", link: "/?category=6932d7a0a7115a1353571058" },
   ];
 
   const apps = [
