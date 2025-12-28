@@ -103,6 +103,7 @@
   background: var(--bg);
   padding: 4px 8px;
   border-radius: 6px;
+  margin-right: 10px;
 }
 
 .field input,
@@ -389,12 +390,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  justify-content: center; /* اضافه: وسط‌چین عمودی کامل */
+  gap: 10px; /* فاصله بهتر بین آیکون و متن */
   color: #6b7280;
   font-size: 0.85rem;
   pointer-events: none;
   text-align: center;
-  padding: 16px;
+  padding: 20px 12px; /* padding متعادل‌تر */
+  height: 100%;
+  box-sizing: border-box;
   transition: color 0.2s ease;
 }
 
@@ -542,15 +546,56 @@
   }
 }
 
+@keyframes pageEntry {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Responsive */
+@media (max-width: 1024px) {
+  .imageGrid {
+    grid-template-columns: repeat(5, minmax(120px, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .imageGrid {
+    grid-template-columns: repeat(4, minmax(90px, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .imageGrid {
+    grid-template-columns: repeat(2, minmax(80px, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .imageGrid {
+    grid-template-columns: repeat(2, minmax(70px, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .imageGrid {
+    grid-template-columns: repeat(1, minmax(60px, 1fr));
+    gap: 10px;
+  }
+}
+
 @media (max-width: 640px) {
   .form {
     padding: 20px;
-  }
-
-  .imageGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
   }
 
   .actionButtons {
@@ -561,17 +606,6 @@
   .submitBtn {
     flex: 1;
     width: 100%;
-  }
-
-  @keyframes pageEntry {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
 }
 
