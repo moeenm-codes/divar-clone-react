@@ -225,11 +225,46 @@
   border-color: #a62626;
   box-shadow: 0 4px 20px rgba(166, 38, 38, 0.15);
 }
+
 .cityListContainer {
   max-height: 300px;
   overflow-y: auto;
   background: white;
+  padding-right: 4px; /* کمی فاصله از راست برای اسکرول‌بار */
+  box-sizing: border-box;
+  scrollbar-width: thin; /* برای فایرفاکس */
+  scrollbar-color: #d0d0d0 transparent; /* برای فایرفاکس */
 }
+
+.cityListContainer::-webkit-scrollbar {
+  width: 8px; /* عرض اسکرول‌بار */
+}
+
+.cityListContainer::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+  margin: 4px 0;
+}
+
+.cityListContainer::-webkit-scrollbar-thumb {
+  background: #d0d0d0;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.cityListContainer::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b0;
+}
+
+/* وقتی hover روی لیست باشه، اسکرول‌بار کمی پررنگ‌تر بشه */
+.cityListContainer:hover::-webkit-scrollbar-thumb {
+  background: #a62626;
+}
+
+.cityListContainer:hover::-webkit-scrollbar-thumb:hover {
+  background: #8b1e1e;
+}
+
 .cityEmptyResult {
   padding: 12px 18px;
   color: #888;
@@ -546,7 +581,7 @@
 }
 
 [data-theme="dark"] .citySearchContainer {
-  background: var(--bg-surface);
+  background: var(--bg-card);
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -562,6 +597,23 @@
 
 [data-theme="dark"] .cityListContainer {
   background: var(--bg-card);
+  scrollbar-color: #444 transparent;
+}
+
+[data-theme="dark"] .cityListContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-theme="dark"] .cityListContainer::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+[data-theme="dark"] .cityListContainer:hover::-webkit-scrollbar-thumb {
+  background: var(--primary);
+}
+
+[data-theme="dark"] .cityListContainer:hover::-webkit-scrollbar-thumb:hover {
+  background: #c93a3a;
 }
 
 [data-theme="dark"] .cityEmptyResult {
