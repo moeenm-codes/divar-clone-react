@@ -223,12 +223,6 @@
   border: 1px dashed var(--border-color);
 }
 
-[data-theme="dark"] .toastContainer > * {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-}
-
 @media (max-width: 768px) {
   [data-theme="dark"] .container {
     background: var(--bg-primary);

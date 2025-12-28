@@ -159,3 +159,49 @@
     transform: translateX(-100%);
   }
 }
+
+/* --- Dark Mode --- */
+[data-theme="dark"] .notification {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .close:hover {
+  background-color: rgba(204, 204, 204, 0.15);
+}
+
+[data-theme="dark"] .close svg {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+[data-theme="dark"] .success .icon svg,
+[data-theme="dark"] .success .close svg {
+  color: #10b981;
+}
+
+[data-theme="dark"] .success .progress {
+  background: #10b981;
+}
+
+[data-theme="dark"] .error {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+[data-theme="dark"] .error .icon svg,
+[data-theme="dark"] .error .close svg {
+  color: #ef4444;
+}
+
+[data-theme="dark"] .error .progress {
+  background: #ef4444;
+}
